@@ -1,16 +1,13 @@
 # 我的 Rime 配置
 
-基于 [雾凇拼音](https://github.com/iDvel/rime-ice)，整合了虎码方案，支持全平台同步使用。
+基于 [雾凇拼音](https://github.com/iDvel/rime-ice)，整合虎码形码，支持全平台同步使用。
 
 ## 输入方案
 
 | 方案 | 说明 |
 |------|------|
-| 虎码官方词库 (`tigress`) | 虎码形码，单字 + 词组，**日常推荐** |
-| 虎码官方单字 (`tiger`) | 虎码形码，纯单字模式 |
-| 自然码双拼 (`double_pinyin`) | 自然码双拼方案 |
-| 雾凇拼音 (`rime_ice`) | 全拼方案 |
-| 中文九键 (`t9`) | 九宫格，仓输入法 / 元书专用 |
+| 虎码单字 (`tiger`) | 虎码形码，纯单字模式 |
+| 自然码双拼 (`double_pinyin`) | 自然码双拼，词库基于雾凇拼音 |
 
 在虎码方案中，按 `` ` `` 键可切换为**自然码双拼反查**，用拼音检索虎码编码。
 
@@ -120,10 +117,9 @@ MyRimeConfig/
 ├── squirrel.yaml      # macOS 前端配置
 ├── weasel.yaml        # Windows 前端配置
 ├── hamster.yaml       # iOS 前端配置
-├── tiger.schema.yaml  # 虎码单字方案
-├── tigress.schema.yaml# 虎码词组方案
+├── tiger.schema.yaml          # 虎码单字方案
 ├── double_pinyin.schema.yaml  # 自然码双拼方案
-├── rime_ice.schema.yaml       # 雾凇拼音方案
+├── rime_ice.schema.yaml       # 雾凇拼音词库（自然码双拼的词库来源）
 ├── deploy.sh          # 部署脚本（macOS / Linux）
 └── deploy.ps1         # 部署脚本（Windows）
 ```
@@ -132,7 +128,7 @@ MyRimeConfig/
 
 | 按键 | 功能 |
 |------|------|
-| `F4` 或 `Ctrl+grave` | 切换输入方案 |
+| `F4` / `Ctrl+\`` / `Ctrl+F8` | 切换输入方案 |
 | `` ` `` | 虎码中切换自然码双拼反查 |
 | `Shift` | 临时切换中/英文，上屏已输入内容 |
 | `Caps Lock` | 清空输入并切换英文 |
