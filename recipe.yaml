@@ -31,3 +31,17 @@ install_files: >-
   melt_eng.schema.yaml
   melt_eng.dict.yaml
   custom_phrase.txt
+  hamster.yaml
+  rime.lua
+  tiger.schema.yaml
+  tiger.dict.yaml
+  tiger.extended.dict.yaml
+  tigress.schema.yaml
+  tigress.dict.yaml
+  tigress.extended.dict.yaml
+  tigress_ci.dict.yaml
+  tigress_simp_ci.dict.yaml
+  core2022.schema.yaml
+  core2022.dict.yaml
+  PY_c.schema.yaml
+  PY_c.custom.yaml

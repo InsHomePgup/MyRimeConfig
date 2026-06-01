@@ -1,0 +1,50 @@
+# Hamster (仓输入法) settings
+# encoding: utf-8
+#
+# 仓输入法前端配置，iOS 平台专用
+# 文档参考：https://github.com/imfuxiao/Hamster
+
+config_version: '2026-06-01'
+
+# 何时显示通知  always | never | appropriate
+show_notifications_when: appropriate
+
+
+style:
+  # 候选框排列方式
+  candidate_list_layout: linear   # stacked | linear  (iOS 横排更适合)
+  text_orientation: horizontal
+  inline_preedit: false           # iOS 不支持 inline，保持 false
+
+  # 配色方案（与 squirrel.yaml 保持一致）
+  color_scheme: purity_of_form_custom
+  color_scheme_dark: purity_of_form_custom
+
+
+# 针对特定 App 的设置（仓输入法支持 bundle id 匹配）
+app_options:
+  # com.apple.MobileSMS:
+  #   ascii_mode: false
+  # com.apple.mobilesafari:
+  #   ascii_mode: false
+
+
+# 自定义配色（从 squirrel.yaml 同步过来）
+preset_color_schemes:
+  purity_of_form_custom:
+    name: 纯粹的形式／自定义
+    author: 雾凇拼音
+    translucency: false
+    mutual_exclusive: false
+    back_color: 0xFFFFFF
+    border_color: 0xFFFFFF
+    text_color: 0x000000
+    hilited_text_color: 0x000000
+    hilited_back_color: 0xFFFFFF
+    hilited_candidate_back_color: 0xFFFFFF
+    hilited_candidate_text_color: 0xEF7D00
+    hilited_candidate_label_color: 0xEF7D00
+    hilited_comment_text_color: 0xEF7D00
+    candidate_text_color: 0x000000
+    comment_text_color: 0x000000
+    label_color: 0x000000
