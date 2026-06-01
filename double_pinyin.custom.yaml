@@ -1,6 +1,0 @@
-patch:
-  "translator/spelling_hints": 0          # 不显示全拼提示
-  "translator/always_show_comments": false
-  "translator/comment_format":            # 清除候选词上的拼音注释
-    - xform/.*//
-  "translator/preedit_format": []         # 输入框按双拼原始编码显示，不展开为全拼

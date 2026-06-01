@@ -1,4 +1,5 @@
-patch: 
+patch:
+  translator/dictionary: rime_ice  # PY_c.dict.yaml 不存在，改用雾凇词库
   speller/algebra:
     - erase/^xx$/
     - derive/^([jqxy])u$/$1v/
