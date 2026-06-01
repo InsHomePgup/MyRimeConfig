@@ -27,4 +27,21 @@ Get-ChildItem -Path $RepoDir | Where-Object {
 }
 
 Write-Host ">>> 文件同步完成"
+
+# 删除旧的 .custom.yaml 补丁（设置已合并进主文件）
+$OldCustomFiles = @(
+    "default.custom.yaml",
+    "weasel.custom.yaml",
+    "tiger.custom.yaml",
+    "tigress.custom.yaml",
+    "double_pinyin.custom.yaml"
+)
+foreach ($f in $OldCustomFiles) {
+    $p = Join-Path $RimeDir $f
+    if (Test-Path $p) {
+        Remove-Item $p -Force
+        Write-Host ">>> 已删除旧补丁: $f"
+    }
+}
+
 Write-Host ">>> 请在系统托盘右键小狼毫图标，点击「重新部署」"

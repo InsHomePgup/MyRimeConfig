@@ -36,6 +36,7 @@ switcher:
   hotkeys:
     - F4
     - Control+grave
+    - Control+F8
     - Control+Shift+grave
     # - Alt+grave
   # 开关记忆（方案中的 switches），从方案选单（而非快捷键）切换时会记住的选项，需要记忆的开关不能设定 reset
@@ -76,7 +77,7 @@ ascii_composer:
   switch_key:
     Caps_Lock: clear      # commit_code | commit_text | clear
     Shift_L: commit_code  # commit_code | commit_text | inline_ascii | clear | noop | set_ascii_mode | unset_ascii_mode
-    Shift_R: noop         # commit_code | commit_text | inline_ascii | clear | noop | set_ascii_mode | unset_ascii_mode
+    Shift_R: commit_code  # commit_code | commit_text | inline_ascii | clear | noop | set_ascii_mode | unset_ascii_mode
     Control_L: noop       # commit_code | commit_text | inline_ascii | clear | noop | set_ascii_mode | unset_ascii_mode
     Control_R: noop       # commit_code | commit_text | inline_ascii | clear | noop | set_ascii_mode | unset_ascii_mode
 

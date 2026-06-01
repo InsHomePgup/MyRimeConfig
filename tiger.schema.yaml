@@ -118,8 +118,12 @@ speller:
   auto_select_pattern: ^;\w+ #自动上屏规则  对 [;] 引导的编码实行候选唯一自动上屏
   # 若要添加四码上屏功能，在  ^;\w+ 后面 加上  |^\w{4}$  即可
 
+menu:
+  page_size: 9
+  alternative_select_labels: [ ㊀, ㊁, ㊂, ㊃, ㊄, ㊅, ㊆, ㊇, ㊈ ]
+
 translator:
-  dictionary: tiger
+  dictionary: tiger.extended
   enable_charset_filter: false
   enable_encoder: false
   enable_sentence: false
