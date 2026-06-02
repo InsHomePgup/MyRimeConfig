@@ -1,0 +1,26 @@
+# Rime table
+# coding: utf-8
+#@/db_name	custom_phrase_double.txt
+#@/db_type	tabledb
+#
+# 自定义短语（自然码双拼版）
+# 对应 double_pinyin.schema.yaml 中的 custom_phrase/user_dict: custom_phrase_double
+#
+# 以 Tab 分割：词汇<Tab>编码<Tab>权重
+# 编码使用自然码双拼，韵母映射：ang→h, ei→z, uan→r, ong→s, ing→y, ai→l, en→f, eng→g, ao→k, ou→b, in→n, ie→x, ian→m, an→j
+#
+# 此行之后不能写注释
+
+李录	lilu
+巴菲特	bafzte
+芒格	mhge
+段永平	dryspy
+
+go	go
+Golang	golang
+Hugo	hugo
+goto	goto
+TODO	todo
+Amazon	amazon
+NASA	nasa
+SOHO	soho
