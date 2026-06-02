@@ -17,6 +17,9 @@ import_tables:
   # - cn_dicts/mydict2  # 挂载 cn_dicts 目录里的 mydict2.dict.yaml 词库文件
   - cn_dicts/zhwiki       # 中文 Wikipedia 词条（地名、人名、IT专有名词等）
   - cn_dicts/web-slang    # 网络用语（来自 Wikipedia web-slang 项目）
+  - cn_dicts/invest       # 投资相关词库（自建）
+  - cn_dicts/c_finance    # 金融词汇（来自搜狗细胞词库，约12000条）
+  - cn_dicts/c_stock      # 股票基金公司名（来自搜狗细胞词库，约1600条）
 ...
 
 # 按需启用：
