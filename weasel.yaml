@@ -773,6 +773,153 @@ preset_color_schemes:
     name: "玫红"
     preedit_back_color: 0x364572
 
+  macos_light:
+    name: "macOS 浅色／macOS Light"
+    author: custom
+    color_format: rgba
+    back_color: 0xFFFFFF
+    border_color: 0xE5E5E5
+    shadow_color: 0x00000026
+    text_color: 0x1D1D1F
+    label_color: 0x86868B
+    candidate_text_color: 0x1D1D1F
+    comment_text_color: 0x86868B
+    candidate_back_color: 0xFFFFFF
+    hilited_back_color: 0xF5F5F7
+    hilited_text_color: 0x0066CC
+    hilited_candidate_back_color: 0x0066CC
+    hilited_candidate_text_color: 0xFFFFFF
+    hilited_candidate_label_color: 0xFFFFFF
+    hilited_comment_text_color: 0xCCE5FF
+    hilited_label_color: 0x0066CC
+    hilited_mark_color: 0x0066CC
+
+  macos_dark:
+    name: "macOS 深色／macOS Dark"
+    author: custom
+    color_format: rgba
+    back_color: 0x1D1D1F
+    border_color: 0x3D3D3F
+    shadow_color: 0x00000066
+    text_color: 0xF5F5F7
+    label_color: 0x8E8E93
+    candidate_text_color: 0xF5F5F7
+    comment_text_color: 0x8E8E93
+    candidate_back_color: 0x1D1D1F
+    hilited_back_color: 0x2D2D2F
+    hilited_text_color: 0x419CFF
+    hilited_candidate_back_color: 0x419CFF
+    hilited_candidate_text_color: 0xFFFFFF
+    hilited_candidate_label_color: 0xFFFFFF
+    hilited_comment_text_color: 0x003B7A
+    hilited_label_color: 0x419CFF
+    hilited_mark_color: 0x419CFF
+
+  ios_light:
+    name: "iOS 浅色／iOS Light"
+    author: custom
+    color_format: rgba
+    back_color: 0xF2F2F7
+    border_color: 0xC6C6CB
+    shadow_color: 0x00000020
+    text_color: 0x000000
+    label_color: 0x8E8E93
+    candidate_text_color: 0x000000
+    comment_text_color: 0x8E8E93
+    candidate_back_color: 0xFFFFFF
+    hilited_back_color: 0xE5E5EA
+    hilited_text_color: 0x007AFF
+    hilited_candidate_back_color: 0x007AFF
+    hilited_candidate_text_color: 0xFFFFFF
+    hilited_candidate_label_color: 0xFFFFFF
+    hilited_comment_text_color: 0xCCE5FF
+    hilited_label_color: 0x007AFF
+    hilited_mark_color: 0x007AFF
+
+  ios_dark:
+    name: "iOS 深色／iOS Dark"
+    author: custom
+    color_format: rgba
+    back_color: 0x1C1C1E
+    border_color: 0x38383A
+    shadow_color: 0x00000099
+    text_color: 0xFFFFFF
+    label_color: 0x8E8E93
+    candidate_text_color: 0xEBEBF5
+    comment_text_color: 0x636366
+    candidate_back_color: 0x2C2C2E
+    hilited_back_color: 0x38383A
+    hilited_text_color: 0x0A84FF
+    hilited_candidate_back_color: 0x0A84FF
+    hilited_candidate_text_color: 0xFFFFFF
+    hilited_candidate_label_color: 0xFFFFFF
+    hilited_comment_text_color: 0x00336B
+    hilited_label_color: 0x0A84FF
+    hilited_mark_color: 0x0A84FF
+
+  catppuccin:
+    name: "Catppuccin Macchiato"
+    author: Catppuccin
+    color_format: rgba
+    back_color: 0x24273A
+    border_color: 0x363A4F
+    shadow_color: 0x00000066
+    text_color: 0xCAD3F5
+    label_color: 0x8087A2
+    candidate_text_color: 0xCAD3F5
+    comment_text_color: 0x8087A2
+    candidate_back_color: 0x24273A
+    hilited_back_color: 0x363A4F
+    hilited_text_color: 0xB7BDF8
+    hilited_candidate_back_color: 0x8AADF4
+    hilited_candidate_text_color: 0x24273A
+    hilited_candidate_label_color: 0x24273A
+    hilited_comment_text_color: 0x1E2030
+    hilited_label_color: 0x24273A
+    hilited_mark_color: 0x8AADF4
+
+  catppuccin_latte:
+    name: "Catppuccin Latte"
+    author: Catppuccin
+    color_format: rgba
+    back_color: 0xEFF1F5
+    border_color: 0xCCD0DA
+    shadow_color: 0x00000020
+    text_color: 0x4C4F69
+    label_color: 0x8C8FA1
+    candidate_text_color: 0x4C4F69
+    comment_text_color: 0x8C8FA1
+    candidate_back_color: 0xEFF1F5
+    hilited_back_color: 0xE6E9EF
+    hilited_text_color: 0x1E66F5
+    hilited_candidate_back_color: 0x1E66F5
+    hilited_candidate_text_color: 0xEFF1F5
+    hilited_candidate_label_color: 0xEFF1F5
+    hilited_comment_text_color: 0xE0E8FF
+    hilited_label_color: 0xEFF1F5
+    hilited_mark_color: 0x1E66F5
+
+  one_dark:
+    name: "One Dark"
+    author: Atom
+    color_format: rgba
+    back_color: 0x282C34
+    border_color: 0x21252B
+    shadow_color: 0x00000066
+    text_color: 0xABB2BF
+    label_color: 0x636D83
+    candidate_text_color: 0xABB2BF
+    comment_text_color: 0x636D83
+    candidate_back_color: 0x282C34
+    hilited_back_color: 0x2C313A
+    hilited_text_color: 0x61AFEF
+    hilited_candidate_back_color: 0x61AFEF
+    hilited_candidate_text_color: 0x282C34
+    hilited_candidate_label_color: 0x282C34
+    hilited_comment_text_color: 0x1A2B3D
+    hilited_label_color: 0x61AFEF
+    hilited_mark_color: 0x61AFEF
+
   google_pinyin:
     name: "谷歌拼音／Google Pinyin"
     author: custom
