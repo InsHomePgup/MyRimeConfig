@@ -73,7 +73,7 @@ style:
   vertical_auto_reverse: false             # 文本竖排模式下，候选窗口位于光标上方时倒序排列：true；false
 
   label_format: "%s"                       # 标签字符：例如 %s. 效果为 1. 2. 3. ....
-  mark_text: " "                           # 标记字符，显示在选中的候选标签前，需要在配色方案中指定颜色；如该项为空字符串 "" 而配色方案中 hilited_mark_color 非透明色，则显示 Windows 11 输入法风格标记
+  mark_text: ""                            # 标记字符，显示在选中的候选标签前，需要在配色方案中指定颜色；如该项为空字符串 "" 而配色方案中 hilited_mark_color 非透明色，则显示 Windows 11 输入法风格标记
   ascii_tip_follow_cursor: false           # 切换 ASCII 模式时，提示跟随鼠标，而非输入光标
   enhanced_position: true                  # 无法定位候选框时，在窗口左上角显示候选框：true；false
   display_tray_icon: false                 # 托盘显示独立于语言栏的额外图标：true；false
@@ -791,8 +791,7 @@ preset_color_schemes:
     hilited_candidate_text_color: 0xFFFFFF
     hilited_candidate_label_color: 0xFFFFFF
     hilited_comment_text_color: 0xCCE5FF
-    hilited_label_color: 0x0066CC
-    hilited_mark_color: 0x0066CC
+    hilited_label_color: 0xFFFFFF
 
   macos_dark:
     name: "macOS 深色／macOS Dark"
@@ -812,8 +811,7 @@ preset_color_schemes:
     hilited_candidate_text_color: 0xFFFFFF
     hilited_candidate_label_color: 0xFFFFFF
     hilited_comment_text_color: 0x003B7A
-    hilited_label_color: 0x419CFF
-    hilited_mark_color: 0x419CFF
+    hilited_label_color: 0xFFFFFF
 
   ios_light:
     name: "iOS 浅色／iOS Light"
@@ -833,8 +831,7 @@ preset_color_schemes:
     hilited_candidate_text_color: 0xFFFFFF
     hilited_candidate_label_color: 0xFFFFFF
     hilited_comment_text_color: 0xCCE5FF
-    hilited_label_color: 0x007AFF
-    hilited_mark_color: 0x007AFF
+    hilited_label_color: 0xFFFFFF
 
   ios_dark:
     name: "iOS 深色／iOS Dark"
@@ -854,8 +851,7 @@ preset_color_schemes:
     hilited_candidate_text_color: 0xFFFFFF
     hilited_candidate_label_color: 0xFFFFFF
     hilited_comment_text_color: 0x00336B
-    hilited_label_color: 0x0A84FF
-    hilited_mark_color: 0x0A84FF
+    hilited_label_color: 0xFFFFFF
 
   catppuccin:
     name: "Catppuccin Macchiato"
@@ -876,7 +872,6 @@ preset_color_schemes:
     hilited_candidate_label_color: 0x24273A
     hilited_comment_text_color: 0x1E2030
     hilited_label_color: 0x24273A
-    hilited_mark_color: 0x8AADF4
 
   catppuccin_latte:
     name: "Catppuccin Latte"
@@ -897,7 +892,6 @@ preset_color_schemes:
     hilited_candidate_label_color: 0xEFF1F5
     hilited_comment_text_color: 0xE0E8FF
     hilited_label_color: 0xEFF1F5
-    hilited_mark_color: 0x1E66F5
 
   one_dark:
     name: "One Dark"
@@ -917,8 +911,7 @@ preset_color_schemes:
     hilited_candidate_text_color: 0x282C34
     hilited_candidate_label_color: 0x282C34
     hilited_comment_text_color: 0x1A2B3D
-    hilited_label_color: 0x61AFEF
-    hilited_mark_color: 0x61AFEF
+    hilited_label_color: 0x282C34
 
   google_pinyin:
     name: "谷歌拼音／Google Pinyin"
@@ -938,8 +931,7 @@ preset_color_schemes:
     hilited_candidate_text_color: 0xFFFFFF
     hilited_candidate_label_color: 0xFFFFFF
     hilited_comment_text_color: 0xCCDDFF
-    hilited_label_color: 0x4285F4
-    hilited_mark_color: 0x4285F4
+    hilited_label_color: 0xFFFFFF
 
   wechat_light:
     name: "微信输入法浅色／WeChat Light"
@@ -959,8 +951,7 @@ preset_color_schemes:
     hilited_candidate_text_color: 0xFFFFFF
     hilited_candidate_label_color: 0xFFFFFF
     hilited_comment_text_color: 0xCCFFE5
-    hilited_label_color: 0x07C160
-    hilited_mark_color: 0x07C160
+    hilited_label_color: 0xFFFFFF
 
   wechat_dark:
     name: "微信输入法深色／WeChat Dark"
@@ -980,7 +971,6 @@ preset_color_schemes:
     hilited_candidate_text_color: 0xFFFFFF
     hilited_candidate_label_color: 0xFFFFFF
     hilited_comment_text_color: 0xAAEECC
-    hilited_label_color: 0x07C160
-    hilited_mark_color: 0x07C160
+    hilited_label_color: 0xFFFFFF
 
 # [End of <preset_color_schemes>]
