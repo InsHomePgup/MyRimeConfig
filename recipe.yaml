@@ -32,6 +32,7 @@ install_files: >-
   melt_eng.dict.yaml
   custom_phrase.txt
   hamster.yaml
+  yuanshu.yaml
   rime.lua
   tiger.schema.yaml
   tiger.dict.yaml

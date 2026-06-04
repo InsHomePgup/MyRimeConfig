@@ -19,6 +19,7 @@
 | Windows | 小狼毫 (Weasel) | `weasel.yaml` |
 | Linux | ibus-rime | — |
 | iOS | 仓输入法 (Hamster) | `hamster.yaml` |
+| iOS | 元书输入法 | `yuanshu.yaml` |
 
 所有 schema、词典、Lua 脚本、OpenCC 文件全平台通用，各平台前端配置文件互不干扰。
 
@@ -66,7 +67,9 @@ cd MyRimeConfig
 
 脚本同步到 `%APPDATA%\Rime\`。完成后右键系统托盘小狼毫图标 → **重新部署**。
 
-### iOS（仓输入法）
+### iOS（仓输入法 / 元书输入法）
+
+仓输入法与元书输入法都可以直接导入普通 Rime 配置目录。
 
 仓输入法支持通过 iCloud 同步配置，推荐以下两种方式：
 
@@ -80,6 +83,12 @@ cd MyRimeConfig
 **方式二：Git 同步（仓输入法 ≥ 2.x）**
 
 仓输入法内置 Git 支持，可直接填入本 repo 地址自动拉取。
+
+### iOS（元书输入法）
+
+将本 repo 全部文件导入元书的 Rime 用户目录，并保留 `yuanshu.yaml`。导入后在元书内执行一次**重新部署**即可。
+
+如果元书使用的是独立共享目录，需确保本仓库依赖的所有 schema、dict、lua、opencc 文件一并导入，不能只单独导入某一个方案文件。
 
 ---
 
@@ -116,7 +125,8 @@ MyRimeConfig/
 ├── rime.lua           # 虎码 Lua 入口
 ├── squirrel.yaml      # macOS 前端配置
 ├── weasel.yaml        # Windows 前端配置
-├── hamster.yaml       # iOS 前端配置
+├── hamster.yaml       # iOS 仓输入法前端配置
+├── yuanshu.yaml       # iOS 元书输入法前端配置
 ├── tiger.schema.yaml          # 虎码单字方案
 ├── double_pinyin.schema.yaml  # 自然码双拼方案
 ├── rime_ice.schema.yaml       # 雾凇拼音词库（自然码双拼的词库来源）
