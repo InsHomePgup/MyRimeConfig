@@ -20,8 +20,15 @@
 | Linux | ibus-rime | — |
 | iOS | 仓输入法 (Hamster) | `hamster.yaml` |
 | iOS | 元书输入法 | `yuanshu.yaml` |
+| Android | [Trime 自定义（个人版）](https://github.com/InsHomePgup/trime) | 内嵌为 APK，装完即用 |
 
 所有 schema、词典、Lua 脚本、OpenCC 文件全平台通用，各平台前端配置文件互不干扰。
+
+Android 端不走 `deploy.sh` 这套流程：本仓库以 git submodule 的形式接入个人 fork
+[InsHomePgup/trime](https://github.com/InsHomePgup/trime)，随 APK 一起编译打包。改了配置后，
+在 trime 仓库执行 `git submodule update --remote` 并打 tag，GitHub Actions 会自动出新 APK，
+发布在 [trime 仓库的 Releases 页面](https://github.com/InsHomePgup/trime/releases)。仅供个人
+使用，不是公开发布的输入法应用。
 
 ---
 
