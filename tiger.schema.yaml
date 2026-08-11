@@ -80,7 +80,7 @@ engine:
     - fallback_segmentor
   translators:
     - punct_translator
-    - reverse_lookup_translator #拼音反查
+    - script_translator@reverse_lookup #双拼反查，用 script_translator 以支持多字词组
     - table_translator
     - table_translator@easy_english #临时英文
     - history_translator@historyDM # 重复上屏 电脑
@@ -138,8 +138,12 @@ translator:
 
 # 双拼反查
 reverse_lookup:
+  tag: reverse_lookup
   dictionary: rime_ice
   prism: double_pinyin
+  enable_sentence: false   # 反查不需要造句
+  enable_user_dict: false  # 不使用用户词典，避免污染主翻译器的词频
+  initial_quality: 1
   prefix: "`"
   tips: "〔双拼〕"
   preedit_format: []
