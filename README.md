@@ -54,9 +54,16 @@ cd MyRimeConfig
 ./deploy.sh linux-ibus
 ```
 
-脚本同步到 `~/.config/ibus/rime/` 并执行 `ibus restart`。
+脚本同步到 `~/.config/ibus/rime/` 并执行 `ibus restart`（ibus-rime 启动时会重新部署有变动的文件）。
 
-若修改了 schema 或词库，还需手动触发 Rime 重新部署：右键 ibus 托盘图标 → **部署**，或：
+如果用的是 fcitx5-rime，执行 `./deploy.sh linux-fcitx5`，同步到 `~/.local/share/fcitx5/rime/` 并执行 `fcitx5-remote -r`。
+不带参数时脚本会自动判断（fcitx5 在运行就用 fcitx5，否则用 ibus）。不确定自己用的是哪个，可以执行：
+
+```bash
+pgrep -a 'fcitx5|ibus-daemon'
+```
+
+若部署后没有生效，手动触发 Rime 重新部署：右键托盘图标 → **部署**，或：
 
 ```bash
 rm -rf ~/.config/ibus/rime/build && ibus restart
@@ -72,7 +79,7 @@ cd MyRimeConfig
 .\deploy.ps1
 ```
 
-脚本同步到 `%APPDATA%\Rime\`。完成后右键系统托盘小狼毫图标 → **重新部署**。
+脚本同步到 `%APPDATA%\Rime\` 并调用 `WeaselDeployer.exe /deploy` 重新部署；找不到小狼毫安装目录时，请右键系统托盘小狼毫图标 → **重新部署**。
 
 ### iOS（仓输入法 / 元书输入法）
 
@@ -96,6 +103,8 @@ cd MyRimeConfig
 将本 repo 全部文件导入元书的 Rime 用户目录，并保留 `yuanshu.yaml`。导入后在元书内执行一次**重新部署**即可。
 
 如果元书使用的是独立共享目录，需确保本仓库依赖的所有 schema、dict、lua、opencc 文件一并导入，不能只单独导入某一个方案文件。
+
+部署脚本只覆盖 repo 里的配置文件，Rime 目录下的用户词库（`*.userdb`）、`user.yaml`、`installation.yaml`、`sync/` 不会被删除或覆盖。
 
 ---
 

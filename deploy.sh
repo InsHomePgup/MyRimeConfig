@@ -11,7 +11,9 @@ detect_platform() {
     case "$OSTYPE" in
         darwin*) echo "macos" ;;
         linux*)
-            if pgrep -x ibus-daemon &>/dev/null || [ -d ~/.config/ibus/rime ]; then
+            if pgrep -x fcitx5 &>/dev/null; then
+                echo "linux-fcitx5"
+            elif pgrep -x ibus-daemon &>/dev/null || [ -d ~/.config/ibus/rime ]; then
                 echo "linux-ibus"
             else
                 echo "linux-fcitx5"
@@ -27,15 +29,12 @@ PLATFORM="${1:-$(detect_platform)}"
 case "$PLATFORM" in
     macos)
         RIME_DIR="$HOME/Library/Rime"
-        REDEPLOY_CMD="/Library/Input Methods/Squirrel.app/Contents/MacOS/Squirrel --reload"
         ;;
     linux-ibus)
         RIME_DIR="$HOME/.config/ibus/rime"
-        REDEPLOY_CMD="ibus restart"
         ;;
     linux-fcitx5)
         RIME_DIR="$HOME/.local/share/fcitx5/rime"
-        REDEPLOY_CMD="fcitx5-remote -r"
         ;;
     windows)
         echo "Windows 请在 PowerShell 中运行 deploy.ps1"
@@ -53,24 +52,66 @@ echo ">>> 目标目录: $RIME_DIR"
 
 mkdir -p "$RIME_DIR"
 
-# 同步文件（排除 .git、部署脚本本身、LICENSE）
-rsync -av --delete \
-    --exclude='.git/' \
-    --exclude='deploy.sh' \
-    --exclude='deploy.ps1' \
-    --exclude='LICENSE' \
-    --exclude='*.md' \
-    --exclude='build/' \
-    "$REPO_DIR/" "$RIME_DIR/"
+# 同步文件。--delete 会清掉 repo 里已删除的文件，
+# 但被 exclude 的路径不会被删，用户词库、同步目录等都靠这里保住
+if command -v rsync &>/dev/null; then
+    rsync -a --delete \
+        --exclude='.git/' \
+        --exclude='.gitignore' \
+        --exclude='deploy.sh' \
+        --exclude='deploy.ps1' \
+        --exclude='LICENSE' \
+        --exclude='*.md' \
+        --exclude='build/' \
+        --exclude='sync/' \
+        --exclude='*.userdb/' \
+        --exclude='*.userdb.txt' \
+        --exclude='user.yaml' \
+        --exclude='installation.yaml' \
+        "$REPO_DIR/" "$RIME_DIR/"
+else
+    # 没有 rsync 时只覆盖、不删除
+    echo ">>> 未找到 rsync，改用 tar 直接复制（repo 中已删除的文件不会从目标目录移除）"
+    tar -C "$REPO_DIR" -cf - \
+        --exclude='./.git' \
+        --exclude='./.gitignore' \
+        --exclude='./deploy.sh' \
+        --exclude='./deploy.ps1' \
+        --exclude='./LICENSE' \
+        --exclude='*.md' \
+        --exclude='./build' \
+        . | tar -xf - -C "$RIME_DIR"
+fi
 
 echo ">>> 文件同步完成"
 
 # 重新部署
-if command -v "$REDEPLOY_CMD" &>/dev/null 2>&1 || [ -f "${REDEPLOY_CMD%% *}" ]; then
-    echo ">>> 触发重新部署..."
-    eval "$REDEPLOY_CMD" 2>/dev/null || echo "    (请手动点击「重新部署」)"
-else
-    echo ">>> 请手动触发 Rime 重新部署"
-fi
+SQUIRREL="/Library/Input Methods/Squirrel.app/Contents/MacOS/Squirrel"
+case "$PLATFORM" in
+    macos)
+        if [ -x "$SQUIRREL" ]; then
+            echo ">>> 触发重新部署..."
+            "$SQUIRREL" --reload
+        else
+            echo ">>> 未找到鼠须管，请手动点击「重新部署」"
+        fi
+        ;;
+    linux-ibus)
+        if command -v ibus &>/dev/null; then
+            echo ">>> 重启 ibus（ibus-rime 启动时会重新部署有变动的文件）..."
+            ibus restart
+        else
+            echo ">>> 未找到 ibus，请手动重新部署"
+        fi
+        ;;
+    linux-fcitx5)
+        if command -v fcitx5-remote &>/dev/null; then
+            echo ">>> 重新加载 fcitx5..."
+            fcitx5-remote -r
+        else
+            echo ">>> 未找到 fcitx5-remote，请手动重新部署"
+        fi
+        ;;
+esac
 
 echo ">>> 完成！"

@@ -12,7 +12,7 @@ if (-not (Test-Path $RimeDir)) {
 }
 
 # 排除不需要同步的文件
-$Excludes = @('.git', 'deploy.sh', 'deploy.ps1', 'LICENSE', '*.md')
+$Excludes = @('.git', '.gitignore', 'deploy.sh', 'deploy.ps1', 'LICENSE', '*.md')
 
 Get-ChildItem -Path $RepoDir | Where-Object {
     $name = $_.Name
@@ -20,7 +20,11 @@ Get-ChildItem -Path $RepoDir | Where-Object {
 } | ForEach-Object {
     $dest = Join-Path $RimeDir $_.Name
     if ($_.PSIsContainer) {
-        Copy-Item -Path $_.FullName -Destination $dest -Recurse -Force
+        # 目标目录已存在时 Copy-Item 会把源目录嵌套进去（lua\lua\），所以复制目录内容
+        if (-not (Test-Path $dest)) {
+            New-Item -ItemType Directory -Path $dest | Out-Null
+        }
+        Copy-Item -Path (Join-Path $_.FullName '*') -Destination $dest -Recurse -Force
     } else {
         Copy-Item -Path $_.FullName -Destination $dest -Force
     }
@@ -44,4 +48,25 @@ foreach ($f in $OldCustomFiles) {
     }
 }
 
-Write-Host ">>> 请在系统托盘右键小狼毫图标，点击「重新部署」"
+# 清理以前部署时误嵌套出来的目录（如 lua\lua\）
+foreach ($d in Get-ChildItem -Path $RepoDir -Directory) {
+    $nested = Join-Path (Join-Path $RimeDir $d.Name) $d.Name
+    if ((Test-Path $nested) -and -not (Test-Path (Join-Path $d.FullName $d.Name))) {
+        Remove-Item $nested -Recurse -Force
+        Write-Host ">>> 已清理误嵌套目录: $($d.Name)\$($d.Name)"
+    }
+}
+
+# 重新部署
+$WeaselRoot = $null
+foreach ($key in @('HKLM:\SOFTWARE\WOW6432Node\Rime\Weasel', 'HKLM:\SOFTWARE\Rime\Weasel')) {
+    $item = Get-ItemProperty -Path $key -ErrorAction SilentlyContinue
+    if ($item -and $item.WeaselRoot) { $WeaselRoot = $item.WeaselRoot; break }
+}
+$Deployer = if ($WeaselRoot) { Join-Path $WeaselRoot 'WeaselDeployer.exe' }
+if ($Deployer -and (Test-Path $Deployer)) {
+    Write-Host ">>> 触发重新部署..."
+    & $Deployer /deploy
+} else {
+    Write-Host ">>> 请在系统托盘右键小狼毫图标，点击「重新部署」"
+}
