@@ -82,6 +82,7 @@ engine:
     - punct_translator
     - reverse_lookup_translator #拼音反查
     - table_translator
+    - table_translator@english_auto #无前缀英文，超过4码时出现
     - table_translator@easy_english #临时英文
     - history_translator@historyDM # 重复上屏 电脑
     - history_translator@historyDM2 # 重复上屏 电脑2
@@ -95,6 +96,8 @@ engine:
 
   filters:
     - lua_filter@core2022  #自定义字集过滤lua；放在最上面完美解决简繁滤镜出错的问题
+    - lua_filter@tiger_phrase_code_filter  #双拼反查词组逐字注释虎码
+    - lua_filter@tiger_english_filter  #4码以内隐藏英文候选
     # - lua_filter@dz_ci  #过滤词组lua，单字模式
     # - charset_filter@utf8
     # - charset_filter@gbk
@@ -110,9 +113,9 @@ engine:
     - uniquifier #过滤重复
 
 speller:
-  auto_clear: max_length # 3种选择， manual|auto|max_length 空码按下一键确认清屏|空码自动清|达到最长码时后码顶上清屏
+  auto_clear: none # 4种选择， none|manual|auto|max_length 不清屏|空码按下一键确认清屏|空码自动清|达到最长码时后码顶上清屏；超过4码要继续打英文，所以不清屏
   auto_select: true
-  max_code_length: 4
+  # max_code_length: 4 # 4码顶屏，关掉以便超过4码继续打英文
   alphabet: "[;'zyxwvutsrqponmlkjihgfedcba]"
   # initials: "abcdefghijklmnopqrstuvwxyz;'"
   auto_select_pattern: ^;\w+ #自动上屏规则  对 [;] 引导的编码实行候选唯一自动上屏
@@ -135,6 +138,10 @@ translator:
     - "xform/~/ /" #去掉编码提示前的~号
     # - "xform/^/ /" #提示前面 +间距
 
+
+# 双拼反查词组逐字注释虎码，只作用于反查
+tiger_phrase_code_filter:
+  tags: [ reverse_lookup ]
 
 # 双拼反查
 reverse_lookup:
@@ -261,6 +268,19 @@ emoji_cn:
   opencc_config: emoji.json
   option_name: emoji_cn
   tips: all
+
+# 无前缀英文：超过4码只显示英文，4码以内空码时也显示（见 lua/tiger_english_filter.lua）
+english_auto:
+  dictionary: easy_english
+  enable_completion: true
+  enable_sentence: false
+  enable_user_dict: false
+  initial_quality: -1
+  comment_format:
+    - "xform/.*//" #去掉补全编码提示
+
+tiger_english_filter:
+  tags: [ abc ]
 
 # 临时英文
 easy_english:
