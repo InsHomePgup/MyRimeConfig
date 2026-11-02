@@ -5,6 +5,7 @@ schema:
     - core2022      #自定义字集工具方案
     - double_pinyin # 双拼反查
     - easy_english  # 英文
+    - melt_eng      # 无前缀英文（支持大写）
   description: |
     虎码官方单字
     敲 ` 鍵進入拼音反查
@@ -82,7 +83,8 @@ engine:
     - punct_translator
     - reverse_lookup_translator #拼音反查
     - table_translator
-    - table_translator@english_auto #无前缀英文，超过4码时出现
+    - table_translator@english_auto #无前缀英文，超过4码时出现，支持大写开头
+    - table_translator@english_auto_more #无前缀英文补充词库（只认小写）
     - table_translator@easy_english #临时英文
     - history_translator@historyDM # 重复上屏 电脑
     - history_translator@historyDM2 # 重复上屏 电脑2
@@ -98,6 +100,7 @@ engine:
     - lua_filter@core2022  #自定义字集过滤lua；放在最上面完美解决简繁滤镜出错的问题
     - lua_filter@tiger_phrase_code_filter  #双拼反查词组逐字注释虎码
     - lua_filter@tiger_english_filter  #4码以内隐藏英文候选
+    - lua_filter@autocap_filter  #大写开头的英文候选转大写（Hello / HELLO）
     # - lua_filter@dz_ci  #过滤词组lua，单字模式
     # - charset_filter@utf8
     # - charset_filter@gbk
@@ -116,7 +119,7 @@ speller:
   auto_clear: none # 4种选择， none|manual|auto|max_length 不清屏|空码按下一键确认清屏|空码自动清|达到最长码时后码顶上清屏；超过4码要继续打英文，所以不清屏
   auto_select: true
   # max_code_length: 4 # 4码顶屏，关掉以便超过4码继续打英文
-  alphabet: "[;'zyxwvutsrqponmlkjihgfedcba]"
+  alphabet: "[;'zyxwvutsrqponmlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA]" # 大写字母用于直接打英文
   # initials: "abcdefghijklmnopqrstuvwxyz;'"
   auto_select_pattern: ^;\w+ #自动上屏规则  对 [;] 引导的编码实行候选唯一自动上屏
   # 若要添加四码上屏功能，在  ^;\w+ 后面 加上  |^\w{4}$  即可
@@ -270,8 +273,9 @@ emoji_cn:
   tips: all
 
 # 无前缀英文：超过4码只显示英文，4码以内空码时也显示（见 lua/tiger_english_filter.lua）
+# melt_eng 是雾凇的英文词库，拼写运算里已经派生了大写，Hello / HELLO 都能查到，常用词和 GitHub、iPhone 这类专有名词排在前面
 english_auto:
-  dictionary: easy_english
+  dictionary: melt_eng
   enable_completion: true
   enable_sentence: false
   enable_user_dict: false
@@ -279,7 +283,20 @@ english_auto:
   comment_format:
     - "xform/.*//" #去掉补全编码提示
 
+# easy_english 词量大得多，排在 melt_eng 后面补充
+english_auto_more:
+  dictionary: easy_english
+  enable_completion: true
+  enable_sentence: false
+  enable_user_dict: false
+  initial_quality: -2
+  comment_format:
+    - "xform/.*//" #去掉补全编码提示
+
 tiger_english_filter:
+  tags: [ abc ]
+
+autocap_filter:
   tags: [ abc ]
 
 # 临时英文
