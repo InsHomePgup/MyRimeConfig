@@ -94,6 +94,7 @@ engine:
     - lua_translator@number_translator # 数字转大写
     - lua_translator@calculator_translator # 简易计算器
     - lua_translator@shijian2_translator # 高级时间
+    - lua_translator@haha_translator # 连按 h（5 个起）输出同样个数的「哈」
 
 
   filters:
@@ -230,6 +231,10 @@ historyDM2:
   input: "'"
   size: 1
   initial_quality: -999
+
+# 连按 h 输出同样个数的「哈」，4 码以内是虎码编码，所以从 5 个起
+haha_translator:
+  min_length: 5
 
 historyDM3:
   input: "]"

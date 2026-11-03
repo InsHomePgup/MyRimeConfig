@@ -82,6 +82,7 @@ engine:
     - lua_translator@*number_translator  # 数字、金额大写
     - lua_translator@*calc_translator    # 计算器
     - lua_translator@*force_gc           # 暴力 GC
+    - lua_translator@*haha_translator    # 连按 h 输出同样个数的「哈」
   filters:
     - lua_filter@*corrector                         # 错音错字提示
     - reverse_lookup_filter@radical_reverse_lookup  # 部件拆字滤镜
@@ -196,6 +197,10 @@ cn_en:
 
 
 # 自定义短语
+# 连按 h 输出同样个数的「哈」；h 是声母、hh 是 hang，所以从 3 个起
+haha_translator:
+  min_length: 3
+
 custom_phrase:
   dictionary: ""
   user_dict: custom_phrase_double  # 需要手动创建 custom_phrase_double.txt 文件
