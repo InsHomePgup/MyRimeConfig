@@ -35,8 +35,8 @@ speller:
   delimiter: " '"
   algebra:
     # 根据当前所用拼音方案选择 __include 的值
-    __include: algebra_rime_ice                       # 全拼
-    # __include: algebra_double_pinyin                # 自然码双拼
+    # __include: algebra_rime_ice                     # 全拼
+    __include: algebra_double_pinyin                  # 自然码双拼
     # __include: algebra_double_pinyin_flypy          # 小鹤双拼
     # __include: algebra_double_pinyin_mspy           # 微软双拼
     # __include: algebra_double_pinyin_sogou          # 搜狗双拼
