@@ -21,9 +21,6 @@ switches: # 0 默认关，1 默认开
   - name: extended_char  #自定义字集
     reset: 1
     states: [ 全字集 , 常用字 ]
-  - name: pinyin  #拼音滤镜
-    reset: 0
-    states: [ 拼, pīn ]
   - name: emoji_cn  #emoji滤镜
     reset: 0
     states: [ 🈚, 🈶 ]
@@ -33,9 +30,6 @@ switches: # 0 默认关，1 默认开
   # - options: [ gb2312, gbk, utf8 ]
   #   states: [ gb2312, GBK, UTF-8 ]
   #   reset: 0
-  - name: simplification  #简转繁滤镜
-    reset: 0
-    states: [ 简中, 繁中 ]
   - options: [_keyboard_default, _keyboard_defaultbk, _keyboard_defaultwk]
     reset: 0
     states: [ 有刻, 半刻, 无刻 ]
@@ -54,9 +48,6 @@ switches: # 0 默认关，1 默认开
   - options: [_keyboard_default, _keyboard_defaultzj]
     reset: 0
     states: [ 助记关, 助记开 ]
-  # - name: fanjian  #繁转简滤镜
-  #   reset: 0
-  #   states: [ 反繁, 反简 ]
   - name: full_shape
     reset: 0
     states: [ 半角, 全角 ]
@@ -106,10 +97,7 @@ engine:
     # - charset_filter@utf8
     # - charset_filter@gbk
     # - charset_filter@gb2312
-    - simplifier@simplification  #简繁滤镜
     # - reverse_lookup_filter@reverse_lookup #反查词典滤镜
-    # - simplifier@fanjian #繁简滤镜
-    - simplifier@pinyin #拼音滤镜
     - simplifier@chaifen #拆分滤镜
     - simplifier@emoji_cn #表情滤镜
     - lua_filter@charset_comment_filter #Unicode分区提示滤镜
@@ -174,9 +162,6 @@ key_binder:
     - { when: has_menu, accept: equal, send: Page_Down } # = 向前翻页
     # - { when: composing, accept: bracketleft, send: Page_Up } # [ 后翻
     # - { when: composing, accept: bracketright, send: Page_Down } # ] 前翻
-    - { accept: "Control+o", toggle: simplification, when: composing }  # 简繁开关
-    # - { accept: "Control+Shift+O", toggle: fanjian, when: composing }  # 繁简开关
-    - { accept: "Control+p", toggle: pinyin, when: composing }  # PC 拼音开关
     - { accept: "Control+i", toggle: emoji_cn, when: composing }  # PC emoji开关
     - { accept: "Control+u", toggle: charset_comment_filter, when: composing }  # PC Unicode分区开关
     - { accept: "Control+y", toggle: udpf_switch, when: composing }  #PC Unicode编码开关
@@ -184,8 +169,6 @@ key_binder:
     - { accept: "Control+Shift+H", toggle: extended_char, when: composing } # PC 自定字集开关2
     - { accept: "Control+j", toggle: chaifen, when: composing } # PC 拆分滤镜开关
     - { when: composing, accept: '&', toggle: emoji_cn } # 手机 emoji开关
-    - { when: composing, accept: '*', toggle: simplification } # 手机 繁简开关
-    - { when: composing, accept: '\', toggle: pinyin } # 手机 拼音开关
     - { when: composing, accept: '^', toggle: charset_comment_filter } # 手机 Unicode分区开关1
     - { when: composing, accept: '#', toggle: charset_comment_filter } # 手机 Unicode分区开关2
     - { accept: "%", toggle: udpf_switch, when: composing }  #手机 Unicode编码开关
@@ -240,36 +223,6 @@ historyDM3:
   input: "]"
   size: 1
   initial_quality: 999
-
-# ↓简繁(+部分异体)滤镜
-simplification:  #⇩四选一
-  opencc_config: st_tu.json        # 简 ➡ 繁·异（秃版标准）
- # opencc_config: s2tw.json    # 简 ➡ 台湾正体
- # opencc_config: s2hk.json    # 简 ➡ 香港繁体
- # opencc_config: s2twp.json  # 简 ➡ 台湾正体（含常用词汇如：软体→軟體、鼠标→滑鼠）
-  option_name: simplification
-  tips: all  #all字词|char字
-
-# ↓繁简滤镜
-# fanjian:
-#   opencc_config: t2s.json   # 繁 ➡ 简（OpenCC标准）
-#   option_name: fanjian
-
-# ↓拼音滤镜
-pinyin:
-  opencc_config: pinyin.json
-  option_name: pinyin
-  show_in_comment: true #作为注解在后面显示
-  comment_format:
-    - 'xform/&nbsp;/ /'
-    # - "xform/^/ /"
-  tips: char
-  tags:
-    - abc
-    - tiger
-    - tigress
-    # - reverse_lookup
-
 
 # ↓emoji表情滤镜
 emoji_cn:
