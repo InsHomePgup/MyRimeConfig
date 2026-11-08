@@ -77,7 +77,10 @@ end
 
 local function init(env)
   -- 当此组件被载入时，打开反查库，并存入 `coredb` 中
-  env.coredb = ReverseDb("build/core2022.reverse.bin")
+  -- 按词典名查找，librime 会依次在用户目录和预编译目录（共享目录/build）里找 core2022.reverse.bin。
+  -- 不要写死 "build/core2022.reverse.bin"：那只会找用户目录，词库是预编译好打包进来的（如 Android）时会找不到，
+  -- 导致所有汉字都被过滤掉
+  env.coredb = ReverseLookup("core2022")
 end
 
 return { init = init, func = filter }
