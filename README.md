@@ -131,6 +131,29 @@ git pull; .\deploy.ps1           # Windows（PowerShell）
 
 iOS 在仓输入法内手动触发同步或等待 iCloud 自动同步。
 
+### 用户词库同步（各设备学到的词）
+
+git 只同步配置和词库文件。输入法根据选词学到的词和词频（`*.userdb`）每台设备各一份，用 Rime 自带的「同步用户数据」合并，经由 Google Drive 的 `RimeSync` 文件夹中转。用户词库带个人输入习惯，**不要放进本仓库**。
+
+每台设备在 Rime 用户目录的 `installation.yaml` 里设置（这个文件不进仓库，部署脚本也不会覆盖）：
+
+```yaml
+installation_id: "macos"   # 每台设备取不同的名字，同步目录下会生成同名子文件夹
+sync_dir: "<Google Drive 路径>/RimeSync"
+```
+
+| 平台 | `installation_id` | `sync_dir` |
+|------|------|------|
+| macOS | `macos` | `/Users/<用户名>/Library/CloudStorage/GoogleDrive-<邮箱>/我的云端硬盘/RimeSync` |
+| Windows | `windows` | `G:\\我的云端硬盘\\RimeSync`（盘符以 Google Drive 实际挂载的为准） |
+
+改完后重新部署一次让设置生效。之后：
+
+- `deploy.sh`（macOS）和 `deploy.ps1`（Windows）在部署后会自动同步一次（只在设置了 `sync_dir` 时）。
+- 手动同步：鼠须管菜单栏 / 小狼毫托盘 → **同步用户数据**；macOS 命令行是 `"/Library/Input Methods/Squirrel.app/Contents/MacOS/Squirrel" --sync`。
+- 每次同步会导出本机学到的词，并合并其他设备的词。在一台设备上用了一段时间后同步一次，再到另一台设备同步，两边就一致了。
+- 同步时 Rime 也会把配置文件备份到自己的子文件夹，这是正常的；本机删掉的方案文件，备份里不会自动删除，可以手动清理。
+
 ---
 
 ## 目录结构

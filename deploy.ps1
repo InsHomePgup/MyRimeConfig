@@ -67,6 +67,12 @@ $Deployer = if ($WeaselRoot) { Join-Path $WeaselRoot 'WeaselDeployer.exe' }
 if ($Deployer -and (Test-Path $Deployer)) {
     Write-Host ">>> 触发重新部署..."
     & $Deployer /deploy
+    # installation.yaml 设了 sync_dir 才同步用户词库（合并其他设备学到的词）
+    $Installation = Join-Path $RimeDir 'installation.yaml'
+    if ((Test-Path $Installation) -and (Select-String -Path $Installation -Pattern '^sync_dir:' -Quiet)) {
+        Write-Host ">>> 同步用户词库..."
+        Start-Process -FilePath $Deployer -ArgumentList '/sync' -Wait
+    }
 } else {
     Write-Host ">>> 请在系统托盘右键小狼毫图标，点击「重新部署」"
 }

@@ -94,6 +94,11 @@ case "$PLATFORM" in
         if [ -x "$SQUIRREL" ]; then
             echo ">>> 触发重新部署..."
             "$SQUIRREL" --reload
+            # installation.yaml 设了 sync_dir 才同步用户词库（合并其他设备学到的词）
+            if grep -q '^sync_dir:' "$RIME_DIR/installation.yaml" 2>/dev/null; then
+                echo ">>> 同步用户词库..."
+                "$SQUIRREL" --sync
+            fi
         else
             echo ">>> 未找到鼠须管，请手动点击「重新部署」"
         fi
