@@ -117,6 +117,8 @@ uuid: uuid
 pin_cand_filter:
   # 格式：编码<Tab>字词1<Space>字词2……
   - d	的
+  - a	啊
+  - e	额
 
 
 # 主翻译器，拼音
