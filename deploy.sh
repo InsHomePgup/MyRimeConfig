@@ -58,6 +58,7 @@ if command -v rsync &>/dev/null; then
     rsync -a --delete \
         --exclude='.git/' \
         --exclude='.gitignore' \
+        --exclude='.release-it.json' \
         --exclude='deploy.sh' \
         --exclude='deploy.ps1' \
         --exclude='LICENSE' \
@@ -75,6 +76,7 @@ else
     tar -C "$REPO_DIR" -cf - \
         --exclude='./.git' \
         --exclude='./.gitignore' \
+        --exclude='./.release-it.json' \
         --exclude='./deploy.sh' \
         --exclude='./deploy.ps1' \
         --exclude='./LICENSE' \

@@ -29,3 +29,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Lua filter 不要遍历整个候选流**：候选是惰性生成的，短码的英文补全可能有几万条。只丢弃不 yield 的循环会把它们全部拉一遍，之前就因此每次按键卡了约 0.4 秒。能确定后面没有需要的候选时就 `break`。
 - **仓库是公开的**：`*.userdb`、`installation.yaml`、`user.yaml`、`sync/` 不能提交。部署脚本已经把它们排除，不会覆盖或删除。
 - **分支**：直接在当前分支提交，不要自己建分支。分支由用户管理。
+
+## 版本发布
+
+用 release-it（全局安装，不在仓库里：`npm i -g release-it @release-it/conventional-changelog`）管理版本号、`CHANGELOG.md` 和 tag，配置在 `.release-it.json`。
+
+- 版本号是 `vX.Y.Z`。`feat` 升 minor，只有 `fix` 升 patch，大改升 major。
+- 发版：`release-it`（按提交自动推荐版本）或 `release-it patch|minor|major`，先用 `--dry-run` 预览。它会写 `CHANGELOG.md`、提交 `chore: 发布 vX.Y.Z`、打 tag 并推送。
+- 要求在 `main` 上且工作区干净；`git add . --update` 只带已跟踪文件，新文件要先单独提交。
+- CHANGELOG 靠提交前缀分组：`feat:` 新功能、`fix:` 修复、`perf:` 性能、`revert:` 回退、`docs:` 文档；`chore:` 和没有前缀的提交不会出现。提交信息务必带前缀。
+- 打 tag 会推到公开仓库，只在用户要求时发版。GitHub Release 目前关闭（`github.release: false`，开启需要 `GITHUB_TOKEN`）。
+- Node 用 fnm 管理，全局包按 Node 版本分开存放；切换 Node 版本后要在新版本下重新装 release-it。

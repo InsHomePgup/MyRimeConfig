@@ -12,7 +12,7 @@ if (-not (Test-Path $RimeDir)) {
 }
 
 # 排除不需要同步的文件
-$Excludes = @('.git', '.gitignore', 'deploy.sh', 'deploy.ps1', 'LICENSE', '*.md')
+$Excludes = @('.git', '.gitignore', '.release-it.json', 'deploy.sh', 'deploy.ps1', 'LICENSE', '*.md')
 
 Get-ChildItem -Path $RepoDir | Where-Object {
     $name = $_.Name
