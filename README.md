@@ -46,6 +46,10 @@ cd MyRimeConfig
 
 如未自动部署，点击菜单栏鼠须管图标 → **重新部署**。
 
+> **字体**：鼠须管皮肤 `mac_light` / `mac_dark` 用的是 Inter（英文）+ MiSans（中文），需要先装到系统里，否则会退回系统默认字体。
+> - Inter：`brew install --cask font-inter`（开源 OFL）
+> - MiSans：从 [小米官网](https://hyperos.mi.com/font) 下载，双击 `MiSans-Regular.ttf` 安装。MiSans 的授权不允许再分发，所以字体文件不放进本仓库。
+
 ### Linux（ibus-rime）
 
 ```bash
