@@ -98,10 +98,6 @@ sort: by_weight
 北证50	bei zheng wu shi
 中证500	zhong zheng wu bai
 中证1000	zhong zheng yi qian
-万得全A	wan de quan a
-A股	a gu
-H股	h gu
-B股	b gu
 港股	gang gu
 美股	mei gu
 北交所	bei jiao suo
@@ -123,7 +119,6 @@ B股	b gu
 内房股	nei fang gu
 中资股	zhong zi gu
 港股通	gang gu tong
-AH溢价	a h yi jia
 打新	da xin
 暗盘	an pan
 孖展	ma zhan
@@ -135,14 +130,9 @@ AH溢价	a h yi jia
 道指	dao zhi
 罗素2000	luo su liang qian
 费城半导体指数	fei cheng ban dao ti zhi shu
-VIX指数	v i x zhi shu
 恐慌指数	kong huang zhi shu
 做空机构	zuo kong ji gou
 做空报告	zuo kong bao gao
-ADR	a d r
-GDR	g d r
-SPAC	s p a c
-IPO	i p o
 锁定期	suo ding qi
 解禁	jie jin
 期权	qi quan
@@ -197,7 +187,6 @@ Temu	temu
 小红书	xiao hong shu
 快手	kuai shou
 哔哩哔哩	bi li bi li
-B站	b zhan
 网易	wang yi
 新浪	xin lang
 微博	wei bo
@@ -223,25 +212,19 @@ B站	b zhan
 日元贬值	ri yuan bian zhi
 ##### 欧洲股市
 富时100	fu shi yi bai
-德国DAX	de guo d a x
-法国CAC40	fa guo c a c si shi
 欧元区	ou yuan qu
 欧洲央行	ou zhou yang hang
 ##### 韩国股市
 韩国综合指数	han guo zong he zhi shu
-KOSPI	k o s p i
 三星电子	san xing dian zi
-SK海力士	s k hai li shi
 ##### 印度股市
 孟买证交所	meng mai zheng jiao suo
-SENSEX	s e n s e x
 ##### 东南亚股市
 新加坡交易所	xin jia po jiao yi suo
 马来西亚股市	ma lai xi ya gu shi
 ##### 大宗商品
 原油	yuan you
 布伦特原油	bu lun te yuan you
-WTI原油	w t i yuan you
 黄金	huang jin
 白银	bai yin
 铜期货	tong qi huo
@@ -259,19 +242,9 @@ WTI原油	w t i yuan you
 汇率风险	hui lv feng xian
 外汇管制	wai hui guan zhi
 ##### 指数与ETF
-ETF	e t f
-LOF	l o f
 场内基金	chang nei ji jin
 场外基金	chang wai ji jin
-宽基ETF	kuan ji e t f
-行业ETF	hang ye e t f
 跟踪误差	gen zong wu cha
-QDII	q d i i
-REITs	r e i t s
-跨境ETF	kua jing e t f
-标普500ETF	biao pu wu bai e t f
-纳斯达克ETF	na si da ke e t f
-恒生科技ETF	heng sheng ke ji e t f
 ##### 投资机构与基金
 公募基金	gong mu ji jin
 私募基金	si mu ji jin
@@ -301,13 +274,8 @@ Wind资讯	wind zi xun
 金融时报	jin rong shi bao
 巴伦周刊	ba lun zhou kan
 ##### 宏观经济
-GDP	g d p
-CPI	c p i
-PPI	p p i
-PMI	p m i
 利率	li lv
 基准利率	ji zhun li lv
-LPR	l p r
 联邦基金利率	lian bang ji jin li lv
 存款准备金率	cun kuan zhun bei jin lv
 降准	jiang zhun

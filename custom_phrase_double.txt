@@ -24,3 +24,37 @@ TODO	todo
 Amazon	amazon
 NASA	nasa
 SOHO	soho
+
+# 投资（含字母的词，从 cn_dicts/invest 移来：字母音节会挡住末尾单个声母的联想）
+万得全A	wjdeqra
+A股	agu
+H股	hgu
+B股	bgu
+AH溢价	ahyijw
+VIX指数	vixviuu
+ADR	adr
+GDR	gdr
+SPAC	spac
+IPO	ipo
+B站	bvj
+德国DAX	degodax
+法国CAC40	fagocacsiui
+KOSPI	kospi
+SK海力士	skhlliui
+SENSEX	sensex
+WTI原油	wtiyryb
+ETF	etf
+LOF	lof
+宽基ETF	krjietf
+行业ETF	hhyeetf
+QDII	qdii
+REITs	reits
+跨境ETF	kwjyetf
+标普500ETF	bcpuwubletf
+纳斯达克ETF	nasidakeetf
+恒生科技ETF	hgugkejietf
+GDP	gdp
+CPI	cpi
+PPI	ppi
+PMI	pmi
+LPR	lpr
