@@ -43,8 +43,8 @@ app_options:
 
 style:
   # 选择皮肤，亮色与暗色主题
-  color_scheme: purity_of_form_custom
-  color_scheme_dark: purity_of_form_custom
+  color_scheme: mac_light        # 改回旧皮肤：两行都换成 purity_of_form_custom
+  color_scheme_dark: mac_dark
 
   # 以下是预设选项。如果皮肤没写，则使用这些属性；如果皮肤写了，使用皮肤的。
 
@@ -144,6 +144,66 @@ preset_color_schemes:
     # preedit_back_color:                   # 拼音底色 （inline_preedit: false）
     # hilited_back_color:                   # 选中拼音底色 （inline_preedit: false）
     # border_color:                         # 外边框颜色
+
+  # 仿 macOS 原生风格（Spotlight / 系统菜单），浅色、深色各一套，跟随系统切换
+  # 颜色格式是 0xAABBGGRR：前两位透明度，后面是 蓝绿红（和网页的 RGB 顺序相反）
+  mac_light:
+    name: "macOS 浅色"
+    font_face: ""                  # 留空用系统字体（苹方），emoji 也能保持彩色
+    font_point: 16
+    label_font_point: 12
+    comment_font_point: 13
+    candidate_format: '[label] [candidate] [comment]'
+    translucency: true             # 磨砂背景，需要 back_color 带透明度
+    mutual_exclusive: true         # 选中色不和半透明底色叠加，蓝色更正
+    corner_radius: 10
+    hilited_corner_radius: 6
+    border_height: 4
+    border_width: 6
+    shadow_size: 0
+    line_spacing: 5
+    spacing: 8
+    color_space: srgb
+    back_color: 0xD9F5F5F5                    # 半透明浅灰白
+    border_color: 0x33C8C8C8                  # 极淡的描边
+    candidate_text_color: 0x1F1D1D            # #1D1D1F 系统正文黑
+    label_color: 0x938E8E                     # #8E8E93 系统次要灰
+    comment_text_color: 0x938E8E
+    hilited_candidate_back_color: 0xFF7A00    # #007AFF 系统蓝
+    hilited_candidate_text_color: 0xFFFFFF
+    hilited_candidate_label_color: 0xE6FFFFFF
+    hilited_comment_text_color: 0xCCFFFFFF
+    text_color: 0x938E8E                      # 拼音（inline_preedit: false 时可见）
+    hilited_text_color: 0x1F1D1D
+
+  mac_dark:
+    name: "macOS 深色"
+    font_face: ""
+    font_point: 16
+    label_font_point: 12
+    comment_font_point: 13
+    candidate_format: '[label] [candidate] [comment]'
+    translucency: true
+    mutual_exclusive: true
+    corner_radius: 10
+    hilited_corner_radius: 6
+    border_height: 4
+    border_width: 6
+    shadow_size: 0
+    line_spacing: 5
+    spacing: 8
+    color_space: srgb
+    back_color: 0xD9262626                    # 半透明深灰
+    border_color: 0x33505050
+    candidate_text_color: 0xF2F2F2
+    label_color: 0x9D9898                     # #98989D 深色模式次要灰
+    comment_text_color: 0x9D9898
+    hilited_candidate_back_color: 0xFF840A    # #0A84FF 深色模式系统蓝
+    hilited_candidate_text_color: 0xFFFFFF
+    hilited_candidate_label_color: 0xE6FFFFFF
+    hilited_comment_text_color: 0xCCFFFFFF
+    text_color: 0x9D9898
+    hilited_text_color: 0xF2F2F2
 
 
   # 下面是内置的皮肤 https://github.com/rime/squirrel/blob/master/data/squirrel.yaml
