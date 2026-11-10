@@ -1,0 +1,19 @@
+# 仓库是公开的，下面这些是本机或个人数据，不能提交
+
+# 本机安装信息（含同步目录路径，可能带邮箱）
+installation.yaml
+user.yaml
+
+# 用户词库（个人输入习惯）和同步目录
+*.userdb/
+*.userdb.txt
+sync/
+
+# Rime 编译产物
+build/
+
+# release-it / Node
+node_modules/
+
+# 系统文件
+.DS_Store
