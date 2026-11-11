@@ -73,7 +73,7 @@ style:
   candidate_format: '[label]. [candidate] [comment]'
 
   #base_offset: 0                 # 字基高
-  font_face: 'Avenir'
+  font_face: 'MapleMono-Regular, MiSans-Regular'
   font_point: 16
   #label_font_face: 'Avenir'
   #label_font_point: 12
@@ -149,11 +149,11 @@ preset_color_schemes:
   # 颜色格式是 0xAABBGGRR：前两位透明度，后面是 蓝绿红（和网页的 RGB 顺序相反）
   mac_light:
     name: "macOS 浅色"
-    font_face: "Inter-Regular, MiSans-Regular"     # 英文 Inter，中文回落到 MiSans
+    font_face: "MapleMono-Regular, MiSans-Regular" # 英文 Maple Mono，中文回落到 MiSans
     font_point: 16
-    label_font_face: "Inter-Regular"
+    label_font_face: "MapleMono-Regular"
     label_font_point: 12
-    comment_font_face: "Inter-Regular, MiSans-Regular"
+    comment_font_face: "MapleMono-Regular, MiSans-Regular"
     comment_font_point: 13
     candidate_format: '[label] [candidate] [comment]'
     translucency: true             # 磨砂背景，需要 back_color 带透明度
@@ -180,11 +180,11 @@ preset_color_schemes:
 
   mac_dark:
     name: "macOS 深色"
-    font_face: "Inter-Regular, MiSans-Regular"
+    font_face: "MapleMono-Regular, MiSans-Regular"
     font_point: 16
-    label_font_face: "Inter-Regular"
+    label_font_face: "MapleMono-Regular"
     label_font_point: 12
-    comment_font_face: "Inter-Regular, MiSans-Regular"
+    comment_font_face: "MapleMono-Regular, MiSans-Regular"
     comment_font_point: 13
     candidate_format: '[label] [candidate] [comment]'
     translucency: true
