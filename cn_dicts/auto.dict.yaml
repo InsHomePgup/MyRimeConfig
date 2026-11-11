@@ -1,0 +1,995 @@
+# Rime dictionary
+# encoding: utf-8
+#
+# 汽车词库（自建）：品牌车型、发动机、底盘、转向、制动、轮胎、三电、智驾、座舱、购车用车、保养
+#
+# 挂在 rime_ice.dict.yaml 里 base 之前：重复词条以上面的为准，这样才能把 base 里权重过低的词（如「领克」只有 1）提上来。
+# 权重 = max(base 原权重, 3000)，不会压低常用词。
+# 带字母的词（SUV、4S店等）不要放这里，放 custom_phrase_double.txt，原因见 4022a34。
+---
+name: auto
+version: "2026-11-11"
+sort: by_weight
+...
+领克	ling ke	3000
+极氪	ji ke	3000
+吉利	ji li	90210
+几何	ji he	104750
+银河	yin he	98185
+比亚迪	bi ya di	147538
+腾势	teng shi	3000
+仰望	yang wang	38715
+方程豹	fang cheng bao	3000
+蔚来	wei lai	3000
+乐道	le dao	4570
+萤火虫	ying huo chong	20630
+小鹏	xiao peng	8025
+理想	li xiang	500312
+问界	wen jie	3000
+智界	zhi jie	3000
+享界	xiang jie	3000
+尊界	zun jie	3000
+尚界	shang jie	3000
+鸿蒙智行	hong meng zhi xing	3000
+赛力斯	sai li si	3000
+零跑	ling pao	3000
+哪吒	ne zha	14235
+岚图	lan tu	3000
+阿维塔	a wei ta	3000
+深蓝	shen lan	38510
+启源	qi yuan	3000
+长安	chang an	212425
+长城	chang cheng	282440
+哈弗	ha fu	3000
+魏牌	wei pai	3000
+坦克	tan ke	143310
+欧拉	ou la	5050
+奇瑞	qi rui	127915
+星途	xing tu	3000
+捷途	jie tu	3000
+东风	dong feng	185150
+风神	feng shen	8790
+猛士	meng shi	4095
+奕派	yi pai	3000
+一汽	yi qi	9612
+红旗	hong qi	134735
+解放	jie fang	247360
+奔腾	ben teng	132955
+上汽	shang qi	36075
+荣威	rong wei	3000
+名爵	ming jue	3265
+飞凡	fei fan	3000
+智己	zhi ji	3000
+五菱	wu ling	9999
+宝骏	bao jun	3000
+广汽	guang qi	4444
+埃安	ai an	3000
+传祺	chuan qi	3000
+昊铂	hao bo	3000
+北汽	bei qi	7025
+极狐	ji hu	3000
+小米汽车	xiao mi qi che	3000
+特斯拉	te si la	3000
+丰田	feng tian	144160
+本田	ben tian	117940
+日产	ri chan	74415
+马自达	ma zi da	268085
+斯巴鲁	si ba lu	51137
+三菱	san ling	104675
+雷克萨斯	lei ke sa si	14835
+英菲尼迪	ying fei ni di	16639
+讴歌	ou ge	36576
+大众	da zhong	446855
+奥迪	ao di	326960
+保时捷	bao shi jie	27485
+宝马	bao ma	170065
+奔驰	ben chi	159175
+迈巴赫	mai ba he	4660
+斯柯达	si ke da	64091
+福特	fu te	96215
+林肯	lin ken	100281
+雪佛兰	xue fu lan	27040
+别克	bie ke	6561
+凯迪拉克	kai di la ke	27005
+克莱斯勒	ke lai si le	42475
+道奇	dao qi	10040
+吉普	ji pu	21670
+沃尔沃	wo er wo	30070
+路虎	lu hu	11565
+捷豹	jie bao	3000
+宾利	bin li	3000
+劳斯莱斯	lao si lai si	18460
+法拉利	fa la li	49245
+兰博基尼	lan bo ji ni	6660
+玛莎拉蒂	ma sha la di	4500
+阿斯顿马丁	a si dun ma ding	3000
+迈凯伦	mai kai lun	7777
+布加迪	bu jia di	8649
+阿尔法罗密欧	a er fa luo mi ou	3000
+标致	biao zhi	65465
+雪铁龙	xue tie long	52320
+现代	xian dai	500701
+起亚	qi ya	37350
+捷尼赛思	jie ni sai si	3000
+路特斯	lu te si	3000
+极星	ji xing	3000
+卡罗拉	ka luo la	3000
+凯美瑞	kai mei rui	27785
+亚洲龙	ya zhou long	3000
+汉兰达	han lan da	3000
+威兰达	wei lan da	3000
+荣放	rong fang	3000
+普拉多	pu la duo	3000
+兰德酷路泽	lan de ku lu ze	3000
+埃尔法	ai er fa	3000
+赛那	sai na	3000
+雅阁	ya ge	18669
+思域	si yu	3000
+飞度	fei du	3000
+缤智	bin zhi	3000
+冠道	guan dao	3000
+奥德赛	ao de sai	36172
+艾力绅	ai li shen	3000
+轩逸	xuan yi	3000
+天籁	tian lai	53825
+奇骏	qi jun	3000
+逍客	xiao ke	3000
+帕萨特	pa sa te	64720
+迈腾	mai teng	3000
+速腾	su teng	20125
+宝来	bao lai	56250
+朗逸	lang yi	3000
+途观	tu guan	3000
+途昂	tu ang	3000
+探岳	tan yue	3000
+高尔夫	gao er fu	198620
+凌渡	ling du	3000
+揽境	lan jing	3000
+昂科威	ang ke wei	3000
+君越	jun yue	3000
+英朗	ying lang	3000
+迈锐宝	mai rui bao	3000
+科鲁兹	ke lu zi	3000
+探险者	tan xian zhe	6745
+蒙迪欧	meng di ou	74946
+野马	ye ma	64462
+锐界	rui jie	3000
+牧马人	mu ma ren	3605
+大切诺基	da qie nuo ji	7353
+卫士	wei shi	54640
+揽胜	lan sheng	3000
+发现	fa xian	501897
+帕拉梅拉	pa la mei la	3000
+卡宴	ka yan	3000
+海豹	hai bao	16635
+海豚	hai tun	46335
+海鸥	hai ou	29505
+海狮	hai shi	15735
+护卫舰	hu wei jian	15010
+驱逐舰	qu zhu jian	25280
+星越	xing yue	3000
+星瑞	xing rui	3000
+博越	bo yue	3000
+帝豪	di hao	3000
+缤越	bin yue	3000
+星愿	xing yuan	3000
+轿车	jiao che	1424796
+两厢车	liang xiang che	12705
+三厢车	san xiang che	5760
+掀背车	xian bei che	3000
+旅行车	lv xing che	14030
+猎装车	lie zhuang che	3000
+跑车	pao che	100325
+超跑	chao pao	9999
+敞篷车	chang peng che	4865
+硬顶敞篷	ying ding chang peng	3000
+软顶敞篷	ruan ding chang peng	3000
+轿跑	jiao pao	3000
+越野车	yue ye che	126663
+硬派越野	ying pai yue ye	3000
+城市越野	cheng shi yue ye	3000
+皮卡	pi ka	23310
+房车	fang che	23210
+旅居车	lv ju che	3000
+面包车	mian bao che	35595
+商务车	shang wu che	19380
+小型车	xiao xing che	13225
+紧凑型车	jin cou xing che	3000
+中型车	zhong xing che	3000
+中大型车	zhong da xing che	3000
+大型车	da xing che	3000
+微型车	wei xing che	8700
+新能源车	xin neng yuan che	8812
+电动车	dian dong che	77065
+纯电动	chun dian dong	3000
+混动	hun dong	9999
+插混	cha hun	3333
+增程	zeng cheng	3000
+增程式	zeng cheng shi	3000
+油电混动	you dian hun dong	3000
+插电混动	cha dian hun dong	3000
+燃油车	ran you che	3000
+油车	you che	3615
+电车	dian che	31115
+氢燃料	qing ran liao	4425
+氢能源	qing neng yuan	3000
+燃料电池	ran liao dian chi	30135
+车身	che shen	193395
+白车身	bai che shen	3000
+承载式车身	cheng zai shi che shen	3000
+非承载式车身	fei cheng zai shi che shen	3000
+大梁	da liang	16310
+车架	che jia	37160
+一体压铸	yi ti ya zhu	3000
+车壳	che ke	3000
+车顶	che ding	23260
+车门	che men	91880
+引擎盖	yin qing gai	4900
+前机盖	qian ji gai	3000
+后备箱	hou bei xiang	12355
+尾门	wei men	3000
+电动尾门	dian dong wei men	3000
+电吸门	dian xi men	3000
+无框车门	wu kuang che men	3000
+对开门	dui kai men	3000
+鸥翼门	ou yi men	3000
+剪刀门	jian dao men	3000
+隐藏式门把手	yin cang shi men ba shou	3000
+门把手	men ba shou	6520
+翼子板	yi zi ban	3000
+叶子板	ye zi ban	3000
+保险杠	bao xian gang	21015
+前保险杠	qian bao xian gang	3000
+后保险杠	hou bao xian gang	3000
+前脸	qian lian	3000
+中网	zhong wang	13120
+进气格栅	jin qi ge zha	18203
+格栅	ge zha	22665
+大灯	da deng	48425
+前大灯	qian da deng	3000
+尾灯	wei deng	60438
+贯穿式尾灯	guan chuan shi wei deng	3000
+日间行车灯	ri jian xing che deng	3000
+雾灯	wu deng	17350
+转向灯	zhuan xiang deng	13035
+示廓灯	shi kuo deng	3000
+矩阵大灯	ju zhen da deng	3000
+大灯清洗	da deng qing xi	3000
+后视镜	hou shi jing	68650
+外后视镜	wai hou shi jing	3000
+内后视镜	nei hou shi jing	5812
+流媒体后视镜	liu mei ti hou shi jing	3000
+雨刮	yu gua	3000
+雨刮器	yu gua qi	6945
+雨刷	yu shua	19580
+挡风玻璃	dang feng bo li	40925
+前挡风玻璃	qian dang feng bo li	10058
+天窗	tian chuang	44040
+全景天窗	quan jing tian chuang	3000
+全景天幕	quan jing tian mu	3000
+天幕	tian mu	10915
+行李架	xing li jia	7825
+扰流板	rao liu ban	3630
+尾翼	wei yi	13195
+电动尾翼	dian dong wei yi	3000
+扩散器	kuo san qi	3000
+裙边	qun bian	6085
+侧裙	ce qun	3000
+轮眉	lun mei	6164
+踏板	ta ban	40360
+迎宾踏板	ying bin ta ban	3000
+拖车钩	tuo che gou	3000
+车漆	che qi	3000
+车衣	che yi	3000
+隐形车衣	yin xing che yi	3000
+改色膜	gai se mo	3000
+贴膜	tie mo	21935
+风阻	feng zu	3445
+风阻系数	feng zu xi shu	5695
+轴距	zhou ju	46515
+轮距	lun ju	19480
+车长	che chang	12235
+车宽	che kuan	3310
+车高	che gao	3000
+离地间隙	li di jian xi	3000
+接近角	jie jin jiao	3000
+离去角	li qu jiao	3000
+通过角	tong guo jiao	3000
+涉水深度	she shui shen du	3000
+整备质量	zheng bei zhi liang	3000
+满载质量	man zai zhi liang	3000
+载重	zai zhong	20570
+后排空间	hou pai kong jian	3000
+头部空间	tou bu kong jian	15076
+腿部空间	tui bu kong jian	19347
+发动机	fa dong ji	500290
+引擎	yin qing	348640
+内燃机	nei ran ji	27695
+自然吸气	zi ran xi qi	3000
+涡轮增压	wo lun zeng ya	15025
+机械增压	ji xie zeng ya	3000
+双涡轮	shuang wo lun	3000
+涡轮迟滞	wo lun chi zhi	3000
+排量	pai liang	104515
+缸径	gang jing	3000
+行程	xing cheng	328745
+压缩比	ya suo bi	25595
+气缸	qi gang	36490
+缸体	gang ti	9590
+缸盖	gang gai	8550
+缸垫	gang dian	3000
+活塞	huo sai	66210
+活塞环	huo sai huan	9005
+连杆	lian gan	21455
+曲轴	qu zhou	20020
+凸轮轴	tu lun zhou	17235
+正时	zheng shi	4444
+正时皮带	zheng shi pi dai	3000
+正时链条	zheng shi lian tiao	3000
+气门	qi men	44220
+进气门	jin qi men	3000
+排气门	pai qi men	3000
+可变气门	ke bian qi men	5455
+可变正时	ke bian zheng shi	3000
+直喷	zhi pen	7670
+缸内直喷	gang nei zhi pen	3706
+歧管喷射	qi guan pen she	3000
+喷油嘴	pen you zui	5260
+喷油器	pen you qi	5085
+火花塞	huo hua sai	23165
+点火线圈	dian huo xian quan	4476
+节气门	jie qi men	8485
+进气歧管	jin qi qi guan	3000
+排气歧管	pai qi qi guan	3000
+中冷	zhong leng	3000
+中冷器	zhong leng qi	3000
+增压器	zeng ya qi	9815
+废气阀	fei qi fa	3000
+泄压阀	xie ya fa	3000
+三元催化	san yuan cui hua	3000
+颗粒捕集器	ke li bu ji qi	3000
+尾气	wei qi	29125
+排气管	pai qi guan	15165
+尾喉	wei hou	3000
+消声器	xiao sheng qi	9860
+机油	ji you	78260
+机油滤芯	ji you lv xin	3000
+机油泵	ji you beng	3040
+机油压力	ji you ya li	3000
+烧机油	shao ji you	3000
+积碳	ji tan	3000
+爆震	bao zhen	5105
+怠速	dai su	22525
+抖动	dou dong	54445
+熄火	xi huo	67504
+启停	qi ting	3000
+自动启停	zi dong qi ting	3000
+水箱	shui xiang	60120
+散热器	san re qi	85225
+冷却液	leng que ye	11380
+防冻液	fang dong ye	15970
+水泵	shui beng	78055
+节温器	jie wen qi	3000
+发电机	fa dian ji	72460
+起动机	qi dong ji	3000
+马力	ma li	67640
+功率	gong lv	268490
+扭矩	niu ju	266823
+峰值扭矩	feng zhi niu ju	3000
+峰值功率	feng zhi gong lv	3000
+最大功率	zui da gong lv	47545
+最大扭矩	zui da niu ju	34645
+转速	zhuan su	116955
+红线转速	hong xian zhuan su	3000
+升功率	sheng gong lv	3000
+热效率	re xiao lv	12375
+油耗	you hao	112750
+百公里油耗	bai gong li you hao	3000
+综合油耗	zong he you hao	3000
+馈电油耗	kui dian you hao	3000
+标号	biao hao	26965
+燃油	ran you	160855
+汽油	qi you	187865
+柴油	chai you	136535
+加油	jia you	308090
+加满	jia man	17640
+国六	guo liu	6666
+排放标准	pai fang biao zhun	65601
+变速箱	bian su xiang	70235
+变速器	bian su qi	61780
+手动挡	shou dong dang	12600
+自动挡	zi dong dang	47398
+手自一体	shou zi yi ti	3000
+双离合	shuang li he	3000
+湿式双离合	shi shi shuang li he	3000
+干式双离合	gan shi shuang li he	3000
+无级变速	wu ji bian su	4490
+液力变矩器	ye li bian ju qi	3000
+行星齿轮	xing xing chi lun	3000
+单速变速箱	dan su bian su xiang	3000
+换挡	huan dang	22415
+换挡拨片	huan dang bo pian	3000
+拨片	bo pian	5555
+挡把	dang ba	3000
+怀挡	huai dang	3000
+旋钮换挡	xuan niu huan dang	3000
+降挡	jiang dang	3000
+升挡	sheng dang	3000
+顿挫	dun cuo	5535
+离合	li he	20635
+离合器	li he qi	44920
+飞轮	fei lun	12645
+双质量飞轮	shuang zhi liang fei lun	3000
+传动轴	chuan dong zhou	8550
+半轴	ban zhou	4060
+差速器	cha su qi	10015
+限滑差速器	xian hua cha su qi	3000
+差速锁	cha su suo	3000
+前差速锁	qian cha su suo	3000
+后差速锁	hou cha su suo	3000
+中央差速锁	zhong yang cha su suo	3000
+分动箱	fen dong xiang	3000
+四驱	si qu	20315
+两驱	liang qu	9999
+前驱	qian qu	16715
+后驱	hou qu	3000
+全时四驱	quan shi si qu	3000
+适时四驱	shi shi si qu	3000
+分时四驱	fen shi si qu	3000
+双电机四驱	shuang dian ji si qu	3000
+扭矩分配	niu ju fen pei	3000
+扭矩矢量	niu ju shi liang	3000
+低速四驱	di su si qu	3000
+高速四驱	gao su si qu	3000
+脱困	tuo kun	10760
+底盘	di pan	10083
+底盘调校	di pan tiao jiao	3000
+调校	tiao jiao	3305
+悬架	xuan jia	26115
+悬挂	xuan gua	143540
+独立悬架	du li xuan jia	10405
+非独立悬架	fei du li xuan jia	3000
+前悬架	qian xuan jia	3000
+后悬架	hou xuan jia	3000
+麦弗逊	mai fu xun	3000
+麦弗逊式	mai fu xun shi	3000
+双叉臂	shuang cha bi	3000
+多连杆	duo lian gan	3000
+扭力梁	niu li liang	3000
+整体桥	zheng ti qiao	3000
+拖曳臂	tuo ye bi	3000
+双横臂	shuang heng bi	3000
+摆臂	bai bi	5555
+下摆臂	xia bai bi	3000
+控制臂	kong zhi bi	3000
+球头	qiu tou	3000
+衬套	chen tao	4950
+副车架	fu che jia	3000
+稳定杆	wen ding gan	3000
+防倾杆	fang qing gan	3000
+横向稳定杆	heng xiang wen ding gan	3000
+减震	jian zhen	20735
+减震器	jian zhen qi	14185
+避震	bi zhen	12330
+避震器	bi zhen qi	5680
+可变阻尼	ke bian zu ni	3000
+电磁减震	dian ci jian zhen	3000
+弹簧	tan huang	94775
+螺旋弹簧	luo xuan tan huang	6300
+钢板弹簧	gang ban tan huang	3420
+空气悬架	kong qi xuan jia	3000
+空悬	kong xuan	3000
+魔毯	mo tan	3000
+车身高度	che shen gao du	3000
+侧倾	ce qing	6455
+点头	dian tou	185735
+抬头	tai tou	183170
+支撑性	zhi cheng xing	3000
+滤震	lv zhen	3000
+路感	lu gan	3000
+指向	zhi xiang	201345
+精准度	jing zhun du	3000
+弯道	wan dao	30145
+过弯	guo wan	14935
+推头	tui tou	3000
+甩尾	shuai wei	16852
+转向不足	zhuan xiang bu zu	3000
+转向过度	zhuan xiang guo du	3000
+循迹性	xun ji xing	3000
+操控	cao kong	9999
+操控性	cao kong xing	3000
+舒适性	shu shi xing	47740
+平顺性	ping shun xing	3000
+转向	zhuan xiang	342840
+转向机	zhuan xiang ji	3000
+转向器	zhuan xiang qi	7715
+转向助力	zhuan xiang zhu li	3000
+电动助力	dian dong zhu li	3000
+液压助力	ye ya zhu li	3000
+电子助力	dian zi zhu li	3000
+转向拉杆	zhuan xiang la gan	3000
+横拉杆	heng la gan	3000
+方向机	fang xiang ji	3000
+方向盘	fang xiang pan	94675
+方向盘转向比	fang xiang pan zhuan xiang bi	3000
+转向比	zhuan xiang bi	3000
+可变转向比	ke bian zhuan xiang bi	3000
+后轮转向	hou lun zhuan xiang	3000
+四轮转向	si lun zhuan xiang	3000
+线控转向	xian kong zhuan xiang	3000
+转弯半径	zhuan wan ban jing	6930
+最小转弯半径	zui xiao zhuan wan ban jing	3000
+虚位	xu wei	3000
+回正	hui zheng	3333
+跑偏	pao pian	9999
+吃胎	chi tai	3000
+四轮定位	si lun ding wei	8160
+前束	qian shu	3000
+外倾角	wai qing jiao	3000
+主销	zhu xiao	6750
+主销后倾	zhu xiao hou qing	3000
+动平衡	dong ping heng	4550
+制动	zhi dong	322143
+刹车	sha che	120870
+刹车片	sha che pian	8785
+刹车盘	sha che pan	3450
+制动盘	zhi dong pan	3080
+制动卡钳	zhi dong ka qian	3000
+卡钳	ka qian	3605
+对向卡钳	dui xiang ka qian	3000
+四活塞	si huo sai	3000
+六活塞	liu huo sai	3000
+打孔盘	da kong pan	3000
+划线盘	hua xian pan	3000
+碳陶	tan tao	3000
+碳陶刹车	tan tao sha che	3000
+刹车油	sha che you	6305
+制动液	zhi dong ye	11134
+刹车距离	sha che ju li	3000
+制动距离	zhi dong ju li	5300
+手刹	shou sha	11465
+电子手刹	dian zi shou sha	3000
+驻车	zhu che	3333
+自动驻车	zi dong zhu che	3000
+驻车制动	zhu che zhi dong	3000
+真空助力	zhen kong zhu li	3000
+助力泵	zhu li beng	3000
+防抱死	fang bao si	19815
+电子制动力分配	dian zi zhi dong li fen pei	3000
+能量回收	neng liang hui shou	3000
+动能回收	dong neng hui shou	3000
+单踏板	dan ta ban	3000
+轮胎	lun tai	276630
+胎宽	tai kuan	3000
+胎压	tai ya	11295
+胎压监测	tai ya jian ce	3000
+扁平比	bian ping bi	3000
+轮辋	lun wang	8005
+轮毂	lun gu	27755
+锻造轮毂	duan zao lun gu	3000
+铸造轮毂	zhu zao lun gu	3000
+轮圈	lun quan	14165
+钢圈	gang quan	7320
+胎面	tai mian	6390
+胎壁	tai bi	3000
+胎侧	tai ce	3000
+胎纹	tai wen	3000
+花纹	hua wen	9066
+胎噪	tai zao	3000
+胎冠	tai guan	3000
+鼓包	gu bao	9999
+补胎	bu tai	4535
+换胎	huan tai	3000
+备胎	bei tai	13975
+全尺寸备胎	quan chi cun bei tai	3000
+非全尺寸备胎	fei quan chi cun bei tai	3000
+缺气保用	que qi bao yong	3000
+防爆胎	fang bao tai	3000
+静音棉	jing yin mian	3000
+自修复轮胎	zi xiu fu lun tai	3000
+冬季胎	dong ji tai	3000
+雪地胎	xue di tai	3000
+四季胎	si ji tai	3000
+夏季胎	xia ji tai	3000
+全地形胎	quan di xing tai	3000
+泥地胎	ni di tai	3000
+越野胎	yue ye tai	3000
+性能胎	xing neng tai	3000
+半热熔	ban re rong	3000
+热熔胎	re rong tai	3000
+米其林	mi qi lin	14145
+倍耐力	bei nai li	3000
+马牌	ma pai	3000
+固特异	gu te yi	5745
+普利司通	pu li si tong	5575
+邓禄普	deng lu pu	3000
+韩泰	han tai	3000
+佳通	jia tong	3000
+玛吉斯	ma ji si	3000
+朝阳	chao yang	198365
+横滨	heng bin	11900
+锦湖	jin hu	3000
+耐磨指数	nai mo zhi shu	3000
+载重指数	zai zhong zhi shu	3000
+速度级别	su du ji bie	3000
+三电	san dian	3000
+电池	dian chi	500313
+动力电池	dong li dian chi	3000
+电池包	dian chi bao	3000
+电芯	dian xin	8185
+模组	mo zu	29470
+刀片电池	dao pian dian chi	3000
+磷酸铁锂	lin suan tie li	3000
+三元锂	san yuan li	3000
+半固态	ban gu tai	3000
+固态电池	gu tai dian chi	3000
+麒麟电池	qi lin dian chi	3000
+神行电池	shen xing dian chi	3000
+钠离子	na li zi	3685
+电池管理	dian chi guan li	3000
+热管理	re guan li	3000
+热失控	re shi kong	3000
+热泵	re beng	39445
+热泵空调	re beng kong tiao	3000
+电机	dian ji	237940
+驱动电机	qu dong dian ji	3000
+永磁同步	yong ci tong bu	3000
+交流异步	jiao liu yi bu	3000
+扁线电机	bian xian dian ji	3000
+电驱	dian qu	3000
+电控	dian kong	34690
+多合一	duo he yi	3215
+碳化硅	tan hua gui	9970
+电压平台	dian ya ping tai	3000
+高压平台	gao ya ping tai	3000
+高压快充	gao ya kuai chong	3000
+快充	kuai chong	5555
+慢充	man chong	3333
+超充	chao chong	3000
+超充桩	chao chong zhuang	3000
+充电桩	chong dian zhuang	9999
+充电枪	chong dian qiang	3000
+充电口	chong dian kou	3000
+家充	jia chong	3000
+公共充电桩	gong gong chong dian zhuang	3000
+换电	huan dian	3000
+换电站	huan dian zhan	3000
+补能	bu neng	3000
+补能焦虑	bu neng jiao lv	3000
+里程焦虑	li cheng jiao lv	3000
+续航	xu hang	14070
+续航里程	xu hang li cheng	3000
+纯电续航	chun dian xu hang	3000
+综合续航	zong he xu hang	3000
+实际续航	shi ji xu hang	3000
+冬季续航	dong ji xu hang	3000
+掉电	diao dian	11805
+电耗	dian hao	9025
+百公里电耗	bai gong li dian hao	3000
+充电功率	chong dian gong lv	3000
+充电倍率	chong dian bei lv	3000
+预约充电	yu yue chong dian	3000
+对外放电	dui wai fang dian	3000
+反向放电	fan xiang fang dian	3000
+放电枪	fang dian qiang	3000
+增程器	zeng cheng qi	3000
+发电效率	fa dian xiao lv	3000
+亏电	kui dian	3005
+满电	man dian	3000
+油转电	you zhuan dian	3000
+智驾	zhi jia	4444
+智能驾驶	zhi neng jia shi	3000
+辅助驾驶	fu zhu jia shi	3000
+自动驾驶	zi dong jia shi	3000
+高阶智驾	gao jie zhi jia	3000
+城市领航	cheng shi ling hang	3000
+高速领航	gao su ling hang	3000
+领航辅助	ling hang fu zhu	3000
+自适应巡航	zi shi ying xun hang	3000
+定速巡航	ding su xun hang	7570
+车道保持	che dao bao chi	3000
+车道居中	che dao ju zhong	3000
+车道偏离	che dao pian li	3000
+车道偏离预警	che dao pian li yu jing	3000
+自动变道	zi dong bian dao	3000
+拨杆变道	bo gan bian dao	3000
+自动泊车	zi dong bo che	3000
+记忆泊车	ji yi bo che	3000
+代客泊车	dai ke bo che	3000
+遥控泊车	yao kong bo che	3000
+自动紧急制动	zi dong jin ji zhi dong	3000
+前碰撞预警	qian peng zhuang yu jing	3000
+盲区监测	mang qu jian ce	3000
+并线辅助	bing xian fu zhu	3000
+开门预警	kai men yu jing	3000
+倒车影像	dao che ying xiang	3000
+全景影像	quan jing ying xiang	3000
+透明底盘	tou ming di pan	3000
+倒车雷达	dao che lei da	21650
+毫米波雷达	hao mi bo lei da	3000
+超声波雷达	chao sheng bo lei da	3000
+激光雷达	ji guang lei da	3000
+摄像头	she xiang tou	221220
+视觉方案	shi jue fang an	3000
+纯视觉	chun shi jue	3000
+高精地图	gao jing di tu	3000
+无图	wu tu	73840
+端到端	duan dao duan	8890
+大模型	da mo xing	3000
+接管	jie guan	168540
+接管率	jie guan lv	3000
+鬼探头	gui tan tou	3000
+加塞	jia sai	5555
+疲劳监测	pi lao jian ce	3000
+驾驶员监测	jia shi yuan jian ce	3000
+座舱	zuo cang	10880
+智能座舱	zhi neng zuo cang	3000
+车机	che ji	3000
+车机系统	che ji xi tong	3000
+中控	zhong kong	23915
+中控屏	zhong kong ping	3000
+中控台	zhong kong tai	11645
+仪表盘	yi biao pan	12095
+仪表	yi biao	434898
+液晶仪表	ye jing yi biao	3000
+抬头显示	tai tou xian shi	3000
+增强现实	zeng qiang xian shi	3000
+副驾屏	fu jia ping	3000
+后排屏	hou pai ping	3000
+吸顶屏	xi ding ping	3000
+语音助手	yu yin zhu shou	3000
+语音控制	yu yin kong zhi	3000
+可见即可说	ke jian ji ke shuo	3000
+连续对话	lian xu dui hua	3000
+多音区	duo yin qu	3000
+远程控制	yuan cheng kong zhi	36065
+远程启动	yuan cheng qi dong	3000
+手机互联	shou ji hu lian	3000
+无线充电	wu xian chong dian	3000
+车载冰箱	che zai bing xiang	4897
+音响	yin xiang	221875
+音响系统	yin xiang xi tong	18745
+扬声器	yang sheng qi	97845
+头枕音响	tou zhen yin xiang	3000
+氛围灯	fen wei deng	3000
+座椅	zuo yi	175015
+真皮座椅	zhen pi zuo yi	3000
+座椅加热	zuo yi jia re	3517
+座椅通风	zuo yi tong feng	3000
+座椅按摩	zuo yi an mo	3000
+座椅记忆	zuo yi ji yi	3000
+电动座椅	dian dong zuo yi	3000
+零重力座椅	ling zhong li zuo yi	3000
+女王座驾	nv wang zuo jia	3000
+老板键	lao ban jian	3000
+放倒	fang dao	17100
+后排放倒	hou pai fang dao	3000
+腿托	tui tuo	3000
+方向盘加热	fang xiang pan jia re	3000
+空调	kong tiao	500329
+自动空调	zi dong kong tiao	3000
+双温区	shuang wen qu	3000
+三温区	san wen qu	3000
+空气净化	kong qi jing hua	18305
+香氛	xiang fen	5555
+隔音	ge yin	40980
+双层玻璃	shuang ceng bo li	3000
+夹胶玻璃	jia jiao bo li	3000
+静谧性	jing mi xing	3000
+异响	yi xiang	55555
+做工	zuo gong	119870
+用料	yong liao	71120
+软包	ruan bao	7925
+内饰	nei shi	87360
+外观	wai guan	471635
+颜值	yan zhi	30935
+配置	pei zhi	500663
+高配	gao pei	9999
+低配	di pei	9999
+顶配	ding pei	9999
+入门款	ru men kuan	3000
+选装	xuan zhuang	17205
+选配	xuan pei	47405
+标配	biao pei	51135
+主动安全	zhu dong an quan	3000
+被动安全	bei dong an quan	22646
+安全气囊	an quan qi nang	49050
+气囊	qi nang	42840
+侧气囊	ce qi nang	3000
+侧气帘	ce qi lian	3000
+膝部气囊	xi bu qi nang	3000
+安全带	an quan dai	60305
+预紧	yu jin	3000
+碰撞测试	peng zhuang ce shi	3000
+碰撞	peng zhuang	154200
+追尾	zhui wei	10840
+侧翻	ce fan	3000
+麋鹿测试	mi lu ce shi	3000
+防滚架	fang gun jia	3000
+高强钢	gao qiang gang	3000
+热成型钢	re cheng xing gang	3000
+吸能	xi neng	3000
+溃缩	kui suo	3000
+车身稳定	che shen wen ding	3000
+车身稳定系统	che shen wen ding xi tong	3000
+牵引力控制	qian yin li kong zhi	3000
+陡坡缓降	dou po huan jiang	3000
+上坡辅助	shang po fu zhu	3000
+儿童座椅	er tong zuo yi	3000
+儿童锁	er tong suo	3000
+购车	gou che	93230
+提车	ti che	13195
+订车	ding che	13925
+落地价	luo di jia	3000
+裸车价	luo che jia	3000
+指导价	zhi dao jia	53230
+优惠	you hui	500388
+终端优惠	zhong duan you hui	3000
+置换	zhi huan	97275
+置换补贴	zhi huan bu tie	3000
+以旧换新	yi jiu huan xin	6355
+报废补贴	bao fei bu tie	3000
+购置税	gou zhi shui	3000
+车船税	che chuan shui	6035
+交强险	jiao qiang xian	35165
+商业险	shang ye xian	3000
+车险	che xian	33830
+全险	quan xian	4200
+保险	bao xian	500420
+上牌	shang pai	41840
+牌照	pai zhao	119585
+车牌	che pai	49885
+蓝牌	lan pai	3000
+绿牌	lv pai	3000
+新能源牌	xin neng yuan pai	3000
+摇号	yao hao	3000
+限行	xian xing	33180
+限号	xian hao	44444
+按揭	an jie	81585
+贷款	dai kuan	500512
+首付	shou fu	7777
+月供	yue gong	18830
+全款	quan kuan	12580
+金融方案	jin rong fang an	3000
+零首付	ling shou fu	3000
+贴息	tie xi	48755
+加价	jia jia	39655
+现车	xian che	3000
+期车	qi che	3000
+等车	deng che	18790
+交付	jiao fu	251040
+交付量	jiao fu liang	3000
+销量	xiao liang	297515
+保值率	bao zhi lv	3000
+二手车	er shou che	1112665
+车况	che kuang	44140
+事故车	shi gu che	3000
+泡水车	pao shui che	3000
+火烧车	huo shao che	3000
+调表车	tiao biao che	3000
+过户	guo hu	91270
+年检	nian jian	138335
+年审	nian shen	59435
+驾照	jia zhao	47345
+驾驶证	jia shi zheng	123150
+行驶证	xing shi zheng	46140
+扣分	kou fen	46205
+罚单	fa dan	10895
+违章	wei zhang	84145
+违停	wei ting	3000
+超速	chao su	34970
+酒驾	jiu jia	9180
+醉驾	zui jia	3000
+代驾	dai jia	11800
+车友	che you	63995
+车主	che zhu	238760
+车友会	che you hui	35730
+提车作业	ti che zuo ye	3000
+试驾	shi jia	83699
+试乘	shi cheng	12170
+展厅	zhan ting	95090
+门店	men dian	118195
+直营	zhi ying	16820
+经销商	jing xiao shang	500336
+销售顾问	xiao shou gu wen	3000
+保养	bao yang	283280
+小保养	xiao bao yang	3000
+大保养	da bao yang	3000
+首保	shou bao	3000
+保养周期	bao yang zhou qi	3000
+维修	wei xiu	500396
+维保	wei bao	3000
+质保	zhi bao	47185
+三包	san bao	80750
+召回	zhao hui	59110
+索赔	suo pei	106775
+理赔	li pei	69235
+定损	ding sun	9999
+出险	chu xian	13072
+钣金	ban jin	17035
+喷漆	pen qi	26520
+补漆	bu qi	3000
+抛光	pao guang	65410
+打蜡	da la	5210
+镀晶	du jing	3000
+镀膜	du mo	24800
+洗车	xi che	36255
+精洗	jing xi	3000
+内饰清洗	nei shi qing xi	3000
+空调滤芯	kong tiao lv xin	3000
+空气滤芯	kong qi lv xin	3000
+汽油滤芯	qi you lv xin	3000
+燃油滤芯	ran you lv xin	3000
+变速箱油	bian su xiang you	3000
+助力油	zhu li you	3000
+玻璃水	bo li shui	3000
+电瓶	dian ping	85500
+蓄电池	xu dian chi	81780
+搭电	da dian	3000
+拖车	tuo che	45621
+道路救援	dao lu jiu yuan	3000
+救援	jiu yuan	315250
+检测	jian ce	500548
+故障灯	gu zhang deng	3000
+故障码	gu zhang ma	3595
+发动机故障灯	fa dong ji gu zhang deng	3000
+胎压报警	tai ya bao jing	3000
+诊断	zhen duan	500271
+漏油	lou you	15145
+渗油	shen you	3000
+异味	yi wei	72045
+驾驶	jia shi	343175
+开车	kai che	295295
+自驾	zi jia	3560
+自驾游	zi jia you	36470
+长途	chang tu	104885
+跑高速	pao gao su	3000
+高速	gao su	500273
+国道	guo dao	14375
+省道	sheng dao	40730
+市区	shi qu	362440
+通勤	tong qin	4540
+堵车	du che	25085
+跟车	gen che	3000
+超车	chao che	28705
+并线	bing xian	5065
+变道	bian dao	3000
+掉头	diao tou	31415
+倒车	dao che	25050
+倒车入库	dao che ru ku	3000
+侧方停车	ce fang ting che	3000
+坡道起步	po dao qi bu	3000
+半坡起步	ban po qi bu	3000
+起步	qi bu	11402
+加速	jia su	500250
+急加速	ji jia su	3380
+急刹	ji sha	3030
+点刹	dian sha	3000
+刹停	sha ting	3333
+滑行	hua xing	35510
+弹射起步	tan she qi bu	3000
+零百加速	ling bai jia su	3000
+百公里加速	bai gong li jia su	3000
+百公里制动	bai gong li zhi dong	3000
+极速	ji su	62995
+最高车速	zui gao che su	18135
+推背感	tui bei gan	3000
+动力	dong li	500375
+动力输出	dong li shu chu	3000
+动力响应	dong li xiang ying	3000
+油门	you men	45630
+电门	dian men	3000
+油门响应	you men xiang ying	3000
+驾驶模式	jia shi mo shi	3000
+运动模式	yun dong mo shi	3000
+经济模式	jing ji mo shi	7355
+舒适模式	shu shi mo shi	3000
+雪地模式	xue di mo shi	3000
+越野模式	yue ye mo shi	3000
+赛道模式	sai dao mo shi	3000
+赛道	sai dao	35475
+圈速	quan su	3000
+纽北	niu bei	3000
+漂移	piao yi	52270
+烧胎	shao tai	3000
+自燃	zi ran	15110
