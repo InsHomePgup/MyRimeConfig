@@ -84,6 +84,11 @@ else
         --exclude='./LICENSE' \
         --exclude='*.md' \
         --exclude='./build' \
+        --exclude='./sync' \
+        --exclude='*.userdb' \
+        --exclude='*.userdb.txt' \
+        --exclude='./user.yaml' \
+        --exclude='./installation.yaml' \
         . | tar -xf - -C "$RIME_DIR"
 fi
 
