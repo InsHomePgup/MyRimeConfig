@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # 将此 repo 的配置部署到当前平台的 Rime 配置目录
-# 用法: ./deploy.sh [macos|linux-ibus|linux-fcitx5]
+# 用法: ./deploy.sh [macos|linux-ibus|linux-fcitx5|windows]
+# Windows 在 Git Bash 里运行
 
 set -e
 
@@ -37,12 +38,15 @@ case "$PLATFORM" in
         RIME_DIR="$HOME/.local/share/fcitx5/rime"
         ;;
     windows)
-        echo "Windows 请在 PowerShell 中运行 deploy.ps1"
-        exit 1
+        if ! command -v cygpath &>/dev/null || [ -z "$APPDATA" ]; then
+            echo "windows 平台需要在 Git Bash 里运行"
+            exit 1
+        fi
+        RIME_DIR="$(cygpath -u "$APPDATA")/Rime"
         ;;
     *)
         echo "未知平台: $PLATFORM"
-        echo "用法: $0 [macos|linux-ibus|linux-fcitx5]"
+        echo "用法: $0 [macos|linux-ibus|linux-fcitx5|windows]"
         exit 1
         ;;
 esac
@@ -60,7 +64,6 @@ if command -v rsync &>/dev/null; then
         --exclude='.gitignore' \
         --exclude='.release-it.json' \
         --exclude='deploy.sh' \
-        --exclude='deploy.ps1' \
         --exclude='LICENSE' \
         --exclude='*.md' \
         --exclude='build/' \
@@ -78,7 +81,6 @@ else
         --exclude='./.gitignore' \
         --exclude='./.release-it.json' \
         --exclude='./deploy.sh' \
-        --exclude='./deploy.ps1' \
         --exclude='./LICENSE' \
         --exclude='*.md' \
         --exclude='./build' \
@@ -117,6 +119,28 @@ case "$PLATFORM" in
             fcitx5-remote -r
         else
             echo ">>> 未找到 fcitx5-remote，请手动重新部署"
+        fi
+        ;;
+    windows)
+        # Git Bash 会把 /v、/deploy 这类参数当成路径改写，调用 Windows 程序时要关掉
+        export MSYS_NO_PATHCONV=1
+        WEASEL_ROOT=""
+        for key in 'HKLM\SOFTWARE\WOW6432Node\Rime\Weasel' 'HKLM\SOFTWARE\Rime\Weasel'; do
+            WEASEL_ROOT="$(reg query "$key" /v WeaselRoot 2>/dev/null | sed -n 's/.*REG_SZ[[:space:]]*//p' | tr -d '\r')"
+            [ -n "$WEASEL_ROOT" ] && break
+        done
+        DEPLOYER=""
+        [ -n "$WEASEL_ROOT" ] && DEPLOYER="$(cygpath -u "$WEASEL_ROOT")/WeaselDeployer.exe"
+        if [ -n "$DEPLOYER" ] && [ -f "$DEPLOYER" ]; then
+            echo ">>> 触发重新部署..."
+            "$DEPLOYER" /deploy
+            # installation.yaml 设了 sync_dir 才同步用户词库（合并其他设备学到的词）
+            if grep -q '^sync_dir:' "$RIME_DIR/installation.yaml" 2>/dev/null; then
+                echo ">>> 同步用户词库..."
+                "$DEPLOYER" /sync
+            fi
+        else
+            echo ">>> 未找到小狼毫，请在系统托盘右键小狼毫图标，点击「重新部署」"
         fi
         ;;
 esac

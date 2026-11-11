@@ -46,8 +46,8 @@ cd MyRimeConfig
 
 如未自动部署，点击菜单栏鼠须管图标 → **重新部署**。
 
-> **字体**：鼠须管皮肤 `mac_light` / `mac_dark` 用的是 Inter（英文）+ MiSans（中文），需要先装到系统里，否则会退回系统默认字体。
-> - Inter：`brew install --cask font-inter`（开源 OFL）
+> **字体**：鼠须管皮肤 `mac_light` / `mac_dark` 用的是 Maple Mono（英文）+ MiSans（中文），需要先装到系统里，否则会退回系统默认字体。
+> - Maple Mono：`brew install --cask font-maple-mono`（开源 OFL）
 > - MiSans：从 [小米官网](https://hyperos.mi.com/font) 下载，双击 `MiSans-Regular.ttf` 安装。MiSans 的授权不允许再分发，所以字体文件不放进本仓库。
 
 ### Linux（ibus-rime）
@@ -75,15 +75,25 @@ rm -rf ~/.config/ibus/rime/build && ibus restart
 
 ### Windows（小狼毫）
 
-在 PowerShell 中执行：
+**前置条件**（新装的 Windows 先准备好）：
 
-```powershell
+- [小狼毫](https://rime.im/download/)
+- [Git for Windows](https://git-scm.com/download/win)（或 `winget install Git.Git`），自带 Git Bash，部署脚本在 Git Bash 里运行
+- 字体：`weasel.yaml` 用的是 Maple Mono（英文）+ MiSans（中文），没装会退回其他字体，但不影响部署。
+  - Maple Mono：从 [GitHub Releases](https://github.com/subframe7536/maple-font/releases) 下载安装（开源 OFL）
+  - MiSans：从 [小米官网](https://hyperos.mi.com/font) 下载安装
+
+**部署**：在 Git Bash 中执行：
+
+```bash
 git clone https://github.com/InsHomePgup/MyRimeConfig.git
 cd MyRimeConfig
-.\deploy.ps1
+./deploy.sh
 ```
 
-脚本同步到 `%APPDATA%\Rime\` 并调用 `WeaselDeployer.exe /deploy` 重新部署；找不到小狼毫安装目录时，请右键系统托盘小狼毫图标 → **重新部署**。
+脚本同步到 `%APPDATA%\Rime\` 并调用 `WeaselDeployer.exe /deploy` 重新部署。Git Bash 没有 rsync，脚本会改用 tar 复制：只覆盖不删除，repo 里删掉的文件要自己到 `%APPDATA%\Rime\` 里清理；找不到小狼毫安装目录时，请右键系统托盘小狼毫图标 → **重新部署**。
+
+部署是否成功看 `%TEMP%\rime.weasel\` 下的日志，出现 `finished updating schemas: N success, 0 failure` 即可。
 
 ### iOS（仓输入法 / 元书输入法）
 
@@ -125,8 +135,7 @@ git push
 其他平台同步：
 
 ```bash
-git pull && ./deploy.sh          # macOS / Linux
-git pull; .\deploy.ps1           # Windows（PowerShell）
+git pull && ./deploy.sh          # macOS / Linux / Windows（Git Bash）
 ```
 
 iOS 在仓输入法内手动触发同步或等待 iCloud 自动同步。
@@ -149,7 +158,7 @@ sync_dir: "<Google Drive 路径>/RimeSync"
 
 改完后重新部署一次让设置生效。之后：
 
-- `deploy.sh`（macOS）和 `deploy.ps1`（Windows）在部署后会自动同步一次（只在设置了 `sync_dir` 时）。
+- `deploy.sh` 在 macOS 和 Windows 上部署后会自动同步一次（只在设置了 `sync_dir` 时）。
 - 手动同步：鼠须管菜单栏 / 小狼毫托盘 → **同步用户数据**；macOS 命令行是 `"/Library/Input Methods/Squirrel.app/Contents/MacOS/Squirrel" --sync`。
 - 每次同步会导出本机学到的词，并合并其他设备的词。在一台设备上用了一段时间后同步一次，再到另一台设备同步，两边就一致了。
 - 同步时 Rime 也会把配置文件备份到自己的子文件夹，这是正常的；本机删掉的方案文件，备份里不会自动删除，可以手动清理。
@@ -173,8 +182,7 @@ MyRimeConfig/
 ├── tiger.schema.yaml          # 虎码单字方案
 ├── double_pinyin.schema.yaml  # 自然码双拼方案
 ├── rime_ice.schema.yaml       # 雾凇拼音词库（自然码双拼的词库来源）
-├── deploy.sh          # 部署脚本（macOS / Linux）
-└── deploy.ps1         # 部署脚本（Windows）
+└── deploy.sh          # 部署脚本（macOS / Linux / Windows Git Bash）
 ```
 
 ## 常用快捷键

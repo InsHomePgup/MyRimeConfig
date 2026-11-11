@@ -1,0 +1,2 @@
+# Windows 上的 Git 默认把文件检出成 CRLF，bash 读到 CRLF 的脚本会报错
+*.sh text eol=lf
