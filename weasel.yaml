@@ -48,15 +48,15 @@ global_ascii: false                        # 切换为 ascii 模式时，是否�
 # [style]
 # 字体；候选项、候选窗口的行为、布局及样式
 style:
-  color_scheme: google_pinyin              # 默认配色方案
-  color_scheme_dark: one_dark              # 深色模式下的配色方案，Windows 10 1809+ 可用
+  color_scheme: macos_light                # 默认配色方案；微信风格改成 wechat_light / wechat_dark
+  color_scheme_dark: macos_dark            # 深色模式下的配色方案，Windows 10 1809+ 可用
 
-  # 全局字体
+  # 全局字体：英文 Maple Mono，中文回落到 MiSans，生僻字再回落到 TumanPUA / SimSun-ExtB / 天珩
   # 格式：字体1:起始码位:结束码位:字重:字形,字体2……，字体会依次 fallback
   # 详细设定请参考 <https://github.com/rime/weasel/wiki/字體設定>
-  font_face: "Consolas, Segoe UI Emoji, Noto Color Emoji, LXGW WenKai GB Screen, TumanPUA, SimSun, SimSun-ExtB, SimSun-ExtG, TH-Tshyn-P0, TH-Tshyn-P1, TH-Tshyn-P2, TH-Tshyn-P16"
-  label_font_face: "LXGW WenKai GB Screen, TumanPUA, SimSun, SimSun-ExtB, SimSun-ExtG, TH-Tshyn-P0, TH-Tshyn-P1, TH-Tshyn-P2, TH-Tshyn-P16"
-  comment_font_face: "Consolas, Segoe UI Emoji, Noto Color Emoji, LXGW WenKai GB Screen, TumanPUA, SimSun, SimSun-ExtB, SimSun-ExtG, TH-Tshyn-P0, TH-Tshyn-P1, TH-Tshyn-P2, TH-Tshyn-P16"
+  font_face: "Maple Mono, Segoe UI Emoji, Noto Color Emoji, MiSans, TumanPUA, SimSun, SimSun-ExtB, SimSun-ExtG, TH-Tshyn-P0, TH-Tshyn-P1, TH-Tshyn-P2, TH-Tshyn-P16"
+  label_font_face: "Maple Mono, Segoe UI Emoji, Noto Color Emoji, MiSans, TumanPUA, SimSun, SimSun-ExtB, SimSun-ExtG, TH-Tshyn-P0, TH-Tshyn-P1, TH-Tshyn-P2, TH-Tshyn-P16"
+  comment_font_face: "Maple Mono, Segoe UI Emoji, Noto Color Emoji, MiSans, TumanPUA, SimSun, SimSun-ExtB, SimSun-ExtG, TH-Tshyn-P0, TH-Tshyn-P1, TH-Tshyn-P2, TH-Tshyn-P16"
   font_point: 15                           # 全局字体字号
   label_font_point: 15                     # 标签字体字号
   comment_font_point: 15                   # 注释字体字号
@@ -93,7 +93,7 @@ style:
     max_width: 0                           # 候选框最大宽度，horizontal 布局如宽超此尺寸则换行显示候选，设置为 0 不启用此功能
     min_height: 0                          # 候选框最小高度
     min_width: 10                          # 候选框最小宽度
-    border_width: 2                        # 边框宽度；又名 border
+    border_width: 1                        # 边框宽度；又名 border
     margin_x: 8                            # 主体元素和候选框的左右边距；为负值时，不显示候选框
     margin_y: 8                            # 主体元素的上下边距；为负值时，不显示候选框
     spacing: 13                            # inline_preedit 为否时，编码区域和候选区域的间距
@@ -105,8 +105,8 @@ style:
     shadow_radius: 0                       # 阴影区域半径，为 0 不显示阴影；需要同时在配色方案中指定非透明的阴影颜色
     shadow_offset_x: 4                     # 阴影左右偏移距离
     shadow_offset_y: 4                     # 阴影上下偏移距离
-    corner_radius: 8                       # 候选窗口圆角半径
-    round_corner: 8                        # 候选背景色块圆角半径，又名 hilited_corner_radius
+    corner_radius: 10                      # 候选窗口圆角半径
+    round_corner: 6                        # 候选背景色块圆角半径，又名 hilited_corner_radius
     # type: vertical                       # 布局设置，效果和 style 下的设置相同：
                                            # horizontal（横向）；vertical（竖向） ; vertical_text（竖排文本） ; vertical+fullscreen（全屏） ; horizontal+fullscreen（横向全屏）
 # [End of <style>]
@@ -773,45 +773,47 @@ preset_color_schemes:
     name: "玫红"
     preedit_back_color: 0x364572
 
-  macos_light:
+  macos_light:                               # 对齐鼠须管 mac_light
     name: "macOS 浅色／macOS Light"
     author: custom
     color_format: rgba
-    back_color: 0xFFFFFF
-    border_color: 0xE5E5E5
-    shadow_color: 0x00000026
-    text_color: 0x1D1D1F
-    label_color: 0x86868B
-    candidate_text_color: 0x1D1D1F
-    comment_text_color: 0x86868B
-    candidate_back_color: 0xFFFFFF
-    hilited_back_color: 0xF5F5F7
-    hilited_text_color: 0x0066CC
-    hilited_candidate_back_color: 0x0066CC
+    back_color: 0xF6F6F6                     # 浅灰白（Windows 没有磨砂，用不透明色）
+    border_color: 0xD9D9D9                   # 极淡的描边
+    shadow_color: 0x00000000
+    text_color: 0x8E8E93                     # 编码（inline_preedit: false 时可见）
+    hilited_text_color: 0x1D1D1F
+    hilited_back_color: 0xF6F6F6
+    candidate_text_color: 0x1D1D1F           # 系统正文黑
+    candidate_back_color: 0xF6F6F6
+    label_color: 0x8E8E93                    # 系统次要灰
+    comment_text_color: 0x8E8E93
+    hilited_candidate_back_color: 0x007AFF   # 系统蓝
+    hilited_candidate_border_color: 0x007AFF
     hilited_candidate_text_color: 0xFFFFFF
-    hilited_candidate_label_color: 0xFFFFFF
-    hilited_comment_text_color: 0xCCE5FF
-    hilited_label_color: 0xFFFFFF
+    hilited_label_color: 0xDCEBFF
+    hilited_candidate_label_color: 0xDCEBFF
+    hilited_comment_text_color: 0xCCE4FF
 
-  macos_dark:
+  macos_dark:                                # 对齐鼠须管 mac_dark
     name: "macOS 深色／macOS Dark"
     author: custom
     color_format: rgba
-    back_color: 0x1D1D1F
-    border_color: 0x3D3D3F
-    shadow_color: 0x00000066
-    text_color: 0xF5F5F7
-    label_color: 0x8E8E93
-    candidate_text_color: 0xF5F5F7
-    comment_text_color: 0x8E8E93
-    candidate_back_color: 0x1D1D1F
-    hilited_back_color: 0x2D2D2F
-    hilited_text_color: 0x419CFF
-    hilited_candidate_back_color: 0x419CFF
+    back_color: 0x2A2A2C
+    border_color: 0x3F3F41
+    shadow_color: 0x00000000
+    text_color: 0x98989D
+    hilited_text_color: 0xF2F2F2
+    hilited_back_color: 0x2A2A2C
+    candidate_text_color: 0xF2F2F2
+    candidate_back_color: 0x2A2A2C
+    label_color: 0x98989D                    # 深色模式次要灰
+    comment_text_color: 0x98989D
+    hilited_candidate_back_color: 0x0A84FF   # 深色模式系统蓝
+    hilited_candidate_border_color: 0x0A84FF
     hilited_candidate_text_color: 0xFFFFFF
-    hilited_candidate_label_color: 0xFFFFFF
-    hilited_comment_text_color: 0x003B7A
-    hilited_label_color: 0xFFFFFF
+    hilited_label_color: 0xD6E8FF
+    hilited_candidate_label_color: 0xD6E8FF
+    hilited_comment_text_color: 0xC2DEFF
 
   ios_light:
     name: "iOS 浅色／iOS Light"
@@ -933,44 +935,46 @@ preset_color_schemes:
     hilited_comment_text_color: 0xCCDDFF
     hilited_label_color: 0xFFFFFF
 
-  wechat_light:
+  wechat_light:                              # 微信输入法风格：白底，选中项只变绿字，不铺色块
     name: "微信输入法浅色／WeChat Light"
     author: custom
     color_format: rgba
     back_color: 0xFFFFFF
-    border_color: 0xF0F0F0
-    shadow_color: 0x00000026
-    text_color: 0x424242
-    label_color: 0x999999
-    candidate_text_color: 0x3C3C3C
-    comment_text_color: 0x999999
+    border_color: 0xE5E5E5
+    shadow_color: 0x00000000
+    text_color: 0x999999
+    hilited_text_color: 0x333333
+    hilited_back_color: 0xFFFFFF
+    candidate_text_color: 0x333333
     candidate_back_color: 0xFFFFFF
-    hilited_back_color: 0xF0FFF5
-    hilited_text_color: 0x07C160
-    hilited_candidate_back_color: 0x07C160
-    hilited_candidate_text_color: 0xFFFFFF
-    hilited_candidate_label_color: 0xFFFFFF
-    hilited_comment_text_color: 0xCCFFE5
-    hilited_label_color: 0xFFFFFF
+    label_color: 0xB2B2B2
+    comment_text_color: 0x999999
+    hilited_candidate_back_color: 0xFFFFFF
+    hilited_candidate_border_color: 0xFFFFFF
+    hilited_candidate_text_color: 0x07C160   # 微信绿
+    hilited_label_color: 0x07C160
+    hilited_candidate_label_color: 0x07C160
+    hilited_comment_text_color: 0x07C160
 
   wechat_dark:
     name: "微信输入法深色／WeChat Dark"
     author: custom
     color_format: rgba
-    back_color: 0x1A1A1A
-    border_color: 0x2E2E2E
-    shadow_color: 0x00000066
-    text_color: 0xBBBBBB
-    label_color: 0x777777
-    candidate_text_color: 0xBBBBBB
-    comment_text_color: 0x777777
-    candidate_back_color: 0x1A1A1A
-    hilited_back_color: 0x0A2E1A
-    hilited_text_color: 0x07C160
-    hilited_candidate_back_color: 0x07C160
-    hilited_candidate_text_color: 0xFFFFFF
-    hilited_candidate_label_color: 0xFFFFFF
-    hilited_comment_text_color: 0xAAEECC
-    hilited_label_color: 0xFFFFFF
+    back_color: 0x2C2C2C
+    border_color: 0x3A3A3A
+    shadow_color: 0x00000000
+    text_color: 0x808080
+    hilited_text_color: 0xE5E5E5
+    hilited_back_color: 0x2C2C2C
+    candidate_text_color: 0xE5E5E5
+    candidate_back_color: 0x2C2C2C
+    label_color: 0x808080
+    comment_text_color: 0x808080
+    hilited_candidate_back_color: 0x2C2C2C
+    hilited_candidate_border_color: 0x2C2C2C
+    hilited_candidate_text_color: 0x07C160
+    hilited_label_color: 0x07C160
+    hilited_candidate_label_color: 0x07C160
+    hilited_comment_text_color: 0x07C160
 
 # [End of <preset_color_schemes>]
