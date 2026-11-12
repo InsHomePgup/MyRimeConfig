@@ -16,14 +16,8 @@
 芒格	mhge
 段永平	dryspy
 
-go	go
 Golang	golang
-Hugo	hugo
-goto	goto
-TODO	todo
 Amazon	amazon
-NASA	nasa
-SOHO	soho
 
 # 投资（含字母的词，从 cn_dicts/invest 移来：字母音节会挡住末尾单个声母的联想）
 万得全A	wjdeqra
