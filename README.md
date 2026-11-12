@@ -8,6 +8,7 @@
 |------|------|
 | 虎码单字 (`tiger`) | 虎码形码，纯单字模式 |
 | 自然码双拼 (`double_pinyin`) | 自然码双拼，词库基于雾凇拼音 |
+| 自然码双拼·繁 / ·港 / ·台 (`double_pinyin_trad` / `_hk` / `_tw`) | 打简出繁：通用繁体 / 港澳繁体 / 台湾繁体（含用词转换），用 Ctrl+` 方案选单切换 |
 
 在虎码方案中，按 `` ` `` 键可切换为**自然码双拼反查**，用拼音检索虎码编码。
 
@@ -195,6 +196,7 @@ MyRimeConfig/
 ├── yuanshu.yaml       # iOS 元书输入法前端配置
 ├── tiger.schema.yaml          # 虎码单字方案
 ├── double_pinyin.schema.yaml  # 自然码双拼方案
+├── double_pinyin_{trad,hk,tw}.schema.yaml  # 自然码双拼的繁体版（继承 double_pinyin，只换 OpenCC 配置）
 ├── rime_ice.schema.yaml       # 雾凇拼音词库（自然码双拼的词库来源）
 ├── deploy.sh          # 部署脚本（macOS / Linux / Windows Git Bash）
 └── deploy-yuanshu.py  # 部署脚本（iOS 元书，经 WiFi 传输）

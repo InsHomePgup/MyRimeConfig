@@ -1,0 +1,24 @@
+# Rime schema
+# encoding: utf-8
+
+# 自然码双拼的通用繁体（OpenCC s2t）版：打简出繁。
+# 整份继承 double_pinyin.schema.yaml，只改方案信息和 OpenCC 配置，并把简繁开关固定为开。
+# 词库、prism、用户词库都和 double_pinyin 共用。
+# schema 段要原样写出来：部署时直接读原始文件找 schema_id，不展开 __include。
+
+__include: double_pinyin.schema:/
+
+schema:
+  schema_id: double_pinyin_trad
+  name: 自然码双拼·繁
+  version: "1"
+  description: |
+    雾凇拼音 - 自然码双拼 - 通用繁体（OpenCC s2t）
+  dependencies:
+    - double_pinyin   # 共用 double_pinyin 的 prism
+    - melt_eng
+    - radical_pinyin
+
+__patch:
+  switches/@2/reset: 1                     # traditionalization：进入本方案即开
+  traditionalize/opencc_config: s2t.json

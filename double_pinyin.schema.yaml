@@ -34,8 +34,8 @@ switches:
     states: [ 中, Ａ ]
   - name: ascii_punct  # 中英标点
     states: [ ¥, $ ]
-  - name: traditionalization
-    states: [ 简, 繁 ]
+  - name: traditionalization  # 简繁转换由方案决定（double_pinyin_trad / _hk / _tw），不在开关里切换
+    reset: 0                   # 不写 states：不出现在方案选单里；reset 保证从繁体方案切回来时恢复简体
   - name: emoji
     states: [ 💀, 😄 ]
     reset: 1
@@ -180,8 +180,8 @@ emoji:
 
 # 简繁切换
 traditionalize:
-  option_name: traditionalization  # 对应 switches 中的 name
-  opencc_config: s2t.json          # s2t.json | s2hk.json | s2tw.json | s2twp.json （Rime 内置配置，在程序目录可找到）
+  option_name: traditionalization  # 对应 switches 中的 name；本方案里恒为关，繁体方案里恒为开
+  opencc_config: s2t.json          # 繁体方案各自覆盖：s2t.json 通用 | s2hk.json 港澳 | s2twp.json 台湾（含用词）
   tips: none                       # 转换提示: all 都显示 | char 仅单字显示 | none 不显示。
   tags: [ abc, number, gregorian_to_lunar ]  # 限制在对应 tag，不对其他如反查的内容做简繁转换
 

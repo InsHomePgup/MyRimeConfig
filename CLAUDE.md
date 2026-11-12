@@ -6,7 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 架构
 
-- `default.yaml` 的 `schema_list` 只启用两个方案：`tiger`（虎码单字，主力）和 `double_pinyin`（自然码双拼，即雾凇方案）。其余 schema 都是被借用的依赖，不直接出现在方案列表里。
+- `default.yaml` 的 `schema_list` 启用 `tiger`（虎码单字，主力）、`double_pinyin`（自然码双拼，即雾凇方案）和它的三个繁体版 `double_pinyin_trad` / `_hk` / `_tw`。其余 schema 都是被借用的依赖，不直接出现在方案列表里。
+- 繁体版用 `__include: double_pinyin.schema:/` 整份继承，只 `__patch` 掉 `traditionalize/opencc_config`（s2t / s2hk / s2twp）和简繁开关的 `reset`。`schema:` 段必须原样写在文件里，部署时读原始文件找 `schema_id`，不展开 `__include`。简繁开关在 `double_pinyin` 里隐藏且 `reset: 0`，这样从繁体方案切回来时会恢复简体。
 - 两个方案来自不同上游，写法不同，不要混用：
   - **虎码**（`tiger.*`、`core2022.*`、`easy_english.*`、`stroke.*`）：Lua 组件在 `rime.lua` 里注册为全局变量，schema 里写 `lua_filter@name`。
   - **雾凇**（`double_pinyin`、`rime_ice`、`melt_eng`、`radical_pinyin`、`cn_dicts/`、`en_dicts/`）：写 `lua_filter@*name`，直接按模块名 require，不经过 `rime.lua`。

@@ -10,6 +10,9 @@ config_version: '2026-02-06'
 schema_list:
   - schema: tiger                   # 虎码单字
   - schema: double_pinyin          # 自然码双拼
+  - schema: double_pinyin_trad     # 自然码双拼·繁（通用繁体）
+  - schema: double_pinyin_hk       # 自然码双拼·港（港澳繁体）
+  - schema: double_pinyin_tw       # 自然码双拼·台（台湾繁体，含用词）
 
 
 # 菜单
@@ -34,7 +37,6 @@ switcher:
   # 部分前端（如小狼毫），仅实现了中英全局状态，其他开关仍然是单独管理。
   save_options:
     - ascii_punct
-    - traditionalization
     - emoji
     - full_shape
     - search_single_char
@@ -236,8 +238,7 @@ key_binder:
     # - { when: always, toggle: ascii_mode, accept: Control+Shift+at }            # 切换中英
     - { when: always, toggle: ascii_punct, accept: Control+Shift+3 }              # 切换中英标点
     - { when: always, toggle: ascii_punct, accept: Control+Shift+numbersign }     # 切换中英标点
-    - { when: always, toggle: traditionalization, accept: Control+Shift+4 }       # 切换简繁
-    - { when: always, toggle: traditionalization, accept: Control+Shift+dollar }  # 切换简繁
+    # 简繁不用快捷键切换：用方案选单（Ctrl+`）选 double_pinyin / _trad / _hk / _tw
     # - { when: always, toggle: full_shape, accept: Control+Shift+5 }             # 切换全半角
     # - { when: always, toggle: full_shape, accept: Control+Shift+percent }       # 切换全半角
 
