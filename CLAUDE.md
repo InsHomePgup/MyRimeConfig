@@ -21,6 +21,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - macOS / Linux：`./deploy.sh`（自动判断平台，也可传 `macos` / `linux-ibus` / `linux-fcitx5`）
 - Windows：在 Git Bash 里 `./deploy.sh`（自动识别为 `windows`）。在 WSL 里要借 Git Bash 跑，WSL 自己的 bash 会被识别成 Linux：`"/mnt/c/Program Files/Git/bin/bash.exe" -c "cd '$(wslpath -w .)' && ./deploy.sh windows"`。
 - `deploy.sh` 调用 Windows 程序（`reg`、`WeaselDeployer.exe`）时靠 `MSYS_NO_PATHCONV=1` 防止 Git Bash 把 `/deploy` 这类参数改写成路径；`.gitattributes` 强制 `*.sh` 用 LF，否则 Windows 检出成 CRLF 后 bash 跑不起来。
+- iOS 元书：`python3 deploy-yuanshu.py <手机地址>`，走元书 WiFi 传输（File Browser，无需登录），只传有变化的配置，再把电脑同步目录里的 `*.userdb.txt` 快照传到手机 `sync/<设备名>/`。这个 File Browser 的 raw 接口会把单个文件打成 zip 返回，比对前要先解压。
 - 部署是否成功以 Rime 日志为准，要看到 `finished updating schemas: N success, 0 failure`。小狼毫的日志在 `%TEMP%\rime.weasel\`。
 - 想不装输入法就验证行为或性能：可以下载 Debian 的 librime、librime-dev、librime-plugin-lua、rime-prelude 包解压到本地，写个几十行的 C 程序调用 `rime_api.h` 的 `simulate_key_sequence` 和 `get_context` 打印候选。
 

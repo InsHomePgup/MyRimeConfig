@@ -64,6 +64,7 @@ if command -v rsync &>/dev/null; then
         --exclude='.gitignore' \
         --exclude='.release-it.json' \
         --exclude='deploy.sh' \
+        --exclude='deploy-yuanshu.py' \
         --exclude='LICENSE' \
         --exclude='*.md' \
         --exclude='build/' \
@@ -81,6 +82,7 @@ else
         --exclude='./.gitignore' \
         --exclude='./.release-it.json' \
         --exclude='./deploy.sh' \
+        --exclude='./deploy-yuanshu.py' \
         --exclude='./LICENSE' \
         --exclude='*.md' \
         --exclude='./build' \

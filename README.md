@@ -114,7 +114,21 @@ cd MyRimeConfig
 
 ### iOS（元书输入法）
 
-将本 repo 全部文件导入元书的 Rime 用户目录，并保留 `yuanshu.yaml`。导入后在元书内执行一次**重新部署**即可。
+在元书里打开 **WiFi 传输**，记下页面上显示的地址，然后在电脑上运行（电脑和手机要在同一个局域网）：
+
+```bash
+python3 deploy-yuanshu.py 192.168.x.x            # 地址换成 WiFi 传输页面上显示的
+python3 deploy-yuanshu.py 192.168.x.x --dry-run  # 只看要传哪些文件
+```
+
+脚本只用 Python 标准库，macOS、Linux、Windows、WSL 都能跑。它会：
+
+1. 比对仓库里已跟踪的配置文件和手机 `RimeUserData/` 里的同名文件，只上传有变化的。手机上的用户词库、`user.yaml`、`installation.yaml` 不会被动到；手机上多出来的文件只列出来，不会删除。
+2. 把电脑同步目录里各设备导出的用户词库快照（`*.userdb.txt`）传到手机的 `RimeUserData/sync/<设备名>/`，见下面的[用户词库同步](#用户词库同步各设备学到的词)。同步目录默认从本机 Rime 的 `installation.yaml` 读 `sync_dir`；也可以用 `--sync-dir` 指定，或用 `--no-userdb` 跳过。在 WSL 里看不到 Google Drive 的盘符，脚本会借 PowerShell 复制快照。
+
+传完后在元书里先点**重新部署**，再点**同步**，把电脑学到的词合并进来。也可以手动在 WiFi 传输页面上传文件，效果一样。
+
+这是单向的：电脑上新学的词，要先在电脑上同步一次，再运行一次脚本才能到元书；元书学到的词也不会回到电脑，因为元书的同步目录不在 Google Drive 里。
 
 如果元书使用的是独立共享目录，需确保本仓库依赖的所有 schema、dict、lua、opencc 文件一并导入，不能只单独导入某一个方案文件。
 
@@ -138,7 +152,7 @@ git push
 git pull && ./deploy.sh          # macOS / Linux / Windows（Git Bash）
 ```
 
-iOS 在仓输入法内手动触发同步或等待 iCloud 自动同步。
+iOS：仓输入法内手动触发同步或等待 iCloud 自动同步；元书运行 `python3 deploy-yuanshu.py <手机地址>`。
 
 ### 用户词库同步（各设备学到的词）
 
@@ -182,7 +196,8 @@ MyRimeConfig/
 ├── tiger.schema.yaml          # 虎码单字方案
 ├── double_pinyin.schema.yaml  # 自然码双拼方案
 ├── rime_ice.schema.yaml       # 雾凇拼音词库（自然码双拼的词库来源）
-└── deploy.sh          # 部署脚本（macOS / Linux / Windows Git Bash）
+├── deploy.sh          # 部署脚本（macOS / Linux / Windows Git Bash）
+└── deploy-yuanshu.py  # 部署脚本（iOS 元书，经 WiFi 传输）
 ```
 
 ## 常用快捷键
