@@ -49,6 +49,7 @@ switches:
 # 输入引擎
 engine:
   processors:
+    - lua_processor@*schema_sync       # 所有窗口共用同一个方案（放第一个）
     - lua_processor@*select_character  # 以词定字
     - ascii_composer
     - recognizer

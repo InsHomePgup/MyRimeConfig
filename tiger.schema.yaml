@@ -54,6 +54,7 @@ switches: # 0 默认关，1 默认开
 
 engine:
   processors:
+    - lua_processor@schema_sync #所有窗口共用同一个方案（放第一个）
     - ascii_composer
     - recognizer
     - key_binder

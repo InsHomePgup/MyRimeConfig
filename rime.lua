@@ -10,3 +10,4 @@ tiger_phrase_code_filter = require("tiger_phrase_code_filter") -- 双拼反查�
 tiger_english_filter = require("tiger_english_filter") -- 虎码无前缀英文，4码以内隐藏英文候选
 autocap_filter = require("autocap_filter") -- 英文自动大写（雾凇）
 haha_translator = require("haha_translator") -- 连按 h 输出同样个数的「哈」
+schema_sync = require("schema_sync") -- 所有窗口共用同一个方案
