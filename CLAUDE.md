@@ -18,7 +18,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   - **雾凇**（`double_pinyin`、`rime_ice`、`melt_eng`、`radical_pinyin`、`cn_dicts/`、`en_dicts/`）：写 `lua_filter@*name`，直接按模块名 require，不经过 `rime.lua`。
 - 虎码借用了别的方案的词库：`` ` `` 双拼反查用 `rime_ice` 词库 + `double_pinyin` prism；无前缀英文用 `melt_eng`（优先，拼写运算自带大写派生）和 `easy_english`。被借用的方案必须写进 `schema/dependencies`，否则它的 prism 不会被编译，翻译器查不到东西。
 - 虎码的英文逻辑：关掉了 4 码顶屏，`auto_clear: none`。`lua/tiger_english_filter.lua` 负责在 4 码以内有虎码候选时隐藏英文，然后交给雾凇的 `autocap_filter` 处理大小写。
-- `squirrel.yaml` / `weasel.yaml` / `hamster.yaml` / `yuanshu.yaml` 是各前端的外观配置，互不影响。Android 端以 submodule 形式打包进 InsHomePgup/trime fork，不走部署脚本。
+- `squirrel.yaml` / `weasel.yaml` / `hamster.yaml` / `yuanshu.yaml` 是各前端的外观配置，互不影响。元书的**键盘皮肤**另在 `yuanshu-skin/`（`build.py` 生成），改皮肤前先读 `yuanshu-skin/README.md`。Android 端以 submodule 形式打包进 InsHomePgup/trime fork，不走部署脚本。
 
 ## 部署与验证
 

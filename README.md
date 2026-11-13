@@ -143,7 +143,7 @@ python3 deploy-yuanshu.py 192.168.x.x --skin
 python3 yuanshu-skin/demo.py   # 在电脑上画预览图到 yuanshu-skin/build/（需要 Pillow）
 ```
 
-键盘字体在元书的「键盘字体」里设置，皮肤不带字体。配色、尺寸、布局都是 `build.py` 开头的常量。生成结果在 `yuanshu-skin/build/`，不提交；里面的 `MyRime.cskin` 也可以隔空投送到手机导入。目前只做了 iPhone 竖屏，横屏和 iPad 暂时沿用竖屏布局。
+键盘字体在元书的「键盘字体」里设置，皮肤不带字体。配色、尺寸、布局都是 `build.py` 开头的常量。生成结果在 `yuanshu-skin/build/`，不提交；里面的 `MyRime.cskin` 也可以隔空投送到手机导入。目前只做了 iPhone 竖屏，横屏和 iPad 暂时沿用竖屏布局。设计目标、代码结构和元书的坑见 [yuanshu-skin/README.md](yuanshu-skin/README.md)。
 
 这是单向的：电脑上新学的词，要先在电脑上同步一次，再运行一次脚本才能到元书；元书学到的词也不会回到电脑，因为元书的同步目录不在 Google Drive 里。
 

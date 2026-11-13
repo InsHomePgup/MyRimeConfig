@@ -714,7 +714,7 @@ KEYBOARDS = {
 for _i, (_kb, _, _, _) in enumerate(SYMBOL_PAGES):
     KEYBOARDS[_kb] = (_kb + "Portrait", lambda mode, i=_i: symbol_page(mode, i))
 
-README = """MyRime：仿微信输入法布局的简洁皮肤，配合雾凇拼音 + 虎码单字使用。
+README = """MyRime：仿微信输入法布局、iOS 原生外观的简洁皮肤，配合雾凇拼音（自然码双拼）使用。
 
 - 字母键没有划动功能，避免误触
 - 底行：123 / 逗号（上划句号）/ 空格 / 中英 / 回车（不做 Emoji 面板，用 iOS 自带的 Emoji 键盘）
@@ -724,6 +724,82 @@ README = """MyRime：仿微信输入法布局的简洁皮肤，配合雾凇拼�
 
 此皮肤由 MyRimeConfig 仓库的 yuanshu-skin/build.py 生成，请勿直接修改 YAML。
 """
+
+
+# ---------------------------------------------------------------- 检查
+# 生成后自动检查，规则来自实际踩过的坑；有问题时 build() 报错退出，不写出半成品
+STYLE_REF_KEYS = ("backgroundStyle", "foregroundStyle", "uppercasedStateForegroundStyle",
+                  "capsLockedStateForegroundStyle", "swipeUpForegroundStyle", "swipeDownForegroundStyle",
+                  "hintStyle", "hintSymbolsStyle", "notification", "candidateStyle", "cellStyle")
+
+
+def _style_refs(value):
+    """样式引用可以是字符串、字符串数组或条件样式数组。"""
+    if isinstance(value, str):
+        return [value]
+    out = []
+    for item in value or []:
+        if isinstance(item, dict):
+            name = item.get("styleName")
+            out += name if isinstance(name, list) else [name]
+        else:
+            out.append(item)
+    return out
+
+
+def check_sheet(sheet, keyboard_types):
+    problems = []
+
+    def size_of(node, key):
+        if "Cell" in node:
+            return sheet.get(node["Cell"], {}).get("size", {}).get(key)
+        stack = node.get("HStack") or node.get("VStack")
+        style = stack.get("style")
+        return sheet.get(style, {}).get("size", {}).get(key) if style else None
+
+    def walk(nodes, where, parent, check_sizes):
+        kinds = {next(iter(n)) for n in nodes}
+        if len(kinds) > 1:
+            problems.append("%s：同级混用了 %s" % (where, "、".join(sorted(kinds))))
+        for n in nodes:
+            if "Cell" in n:
+                if parent is None:
+                    problems.append("%s：Cell %s 直接放在根上" % (where, n["Cell"]))
+                if n["Cell"] not in sheet:
+                    problems.append("%s：Cell %s 未定义" % (where, n["Cell"]))
+            for kind in ("HStack", "VStack"):
+                if kind in n:
+                    style = n[kind].get("style")
+                    if style and style not in sheet:
+                        problems.append("%s：style %s 未定义" % (where, style))
+                    walk(n[kind]["subviews"], where, kind, check_sizes)
+        # 同一行（HStack 的子节点）看宽度，同一列（VStack 的子节点）看高度
+        if check_sizes and parent:
+            key = "width" if parent == "HStack" else "height"
+            sizes = [size_of(n, key) for n in nodes]
+            fixed = sum(v["percentage"] for v in sizes if isinstance(v, dict))
+            auto = sum(1 for v in sizes if v is None)
+            names = [n.get("Cell", "…") for n in nodes]
+            if auto == 0 and abs(fixed - 1) > 1e-3:
+                problems.append("%s：%s 的%s合计 %.4f，不等于 1" % (where, names, "宽度" if key == "width" else "高度", fixed))
+            if auto and fixed >= 1 - 1e-3:
+                problems.append("%s：%s 固定尺寸已占满，自动尺寸的格子没有空间" % (where, names))
+
+    for area in ("toolbarLayout", "keyboardLayout", "horizontalCandidatesLayout", "verticalCandidatesLayout"):
+        walk(sheet.get(area) or [], area, None, area == "keyboardLayout")
+
+    for name, node in sheet.items():
+        if not isinstance(node, dict):
+            continue
+        for key in STYLE_REF_KEYS:
+            for ref in _style_refs(node.get(key)):
+                if ref not in sheet:
+                    problems.append("%s.%s 引用了未定义的 %s" % (name, key, ref))
+        for key in ("action", "swipeUpAction", "swipeDownAction", "uppercasedStateAction"):
+            action = node.get(key)
+            if isinstance(action, dict) and "keyboardType" in action and action["keyboardType"] not in keyboard_types:
+                problems.append("%s.%s 切到未声明的键盘 %s" % (name, key, action["keyboardType"]))
+    return problems
 
 
 def config_yaml():
@@ -758,11 +834,20 @@ def write_demo(path):
 def build():
     skin_dir = os.path.join(OUT_ROOT, SKIN_NAME)
     shutil.rmtree(skin_dir, ignore_errors=True)
+    keyboard_types = set(KEYBOARDS) | {"alphabetic"}
+    sheets, problems = {}, []
+    for mode in ("light", "dark"):
+        for kind, (fname, fn) in KEYBOARDS.items():
+            sheet = fn(mode)
+            sheets[(mode, fname)] = sheet
+            problems += ["%s/%s：%s" % (mode, fname, p) for p in check_sheet(sheet, keyboard_types)]
+    if problems:
+        raise SystemExit("!!! 皮肤检查没通过：\n" + "\n".join("    " + p for p in problems))
     for mode in ("light", "dark"):
         os.makedirs(os.path.join(skin_dir, mode))
-        for fname, fn in KEYBOARDS.values():
-            with open(os.path.join(skin_dir, mode, fname + ".yaml"), "w", encoding="utf-8", newline="\n") as fh:
-                fh.write(to_yaml(fn(mode)) + "\n")
+    for (mode, fname), sheet in sheets.items():
+        with open(os.path.join(skin_dir, mode, fname + ".yaml"), "w", encoding="utf-8", newline="\n") as fh:
+            fh.write(to_yaml(sheet) + "\n")
     with open(os.path.join(skin_dir, "config.yaml"), "w", encoding="utf-8", newline="\n") as fh:
         fh.write(config_yaml())
     with open(os.path.join(skin_dir, "README.md"), "w", encoding="utf-8", newline="\n") as fh:
