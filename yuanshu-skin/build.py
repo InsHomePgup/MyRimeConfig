@@ -631,12 +631,16 @@ def symbol_page(mode, index):
         "insets": {"top": 7, "bottom": 7, "left": 2, "right": 2},
         "cornerRadius": 17,
     })
-    tabs = [return_key(s, 0.15)]
+    # 每个分类都写明宽度：不写宽度时元书没有把剩余空间分满，右侧会留空隙
+    back = 0.15
+    tab_width = (1 - back) / len(SYMBOL_PAGES)
+    tabs = [return_key(s, back)]
     for i, (kb, label, is_icon, _) in enumerate(SYMBOL_PAGES):
         fg = (s.icon("tab%dForeground" % i, label, size=19, color="text_dim") if is_icon
               else s.text("tab%dForeground" % i, label, size=17 if len(label) == 1 else 13, color="text_dim"))
         tabs.append(s.add("tab%dButton" % i, {
             "action": {"keyboardType": kb},
+            "size": {"width": pct(tab_width)},
             "backgroundStyle": "tabSelectedBackground" if i == index else "tabBackground",
             "foregroundStyle": fg,
         }))
