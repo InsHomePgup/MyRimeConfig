@@ -613,7 +613,10 @@ def symbol_page(mode, index):
     vis = pct(0.13 / edge)
     num = s.func_key("symbolicButton", s.text("symbolicForeground", "123"),
                      {"keyboardType": "symbolic"}, edge, {"alignment": "left", "width": vis})
-    r3 = ([num] + [key(20 + i, ch, k) for i, ch in enumerate(chars[20:27])]
+    # 第三行按实际符号个数均分 123 和删除键之间的宽度（同微信：6 个符号时每个键加宽，不留空格）
+    row3 = [ch for ch in chars[20:27] if ch]
+    w3 = (1 - 2 * edge) / max(len(row3), 1)
+    r3 = ([num] + [key(20 + i, ch, w3) for i, ch in enumerate(row3)]
           + [s.backspace(edge, {"alignment": "right", "width": vis})])
 
     # 分类栏：当前分类加灰色圆底
