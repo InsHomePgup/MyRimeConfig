@@ -69,6 +69,7 @@ if command -v rsync &>/dev/null; then
         --exclude='*.md' \
         --exclude='build/' \
         --exclude='yuanshu-skin/' \
+        --exclude='tools/' \
         --exclude='double_pinyin.custom.yaml' \
         --exclude='predict-zhs.db' \
         --exclude='sync/' \
@@ -90,6 +91,7 @@ else
         --exclude='*.md' \
         --exclude='./build' \
         --exclude='./yuanshu-skin' \
+        --exclude='./tools' \
         --exclude='./double_pinyin.custom.yaml' \
         --exclude='./predict-zhs.db' \
         --exclude='./sync' \

@@ -24,13 +24,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `deploy.sh` 调用 Windows 程序（`reg`、`WeaselDeployer.exe`）时靠 `MSYS_NO_PATHCONV=1` 防止 Git Bash 把 `/deploy` 这类参数改写成路径；`.gitattributes` 强制 `*.sh` 用 LF，否则 Windows 检出成 CRLF 后 bash 跑不起来。
 - iOS 元书：`python3 deploy-yuanshu.py <手机地址>`，走元书 WiFi 传输（File Browser，无需登录），只传有变化的配置，再把电脑同步目录里的 `*.userdb.txt` 快照传到手机 `sync/<设备名>/`。这个 File Browser 的 raw 接口会把单个文件打成 zip 返回，比对前要先解压。
 - 部署是否成功以 Rime 日志为准，要看到 `finished updating schemas: N success, 0 failure`。小狼毫的日志在 `%TEMP%\rime.weasel\`。
+- 验证联想：Debian 不打包 librime-predict，要用 librime-dev 的头文件自己把 librime-predict 的 `src/*.cc` 编成 .so，和 librime-lua 一起 LD_PRELOAD，modules 写 `{"default","lua","predict"}`（编译所需的包见 `tools/build_predict_db.sh`）。
 - 想不装输入法就验证行为或性能：可以下载 Debian 的 librime、librime-dev、librime-plugin-lua、rime-prelude 包解压到本地，写个几十行的 C 程序调用 `rime_api.h` 的 `simulate_key_sequence` 和 `get_context` 打印候选。
 
 ## 改动时注意
 
 - **换行符**：虎码系文件（`tiger.*`、`easy_english.*`、`stroke.*`、`core2022.dict.yaml`、`rime.lua`，以及 `lua/calculator_translator.lua`、`lua/unicode_display.lua`）是 CRLF，其余是 LF。编辑时保持原样，用 Python 改写的话要加 `newline=''`。
 - **Lua filter 不要遍历整个候选流**：候选是惰性生成的，短码的英文补全可能有几万条。只丢弃不 yield 的循环会把它们全部拉一遍，之前就因此每次按键卡了约 0.4 秒。能确定后面没有需要的候选时就 `break`。
-- **只给元书的文件**：`double_pinyin.custom.yaml`（联想补丁）和 `predict-zhs.db` 被 `deploy.sh` 排除，只由 `deploy-yuanshu.py` 传到手机。想让某个改动只在 iOS 生效时也按这个办法；新增此类文件要同时加进 `deploy.sh` 的两处 exclude。
+- **只给元书的文件**：`double_pinyin.custom.yaml`（联想补丁，引用 `lua/user_predict.lua`）和 `predict-zhs.db` 被 `deploy.sh` 排除，只由 `deploy-yuanshu.py` 传到手机。想让某个改动只在 iOS 生效时也按这个办法；新增此类文件要同时加进 `deploy.sh` 的两处 exclude。
 - **仓库是公开的**：`*.userdb`、`installation.yaml`、`user.yaml`、`sync/` 不能提交。部署脚本已经把它们排除，不会覆盖或删除。
 - **分支**：直接在当前分支提交，不要自己建分支。分支由用户管理。
 

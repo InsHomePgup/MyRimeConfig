@@ -1,12 +1,19 @@
 # 只给 iOS 元书用：上屏后的联想（猜下一个字词）
 # deploy.sh 不会把这个文件和 predict-zhs.db 同步到电脑，电脑上按空格 / 数字不会误选联想词；
 # deploy-yuanshu.py 会照常传到手机。元书内置 librime-predict 插件。
-# 联想词库 predict-zhs.db 来自 https://github.com/kenspc/rime-predict-zh （GPL-3.0，v1.1.0，纯简体）
+#
+# 两层联想：
+# - 底库 predict-zhs.db：librime-predict 官方数据 data-1.0（essay + octagram，约 17 万个上文）
+#   用 OpenCC t2s 转成简体后重新编译，做法见 tools/build_predict_db.sh
+# - 用户学习 lua/user_predict.lua：记录「上一段 → 这一段」，学到的排在底库前面，
+#   存在 user_predict.userdb，随 Rime「同步」在设备间合并
 
 patch:
-  # schema_sync 必须排第一个，predictor 放在它后面
+  # schema_sync 必须排第一个；predictor 第二；user_predict 要在 predictor 之后（见 user_predict.lua）
   'engine/processors/@before 1': predictor
-  'engine/translators/@before 0': predict_translator
+  'engine/processors/@before 2': lua_processor@*user_predict*processor
+  'engine/translators/@before 0': lua_translator@*user_predict*translator
+  'engine/translators/@before 1': predict_translator
   'switches/+':
     - name: prediction
       states: [ 无联想, 联想 ]
@@ -15,3 +22,5 @@ patch:
     db: predict-zhs.db
     max_candidates: 5   # 和 page_size 一致，避免句号键触发翻页
     max_iterations: 0   # 选了联想词后继续联想，不限次数（同微信输入法）
+  user_predict:
+    max_candidates: 5   # 学到的联想最多排几个在前面

@@ -45,7 +45,7 @@ REMOTE_ROOT = "RimeUserData"
 EXCLUDES = [".gitignore", ".release-it.json", "deploy.sh", "deploy.ps1",
             "deploy-yuanshu.py", "LICENSE", "*.md"]
 # 这些目录不是 Rime 配置（键盘皮肤单独用 --skin 上传）
-EXCLUDE_DIRS = ["yuanshu-skin/"]
+EXCLUDE_DIRS = ["yuanshu-skin/", "tools/"]
 SKIN_ROOT = "Skins"
 
 
