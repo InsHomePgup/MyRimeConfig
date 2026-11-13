@@ -77,6 +77,7 @@ if command -v rsync &>/dev/null; then
         --exclude='*.userdb.txt' \
         --exclude='user.yaml' \
         --exclude='installation.yaml' \
+        --exclude='weasel.custom.yaml' \
         "$REPO_DIR/" "$RIME_DIR/"
 else
     # 没有 rsync 时只覆盖、不删除
@@ -99,6 +100,7 @@ else
         --exclude='*.userdb.txt' \
         --exclude='./user.yaml' \
         --exclude='./installation.yaml' \
+        --exclude='./weasel.custom.yaml' \
         . | tar -xf - -C "$RIME_DIR"
 fi
 

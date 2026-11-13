@@ -48,7 +48,7 @@ global_ascii: false                        # 切换为 ascii 模式时，是否�
 # [style]
 # 字体；候选项、候选窗口的行为、布局及样式
 style:
-  color_scheme: macos_light                # 默认配色方案；微信风格改成 wechat_light / wechat_dark
+  color_scheme: gray_purple                # 默认配色方案；原来是 macos_light；微信风格改成 wechat_light / wechat_dark
   color_scheme_dark: macos_dark            # 深色模式下的配色方案，Windows 10 1809+ 可用
 
   # 全局字体：英文 Maple Mono，中文回落到 MiSans，生僻字再回落到 TumanPUA / SimSun-ExtB / 天珩
@@ -92,19 +92,19 @@ style:
     max_height: 600                        # 候选框最大高度，文本竖排模式下如高度超此尺寸则换列显示候选，设置为 0 不启用此功能
     max_width: 0                           # 候选框最大宽度，horizontal 布局如宽超此尺寸则换行显示候选，设置为 0 不启用此功能
     min_height: 0                          # 候选框最小高度
-    min_width: 10                          # 候选框最小宽度
+    min_width: 160                         # 候选框最小宽度
     border_width: 1                        # 边框宽度；又名 border
-    margin_x: 8                            # 主体元素和候选框的左右边距；为负值时，不显示候选框
+    margin_x: 12                           # 主体元素和候选框的左右边距；为负值时，不显示候选框
     margin_y: 8                            # 主体元素的上下边距；为负值时，不显示候选框
-    spacing: 13                            # inline_preedit 为否时，编码区域和候选区域的间距
-    candidate_spacing: 22                  # 候选项之间的间距
-    hilite_spacing: 6                      # 候选项和相应标签的间距
+    spacing: 8                             # inline_preedit 为否时，编码区域和候选区域的间距
+    candidate_spacing: 16                  # 候选项之间的间距
+    hilite_spacing: 4                      # 候选项和相应标签的间距
     hilite_padding: 8                      # 高亮区域和内部文字的间距，影响高亮区域大小
-    # hilite_padding_x: 8                  # 高亮区域和内部文字的左右间距，如无特殊指定则依 hilite_padding 设置
-    # hilite_padding_y: 8                  # 高亮区域和内部文字的上下间距，如无特殊指定则依 hilite_padding 设置
-    shadow_radius: 0                       # 阴影区域半径，为 0 不显示阴影；需要同时在配色方案中指定非透明的阴影颜色
-    shadow_offset_x: 4                     # 阴影左右偏移距离
-    shadow_offset_y: 4                     # 阴影上下偏移距离
+    hilite_padding_x: 6                    # 高亮区域和内部文字的左右间距，如无特殊指定则依 hilite_padding 设置
+    hilite_padding_y: 4                    # 高亮区域和内部文字的上下间距，如无特殊指定则依 hilite_padding 设置
+    shadow_radius: 8                       # 阴影区域半径，为 0 不显示阴影；需要同时在配色方案中指定非透明的阴影颜色
+    shadow_offset_x: 0                     # 阴影左右偏移距离
+    shadow_offset_y: 2                     # 阴影上下偏移距离
     corner_radius: 10                      # 候选窗口圆角半径
     round_corner: 6                        # 候选背景色块圆角半径，又名 hilited_corner_radius
     # type: vertical                       # 布局设置，效果和 style 下的设置相同：
@@ -120,6 +120,776 @@ style:
 # [小狼毫配色详解](https://github.com/rime/weasel/wiki/定制小狼毫配色)
 
 preset_color_schemes:
+  # ── 以下 45 套取自 Rime Skin Studio 预设 <https://github.com/JGCindy/rime-weasel-skin-studio>（MIT）
+  #    千禧粉两套原出 nevertoday/rime-color-scheme（MIT）。版式统一用上面 style/layout，只换颜色
+  #    在 托盘右键 → 输入法设定 → 界面风格 里切换
+  xxd_millennial:
+    name: "千禧粉"
+    back_color:                    0xEEF1F6
+    border_color:                  0xE2E5EA
+    shadow_color:                  0x20000000
+    text_color:                    0x2C2B39
+    hilited_text_color:            0x2F2E3D
+    hilited_back_color:            0xC8C6F3
+    candidate_text_color:          0x2F2E3D
+    label_color:                   0x6C6B80
+    comment_text_color:            0x6C6B80
+    hilited_candidate_text_color:  0x393678
+    hilited_candidate_back_color:  0xC8C6F3
+    hilited_candidate_label_color: 0x393678
+    hilited_comment_text_color:    0x53508E
+    nextpage_color:                0x6C6B80
+    prevpage_color:                0x6C6B80
+  xxd_millennial_night:
+    name: "千禧粉 · 夜色"
+    back_color:                    0x15141A
+    border_color:                  0x232228
+    shadow_color:                  0x64000000
+    text_color:                    0xCFCED4
+    hilited_text_color:            0xD5D4D9
+    hilited_back_color:            0xC8C6F3
+    candidate_text_color:          0xE7E7E9
+    label_color:                   0x9D9DAA
+    comment_text_color:            0x9D9DAA
+    hilited_candidate_text_color:  0x393678
+    hilited_candidate_back_color:  0xC8C6F3
+    hilited_candidate_label_color: 0x393678
+    hilited_comment_text_color:    0x53508E
+    nextpage_color:                0x9D9DAA
+    prevpage_color:                0x9D9DAA
+  gray_red:
+    name: "高级灰 · 红"
+    back_color:                    0xF3F3F7
+    border_color:                  0xE4E4EC
+    shadow_color:                  0x1A363663
+    text_color:                    0x3C3C49
+    hilited_text_color:            0x363663
+    hilited_back_color:            0xCACAE2
+    candidate_text_color:          0x3C3C49
+    label_color:                   0x838395
+    comment_text_color:            0x9C9CAB
+    hilited_candidate_text_color:  0x363663
+    hilited_candidate_back_color:  0xCACAE2
+    hilited_candidate_label_color: 0x363663
+    hilited_comment_text_color:    0x4E4E7E
+    nextpage_color:                0x9C9CAB
+    prevpage_color:                0x9C9CAB
+  gray_orange:
+    name: "高级灰 · 橙"
+    back_color:                    0xF3F5F7
+    border_color:                  0xE4E8EC
+    shadow_color:                  0x1A364B63
+    text_color:                    0x3C4249
+    hilited_text_color:            0x364B63
+    hilited_back_color:            0xCAD5E2
+    candidate_text_color:          0x3C4249
+    label_color:                   0x838C95
+    comment_text_color:            0x9CA3AB
+    hilited_candidate_text_color:  0x364B63
+    hilited_candidate_back_color:  0xCAD5E2
+    hilited_candidate_label_color: 0x364B63
+    hilited_comment_text_color:    0x4E647E
+    nextpage_color:                0x9CA3AB
+    prevpage_color:                0x9CA3AB
+  gray_yellow:
+    name: "高级灰 · 黄"
+    back_color:                    0xF3F6F7
+    border_color:                  0xE4EBEC
+    shadow_color:                  0x1A365D63
+    text_color:                    0x3C4749
+    hilited_text_color:            0x365D63
+    hilited_back_color:            0xCADFE2
+    candidate_text_color:          0x3C4749
+    label_color:                   0x839395
+    comment_text_color:            0x9CA9AB
+    hilited_candidate_text_color:  0x365D63
+    hilited_candidate_back_color:  0xCADFE2
+    hilited_candidate_label_color: 0x365D63
+    hilited_comment_text_color:    0x4E787E
+    nextpage_color:                0x9CA9AB
+    prevpage_color:                0x9CA9AB
+  gray_green:
+    name: "高级灰 · 绿"
+    back_color:                    0xF3F7F3
+    border_color:                  0xE5ECE4
+    shadow_color:                  0x1A396336
+    text_color:                    0x3D493C
+    hilited_text_color:            0x396336
+    hilited_back_color:            0xCCE2CA
+    candidate_text_color:          0x3D493C
+    label_color:                   0x859583
+    comment_text_color:            0x9DAB9C
+    hilited_candidate_text_color:  0x396336
+    hilited_candidate_back_color:  0xCCE2CA
+    hilited_candidate_label_color: 0x396336
+    hilited_comment_text_color:    0x527E4E
+    nextpage_color:                0x9DAB9C
+    prevpage_color:                0x9DAB9C
+  gray_cyan:
+    name: "高级灰 · 青"
+    back_color:                    0xF7F7F3
+    border_color:                  0xECECE4
+    shadow_color:                  0x1A636336
+    text_color:                    0x49493C
+    hilited_text_color:            0x636336
+    hilited_back_color:            0xE2E2CA
+    candidate_text_color:          0x49493C
+    label_color:                   0x959583
+    comment_text_color:            0xABAB9C
+    hilited_candidate_text_color:  0x636336
+    hilited_candidate_back_color:  0xE2E2CA
+    hilited_candidate_label_color: 0x636336
+    hilited_comment_text_color:    0x7E7E4E
+    nextpage_color:                0xABAB9C
+    prevpage_color:                0xABAB9C
+  gray_blue:
+    name: "高级灰 · 蓝"
+    back_color:                    0xF7F4F3
+    border_color:                  0xECE7E4
+    shadow_color:                  0x1A634336
+    text_color:                    0x49403C
+    hilited_text_color:            0x634336
+    hilited_back_color:            0xE2D1CA
+    candidate_text_color:          0x49403C
+    label_color:                   0x958983
+    comment_text_color:            0xABA09C
+    hilited_candidate_text_color:  0x634336
+    hilited_candidate_back_color:  0xE2D1CA
+    hilited_candidate_label_color: 0x634336
+    hilited_comment_text_color:    0x7E5C4E
+    nextpage_color:                0xABA09C
+    prevpage_color:                0xABA09C
+  gray_purple:
+    name: "高级灰 · 紫"
+    back_color:                    0xF7F3F6
+    border_color:                  0xECE4EA
+    shadow_color:                  0x1A633658
+    text_color:                    0x493C46
+    hilited_text_color:            0x633658
+    hilited_back_color:            0xE2CADC
+    candidate_text_color:          0x493C46
+    label_color:                   0x958391
+    comment_text_color:            0xAB9CA7
+    hilited_candidate_text_color:  0x633658
+    hilited_candidate_back_color:  0xE2CADC
+    hilited_candidate_label_color: 0x633658
+    hilited_comment_text_color:    0x7E4E72
+    nextpage_color:                0xAB9CA7
+    prevpage_color:                0xAB9CA7
+  mori_haze_blue:
+    name: "莫兰迪 · 雾霾蓝"
+    back_color:                    0xF8F6F4
+    border_color:                  0xEDE8E4
+    shadow_color:                  0x20503E2F
+    text_color:                    0x453D36
+    hilited_text_color:            0x000000
+    hilited_back_color:            0xBDA998
+    candidate_text_color:          0x453D36
+    label_color:                   0x998E85
+    comment_text_color:            0xABA39B
+    hilited_candidate_text_color:  0x000000
+    hilited_candidate_back_color:  0xBDA998
+    hilited_candidate_label_color: 0x000000
+    hilited_comment_text_color:    0x4B3C30
+    nextpage_color:                0xABA39B
+    prevpage_color:                0xABA39B
+  mori_pea_green:
+    name: "莫兰迪 · 灰豆绿"
+    back_color:                    0xF5F7F5
+    border_color:                  0xE6EAE6
+    shadow_color:                  0x2031502F
+    text_color:                    0x374536
+    hilited_text_color:            0x000000
+    hilited_back_color:            0xA0BB9E
+    candidate_text_color:          0x374536
+    label_color:                   0x869985
+    comment_text_color:            0x9CAB9B
+    hilited_candidate_text_color:  0x000000
+    hilited_candidate_back_color:  0xA0BB9E
+    hilited_candidate_label_color: 0x000000
+    hilited_comment_text_color:    0x344832
+    nextpage_color:                0x9CAB9B
+    prevpage_color:                0x9CAB9B
+  mori_lotus_pink:
+    name: "莫兰迪 · 藕荷粉"
+    back_color:                    0xF5F4F8
+    border_color:                  0xE4E3ED
+    shadow_color:                  0x20342F50
+    text_color:                    0x383645
+    hilited_text_color:            0x000000
+    hilited_back_color:            0xB5B0D4
+    candidate_text_color:          0x383645
+    label_color:                   0x888599
+    comment_text_color:            0x9D9BAB
+    hilited_candidate_text_color:  0x000000
+    hilited_candidate_back_color:  0xB5B0D4
+    hilited_candidate_label_color: 0x000000
+    hilited_comment_text_color:    0x302B4F
+    nextpage_color:                0x9D9BAB
+    prevpage_color:                0x9D9BAB
+  mori_oat:
+    name: "莫兰迪 · 燕麦色"
+    back_color:                    0xF4F7F8
+    border_color:                  0xE3EAED
+    shadow_color:                  0x202F4750
+    text_color:                    0x364045
+    hilited_text_color:            0x000000
+    hilited_back_color:            0xBED2DA
+    candidate_text_color:          0x364045
+    label_color:                   0x859399
+    comment_text_color:            0x9BA7AB
+    hilited_candidate_text_color:  0x000000
+    hilited_candidate_back_color:  0xBED2DA
+    hilited_candidate_label_color: 0x000000
+    hilited_comment_text_color:    0x2D444E
+    nextpage_color:                0x9BA7AB
+    prevpage_color:                0x9BA7AB
+  mori_calm_gray:
+    name: "莫兰迪 · 淡漠灰"
+    back_color:                    0xF6F6F6
+    border_color:                  0xE8E8E8
+    shadow_color:                  0x20404040
+    text_color:                    0x3D3D3D
+    hilited_text_color:            0x000000
+    hilited_back_color:            0xB4B4B4
+    candidate_text_color:          0x3D3D3D
+    label_color:                   0x8F8F8F
+    comment_text_color:            0xA3A3A3
+    hilited_candidate_text_color:  0x000000
+    hilited_candidate_back_color:  0xB4B4B4
+    hilited_candidate_label_color: 0x000000
+    hilited_comment_text_color:    0x3D3D3D
+    nextpage_color:                0xA3A3A3
+    prevpage_color:                0xA3A3A3
+  mori_gray_purple:
+    name: "莫兰迪 · 灰紫"
+    back_color:                    0xF8F4F6
+    border_color:                  0xEDE3E7
+    shadow_color:                  0x20502F3D
+    text_color:                    0x45363C
+    hilited_text_color:            0x000000
+    hilited_back_color:            0xC7A7B4
+    candidate_text_color:          0x45363C
+    label_color:                   0x99858D
+    comment_text_color:            0xAB9BA2
+    hilited_candidate_text_color:  0x000000
+    hilited_candidate_back_color:  0xC7A7B4
+    hilited_candidate_label_color: 0x000000
+    hilited_comment_text_color:    0x4B303B
+    nextpage_color:                0xAB9BA2
+    prevpage_color:                0xAB9BA2
+  mori_sage:
+    name: "莫兰迪 · 鼠尾草绿"
+    back_color:                    0xF4F8F6
+    border_color:                  0xE4ECE8
+    shadow_color:                  0x202F5040
+    text_color:                    0x36453D
+    hilited_text_color:            0x000000
+    hilited_back_color:            0x91B5A4
+    candidate_text_color:          0x36453D
+    label_color:                   0x85998F
+    comment_text_color:            0x9BABA3
+    hilited_candidate_text_color:  0x000000
+    hilited_candidate_back_color:  0x91B5A4
+    hilited_candidate_label_color: 0x000000
+    hilited_comment_text_color:    0x31493E
+    nextpage_color:                0x9BABA3
+    prevpage_color:                0x9BABA3
+  mori_dried_rose:
+    name: "莫兰迪 · 干燥玫瑰"
+    back_color:                    0xF4F4F8
+    border_color:                  0xE3E4ED
+    shadow_color:                  0x202F3250
+    text_color:                    0x363745
+    hilited_text_color:            0x000000
+    hilited_back_color:            0xA0A4C9
+    candidate_text_color:          0x363745
+    label_color:                   0x858799
+    comment_text_color:            0x9B9DAB
+    hilited_candidate_text_color:  0x000000
+    hilited_candidate_back_color:  0xA0A4C9
+    hilited_candidate_label_color: 0x000000
+    hilited_comment_text_color:    0x2C304E
+    nextpage_color:                0x9B9DAB
+    prevpage_color:                0x9B9DAB
+  mori_mocha:
+    name: "莫兰迪 · 摩卡慕斯"
+    back_color:                    0xF5F6F8
+    border_color:                  0xE4E8EC
+    shadow_color:                  0x202F4150
+    text_color:                    0x363E45
+    hilited_text_color:            0x000000
+    hilited_back_color:            0x93A4B4
+    candidate_text_color:          0x363E45
+    label_color:                   0x858F99
+    comment_text_color:            0x9BA4AB
+    hilited_candidate_text_color:  0x000000
+    hilited_candidate_back_color:  0x93A4B4
+    hilited_candidate_label_color: 0x000000
+    hilited_comment_text_color:    0x323E48
+    nextpage_color:                0x9BA4AB
+    prevpage_color:                0x9BA4AB
+  mori_slate_blue:
+    name: "莫兰迪 · 石板蓝"
+    back_color:                    0xF8F6F4
+    border_color:                  0xECE7E4
+    shadow_color:                  0x20503B2F
+    text_color:                    0x453B36
+    hilited_text_color:            0x000000
+    hilited_back_color:            0xB59F92
+    candidate_text_color:          0x453B36
+    label_color:                   0x998C85
+    comment_text_color:            0xABA19B
+    hilited_candidate_text_color:  0x000000
+    hilited_candidate_back_color:  0xB59F92
+    hilited_candidate_label_color: 0x000000
+    hilited_comment_text_color:    0x493A32
+    nextpage_color:                0xABA19B
+    prevpage_color:                0xABA19B
+  mori_vanilla:
+    name: "莫兰迪 · 香草黄"
+    back_color:                    0xF4F7F8
+    border_color:                  0xE3EBED
+    shadow_color:                  0x202F4A50
+    text_color:                    0x364245
+    hilited_text_color:            0x000000
+    hilited_back_color:            0xBDD5DB
+    candidate_text_color:          0x364245
+    label_color:                   0x859599
+    comment_text_color:            0x9BA8AB
+    hilited_candidate_text_color:  0x000000
+    hilited_candidate_back_color:  0xBDD5DB
+    hilited_candidate_label_color: 0x000000
+    hilited_comment_text_color:    0x2B4850
+    nextpage_color:                0x9BA8AB
+    prevpage_color:                0x9BA8AB
+  mori_clay_red:
+    name: "莫兰迪 · 陶土红"
+    back_color:                    0xF4F4F8
+    border_color:                  0xE3E4ED
+    shadow_color:                  0x202F3450
+    text_color:                    0x363845
+    hilited_text_color:            0x000000
+    hilited_back_color:            0x8990BD
+    candidate_text_color:          0x363845
+    label_color:                   0x858799
+    comment_text_color:            0x9B9DAB
+    hilited_candidate_text_color:  0x000000
+    hilited_candidate_back_color:  0x8990BD
+    hilited_candidate_label_color: 0x000000
+    hilited_comment_text_color:    0x2C304F
+    nextpage_color:                0x9B9DAB
+    prevpage_color:                0x9B9DAB
+  mac_candy_pink:
+    name: "马卡龙 · 千禧粉"
+    back_color:                    0xF1EEFC
+    border_color:                  0xE1DAF6
+    shadow_color:                  0x1A372F50
+    text_color:                    0x383347
+    hilited_text_color:            0x000000
+    hilited_back_color:            0xB6A1F7
+    candidate_text_color:          0x383347
+    label_color:                   0x89849A
+    comment_text_color:            0x9E9AAC
+    hilited_candidate_text_color:  0x000000
+    hilited_candidate_back_color:  0xB6A1F7
+    hilited_candidate_label_color: 0x000000
+    hilited_comment_text_color:    0x342B50
+    nextpage_color:                0x9E9AAC
+    prevpage_color:                0x9E9AAC
+  mac_mint:
+    name: "马卡龙 · 薄荷绿"
+    back_color:                    0xF6FCEE
+    border_color:                  0xEAF6DA
+    shadow_color:                  0x1A42502F
+    text_color:                    0x3E4733
+    hilited_text_color:            0x000000
+    hilited_back_color:            0xD0F0A8
+    candidate_text_color:          0x3E4733
+    label_color:                   0x909A84
+    comment_text_color:            0xA4AC9A
+    hilited_candidate_text_color:  0x000000
+    hilited_candidate_back_color:  0xD0F0A8
+    hilited_candidate_label_color: 0x000000
+    hilited_comment_text_color:    0x3F502B
+    nextpage_color:                0xA4AC9A
+    prevpage_color:                0xA4AC9A
+  mac_lavender:
+    name: "马卡龙 · 薰衣草紫"
+    back_color:                    0xFCEEEE
+    border_color:                  0xF6DADA
+    shadow_color:                  0x1A502F2F
+    text_color:                    0x473333
+    hilited_text_color:            0x000000
+    hilited_back_color:            0xEEAAAA
+    candidate_text_color:          0x473333
+    label_color:                   0x9A8484
+    comment_text_color:            0xAC9A9A
+    hilited_candidate_text_color:  0x000000
+    hilited_candidate_back_color:  0xEEAAAA
+    hilited_candidate_label_color: 0x000000
+    hilited_comment_text_color:    0x502B2B
+    nextpage_color:                0xAC9A9A
+    prevpage_color:                0xAC9A9A
+  mac_baby_blue:
+    name: "马卡龙 · 婴儿蓝"
+    back_color:                    0xFCF7EE
+    border_color:                  0xF6EDDA
+    shadow_color:                  0x1A50462F
+    text_color:                    0x474133
+    hilited_text_color:            0x000000
+    hilited_back_color:            0xF0CF89
+    candidate_text_color:          0x474133
+    label_color:                   0x9A9384
+    comment_text_color:            0xACA69A
+    hilited_candidate_text_color:  0x000000
+    hilited_candidate_back_color:  0xF0CF89
+    hilited_candidate_label_color: 0x000000
+    hilited_comment_text_color:    0x50442B
+    nextpage_color:                0xACA69A
+    prevpage_color:                0xACA69A
+  mac_sakura:
+    name: "马卡龙 · 樱花粉"
+    back_color:                    0xF4EEFC
+    border_color:                  0xE6DAF6
+    shadow_color:                  0x1A3E2F50
+    text_color:                    0x3C3347
+    hilited_text_color:            0x000000
+    hilited_back_color:            0xC8A7F1
+    candidate_text_color:          0x3C3347
+    label_color:                   0x8D849A
+    comment_text_color:            0xA29AAC
+    hilited_candidate_text_color:  0x000000
+    hilited_candidate_back_color:  0xC8A7F1
+    hilited_candidate_label_color: 0x000000
+    hilited_comment_text_color:    0x3B2B50
+    nextpage_color:                0xA29AAC
+    prevpage_color:                0xA29AAC
+  mac_gosling:
+    name: "马卡龙 · 鹅黄"
+    back_color:                    0xEEFAFC
+    border_color:                  0xDAF3F6
+    shadow_color:                  0x1A2F4D50
+    text_color:                    0x334547
+    hilited_text_color:            0x000000
+    hilited_back_color:            0xA1EEF7
+    candidate_text_color:          0x334547
+    label_color:                   0x84989A
+    comment_text_color:            0x9AABAC
+    hilited_candidate_text_color:  0x000000
+    hilited_candidate_back_color:  0xA1EEF7
+    hilited_candidate_label_color: 0x000000
+    hilited_comment_text_color:    0x2B4C50
+    nextpage_color:                0x9AABAC
+    prevpage_color:                0x9AABAC
+  mac_peach:
+    name: "马卡龙 · 蜜桃橙"
+    back_color:                    0xEEF7FC
+    border_color:                  0xDAECF6
+    shadow_color:                  0x1A2F4550
+    text_color:                    0x334047
+    hilited_text_color:            0x000000
+    hilited_back_color:            0xA1D9F7
+    candidate_text_color:          0x334047
+    label_color:                   0x84929A
+    comment_text_color:            0x9AA6AC
+    hilited_candidate_text_color:  0x000000
+    hilited_candidate_back_color:  0xA1D9F7
+    hilited_candidate_label_color: 0x000000
+    hilited_comment_text_color:    0x2B4350
+    nextpage_color:                0x9AA6AC
+    prevpage_color:                0x9AA6AC
+  mac_celadon:
+    name: "马卡龙 · 青瓷绿"
+    back_color:                    0xF1FAF0
+    border_color:                  0xDFF2DE
+    shadow_color:                  0x1A31502F
+    text_color:                    0x354733
+    hilited_text_color:            0x000000
+    hilited_back_color:            0xA9E7A6
+    candidate_text_color:          0x354733
+    label_color:                   0x859A84
+    comment_text_color:            0x9BAC9A
+    hilited_candidate_text_color:  0x000000
+    hilited_candidate_back_color:  0xA9E7A6
+    hilited_candidate_label_color: 0x000000
+    hilited_comment_text_color:    0x2D502B
+    nextpage_color:                0x9BAC9A
+    prevpage_color:                0x9BAC9A
+  mac_ice_blue:
+    name: "马卡龙 · 冰蓝色"
+    back_color:                    0xFBFBEE
+    border_color:                  0xF5F5DB
+    shadow_color:                  0x1A50502F
+    text_color:                    0x474733
+    hilited_text_color:            0x000000
+    hilited_back_color:            0xEDEDAB
+    candidate_text_color:          0x474733
+    label_color:                   0x9A9A84
+    comment_text_color:            0xACAC9A
+    hilited_candidate_text_color:  0x000000
+    hilited_candidate_back_color:  0xEDEDAB
+    hilited_candidate_label_color: 0x000000
+    hilited_comment_text_color:    0x50502B
+    nextpage_color:                0xACAC9A
+    prevpage_color:                0xACAC9A
+  mac_lilac:
+    name: "马卡龙 · 紫丁香"
+    back_color:                    0xF7F2F7
+    border_color:                  0xEDE3ED
+    shadow_color:                  0x1A502F50
+    text_color:                    0x473347
+    hilited_text_color:            0x000000
+    hilited_back_color:            0xE08AE0
+    candidate_text_color:          0x473347
+    label_color:                   0x9A849A
+    comment_text_color:            0xAC9AAC
+    hilited_candidate_text_color:  0x000000
+    hilited_candidate_back_color:  0xE08AE0
+    hilited_candidate_label_color: 0x000000
+    hilited_comment_text_color:    0x502B50
+    nextpage_color:                0xAC9AAC
+    prevpage_color:                0xAC9AAC
+  mac_rose_quartz:
+    name: "马卡龙 · 玫瑰石英"
+    back_color:                    0xEEEEFC
+    border_color:                  0xDADBF6
+    shadow_color:                  0x1A2F3050
+    text_color:                    0x333447
+    hilited_text_color:            0x000000
+    hilited_back_color:            0xA6A8F2
+    candidate_text_color:          0x333447
+    label_color:                   0x84849A
+    comment_text_color:            0x9A9AAC
+    hilited_candidate_text_color:  0x000000
+    hilited_candidate_back_color:  0xA6A8F2
+    hilited_candidate_label_color: 0x000000
+    hilited_comment_text_color:    0x2B2C50
+    nextpage_color:                0x9A9AAC
+    prevpage_color:                0x9A9AAC
+  mac_apricot:
+    name: "马卡龙 · 杏色"
+    back_color:                    0xEEF3FC
+    border_color:                  0xDAE5F6
+    shadow_color:                  0x1A2F3C50
+    text_color:                    0x333B47
+    hilited_text_color:            0x000000
+    hilited_back_color:            0xA1C3F7
+    candidate_text_color:          0x333B47
+    label_color:                   0x848C9A
+    comment_text_color:            0x9AA1AC
+    hilited_candidate_text_color:  0x000000
+    hilited_candidate_back_color:  0xA1C3F7
+    hilited_candidate_label_color: 0x000000
+    hilited_comment_text_color:    0x2B3950
+    nextpage_color:                0x9AA1AC
+    prevpage_color:                0x9AA1AC
+  dopa_hot_pink:
+    name: "多巴胺 · 热粉色"
+    back_color:                    0xF5EFFA
+    border_color:                  0xE6D9F2
+    shadow_color:                  0x1E402F50
+    text_color:                    0x3D304B
+    hilited_text_color:            0x000000
+    hilited_back_color:            0xA347FF
+    candidate_text_color:          0x3D304B
+    label_color:                   0x8F7F9F
+    comment_text_color:            0xA396B0
+    hilited_candidate_text_color:  0x000000
+    hilited_candidate_back_color:  0xA347FF
+    hilited_candidate_label_color: 0x000000
+    hilited_comment_text_color:    0x3D2B50
+    nextpage_color:                0xA396B0
+    prevpage_color:                0xA396B0
+  dopa_bright_orange:
+    name: "多巴胺 · 亮橙色"
+    back_color:                    0xEFF3FA
+    border_color:                  0xD9E1F2
+    shadow_color:                  0x1E2F3A50
+    text_color:                    0x30394B
+    hilited_text_color:            0x000000
+    hilited_back_color:            0x0E5EFF
+    candidate_text_color:          0x30394B
+    label_color:                   0x7F8A9F
+    comment_text_color:            0x969FB0
+    hilited_candidate_text_color:  0x000000
+    hilited_candidate_back_color:  0x0E5EFF
+    hilited_candidate_label_color: 0x000000
+    hilited_comment_text_color:    0x2B3750
+    nextpage_color:                0x969FB0
+    prevpage_color:                0x969FB0
+  dopa_lemon:
+    name: "多巴胺 · 柠檬黄"
+    back_color:                    0xEFF9FA
+    border_color:                  0xD9EEF2
+    shadow_color:                  0x1E2F4C50
+    text_color:                    0x30474B
+    hilited_text_color:            0x000000
+    hilited_back_color:            0x00DAFF
+    candidate_text_color:          0x30474B
+    label_color:                   0x7F9A9F
+    comment_text_color:            0x96ACB0
+    hilited_candidate_text_color:  0x000000
+    hilited_candidate_back_color:  0x00DAFF
+    hilited_candidate_label_color: 0x000000
+    hilited_comment_text_color:    0x2B4A50
+    nextpage_color:                0x96ACB0
+    prevpage_color:                0x96ACB0
+  dopa_neon_green:
+    name: "多巴胺 · 荧光绿"
+    back_color:                    0xEFFAEF
+    border_color:                  0xD9F2D9
+    shadow_color:                  0x1E2F502F
+    text_color:                    0x304B30
+    hilited_text_color:            0x000000
+    hilited_back_color:            0x33FF33
+    candidate_text_color:          0x304B30
+    label_color:                   0x7F9F7F
+    comment_text_color:            0x96B096
+    hilited_candidate_text_color:  0x000000
+    hilited_candidate_back_color:  0x33FF33
+    hilited_candidate_label_color: 0x000000
+    hilited_comment_text_color:    0x2B502B
+    nextpage_color:                0x96B096
+    prevpage_color:                0x96B096
+  dopa_klein_blue:
+    name: "多巴胺 · 克莱因蓝"
+    back_color:                    0xFAF2EF
+    border_color:                  0xF2E0D9
+    shadow_color:                  0x1E50392F
+    text_color:                    0x4B3730
+    hilited_text_color:            0xFFFFFF
+    hilited_back_color:            0xA72F00
+    candidate_text_color:          0x4B3730
+    label_color:                   0x9F887F
+    comment_text_color:            0xB09E96
+    hilited_candidate_text_color:  0xFFFFFF
+    hilited_candidate_back_color:  0xA72F00
+    hilited_candidate_label_color: 0xFFFFFF
+    hilited_comment_text_color:    0xE9CEC4
+    nextpage_color:                0xB09E96
+    prevpage_color:                0xB09E96
+  dopa_electric_purple:
+    name: "多巴胺 · 电光紫"
+    back_color:                    0xFAEFF5
+    border_color:                  0xF2D9E7
+    shadow_color:                  0x1E502F42
+    text_color:                    0x4B303F
+    hilited_text_color:            0xFFFFFF
+    hilited_back_color:            0xFF008F
+    candidate_text_color:          0x4B303F
+    label_color:                   0x9F7F91
+    comment_text_color:            0xB096A5
+    hilited_candidate_text_color:  0xFFFFFF
+    hilited_candidate_back_color:  0xFF008F
+    hilited_candidate_label_color: 0xFFFFFF
+    hilited_comment_text_color:    0xE9C4D8
+    nextpage_color:                0xB096A5
+    prevpage_color:                0xB096A5
+  dopa_neon_blue:
+    name: "多巴胺 · 荧光蓝"
+    back_color:                    0xFAFAEF
+    border_color:                  0xF1F2D9
+    shadow_color:                  0x1E4F502F
+    text_color:                    0x4A4B30
+    hilited_text_color:            0x000000
+    hilited_back_color:            0xEEF415
+    candidate_text_color:          0x4A4B30
+    label_color:                   0x9E9F7F
+    comment_text_color:            0xAFB096
+    hilited_candidate_text_color:  0x000000
+    hilited_candidate_back_color:  0xEEF415
+    hilited_candidate_label_color: 0x000000
+    hilited_comment_text_color:    0x4F502B
+    nextpage_color:                0xAFB096
+    prevpage_color:                0xAFB096
+  dopa_barbie_pink:
+    name: "多巴胺 · 芭比粉"
+    back_color:                    0xF5EFFA
+    border_color:                  0xE7D9F2
+    shadow_color:                  0x1E412F50
+    text_color:                    0x3F304B
+    hilited_text_color:            0x000000
+    hilited_back_color:            0x8B19E8
+    candidate_text_color:          0x3F304B
+    label_color:                   0x907F9F
+    comment_text_color:            0xA496B0
+    hilited_candidate_text_color:  0x000000
+    hilited_candidate_back_color:  0x8B19E8
+    hilited_candidate_label_color: 0x000000
+    hilited_comment_text_color:    0x2F203C
+    nextpage_color:                0xA496B0
+    prevpage_color:                0xA496B0
+  dopa_raspberry:
+    name: "多巴胺 · 树莓红"
+    back_color:                    0xF3EFFA
+    border_color:                  0xE2D9F2
+    shadow_color:                  0x1E3C2F50
+    text_color:                    0x3A304B
+    hilited_text_color:            0xFFFFFF
+    hilited_back_color:            0x5C0BE3
+    candidate_text_color:          0x3A304B
+    label_color:                   0x8B7F9F
+    comment_text_color:            0xA096B0
+    hilited_candidate_text_color:  0xFFFFFF
+    hilited_candidate_back_color:  0x5C0BE3
+    hilited_candidate_label_color: 0xFFFFFF
+    hilited_comment_text_color:    0xE3DAF1
+    nextpage_color:                0xA096B0
+    prevpage_color:                0xA096B0
+  dopa_royal_blue:
+    name: "多巴胺 · 宝蓝色"
+    back_color:                    0xFAF2EF
+    border_color:                  0xF2DFD9
+    shadow_color:                  0x1E50372F
+    text_color:                    0x4B3630
+    hilited_text_color:            0xFFFFFF
+    hilited_back_color:            0xFF6633
+    candidate_text_color:          0x4B3630
+    label_color:                   0x9F877F
+    comment_text_color:            0xB09D96
+    hilited_candidate_text_color:  0xFFFFFF
+    hilited_candidate_back_color:  0xFF6633
+    hilited_candidate_label_color: 0xFFFFFF
+    hilited_comment_text_color:    0xF1E0DA
+    nextpage_color:                0xB09D96
+    prevpage_color:                0xB09D96
+  dopa_chartreuse:
+    name: "多巴胺 · 查特酒绿"
+    back_color:                    0xEFFAF5
+    border_color:                  0xD9F2E5
+    shadow_color:                  0x1E2F5040
+    text_color:                    0x304B3D
+    hilited_text_color:            0x000000
+    hilited_back_color:            0x00FF7F
+    candidate_text_color:          0x304B3D
+    label_color:                   0x7F9F8F
+    comment_text_color:            0x96B0A3
+    hilited_candidate_text_color:  0x000000
+    hilited_candidate_back_color:  0x00FF7F
+    hilited_candidate_label_color: 0x000000
+    hilited_comment_text_color:    0x2B503D
+    nextpage_color:                0x96B0A3
+    prevpage_color:                0x96B0A3
+  dopa_sunset_orange:
+    name: "多巴胺 · 落日橙"
+    back_color:                    0xEFF0FA
+    border_color:                  0xD9DBF2
+    shadow_color:                  0x1E2F3150
+    text_color:                    0x30314B
+    hilited_text_color:            0x000000
+    hilited_back_color:            0x4A55FD
+    candidate_text_color:          0x30314B
+    label_color:                   0x7F819F
+    comment_text_color:            0x9698B0
+    hilited_candidate_text_color:  0x000000
+    hilited_candidate_back_color:  0x4A55FD
+    hilited_candidate_label_color: 0x000000
+    hilited_comment_text_color:    0x2B2D50
+    nextpage_color:                0x9698B0
+    prevpage_color:                0x9698B0
+  # ── Rime Skin Studio 预设结束
+
   wechat:
     name: '微信键盘 / WeChat-keyboard'
     author: zsakvo
