@@ -21,6 +21,7 @@
 依赖：只用标准库；装了 Pillow 时会画一张示意图当 demo.png，否则用纯色占位图。
 """
 
+import glob
 import json
 import os
 import shutil
@@ -31,6 +32,37 @@ import zlib
 SKIN_NAME = "MyRime"
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT_ROOT = os.path.join(HERE, "build")
+
+# ---------------------------------------------------------------- 字体
+# 和电脑上的 Rime 一致：英文 Maple Mono，中文 MiSans。
+# 按顺序生效：Maple Mono 只管 ASCII（英文、数字、半角符号），其余字符落到 MiSans。
+# 字体文件有版权，不放进仓库，生成时从本机字体目录复制进皮肤的 fonts/；找不到的跳过，键盘用系统字体。
+# 额外的查找目录可以用环境变量 YUANSHU_FONT_DIRS 指定（多个用系统路径分隔符隔开）。
+FONTS = [
+    ("MapleMono-Regular.ttf", [{"location": 0x20, "length": 0x7F - 0x20}]),
+    ("MiSans-Regular.ttf", None),
+]
+FONT_DIRS = (
+    [d for d in os.environ.get("YUANSHU_FONT_DIRS", "").split(os.pathsep) if d]
+    + [os.path.expanduser("~/Documents/Font")]
+    + sorted(glob.glob("/mnt/c/Users/*/Documents/Font"))          # WSL 下的 Windows 用户目录
+    + ([os.path.join(os.environ["LOCALAPPDATA"], "Microsoft", "Windows", "Fonts")]
+       if os.environ.get("LOCALAPPDATA") else [])
+    + sorted(glob.glob("/mnt/c/Users/*/AppData/Local/Microsoft/Windows/Fonts"))
+    + ["C:/Windows/Fonts", "/mnt/c/Windows/Fonts",
+       os.path.expanduser("~/Library/Fonts"), "/Library/Fonts",
+       os.path.expanduser("~/.local/share/fonts"), "/usr/share/fonts"]
+)
+
+
+def find_font(filename):
+    for d in FONT_DIRS:
+        if not d or not os.path.isdir(d):
+            continue
+        for root, _, files in os.walk(d):
+            if filename in files:
+                return os.path.join(root, filename)
+    return None
 
 # ---------------------------------------------------------------- 配色
 # 跟 iOS 26/27 原生键盘保持一致：键盘区不画背景，透出系统的液态玻璃容器
@@ -436,7 +468,7 @@ def pinyin_keyboard(mode):
     zh_big = s.text("zhBigForeground", "中", size=17, center={"x": 0.38, "y": 0.42})
     en_small = s.text("enSmallForeground", "英", size=11, color="text_dim", center={"x": 0.66, "y": 0.64})
     zh_small = s.text("zhSmallForeground", "中", size=11, color="text_dim", center={"x": 0.34, "y": 0.36})
-    en_big = s.text("enBigForeground", "英", size=17, color="accent", center={"x": 0.62, "y": 0.58})
+    en_big = s.text("enBigForeground", "英", size=17, center={"x": 0.62, "y": 0.58})
     zh_state = [zh_big, en_small]
     en_state = [zh_small, en_big]
     ascii_action = {"shortcut": "#中英切换"}
@@ -698,6 +730,15 @@ README = """MyRime：仿微信输入法布局的简洁皮肤，配合雾凇拼�
 
 def config_yaml():
     cfg = {"name": SKIN_NAME, "author": "MyRimeConfig"}
+    faces = []
+    for fname, ranges in FONTS:
+        if os.path.exists(os.path.join(OUT_ROOT, SKIN_NAME, "fonts", fname)):
+            face = {"url": fname}
+            if ranges:
+                face["ranges"] = ranges
+            faces.append(face)
+    if faces:
+        cfg["fontFace"] = faces
     for kind, (fname, _) in KEYBOARDS.items():
         # 横屏、iPad 暂时沿用竖屏文件，之后单独做
         cfg[kind] = {
@@ -733,6 +774,13 @@ def build():
         for fname, fn in KEYBOARDS.values():
             with open(os.path.join(skin_dir, mode, fname + ".yaml"), "w", encoding="utf-8", newline="\n") as fh:
                 fh.write(to_yaml(fn(mode)) + "\n")
+    os.makedirs(os.path.join(skin_dir, "fonts"))
+    for fname, _ in FONTS:
+        src = find_font(fname)
+        if src:
+            shutil.copyfile(src, os.path.join(skin_dir, "fonts", fname))
+        else:
+            print("!!! 找不到字体 %s，键盘上对应字符用系统字体（可设 YUANSHU_FONT_DIRS 指定目录）" % fname)
     with open(os.path.join(skin_dir, "config.yaml"), "w", encoding="utf-8", newline="\n") as fh:
         fh.write(config_yaml())
     with open(os.path.join(skin_dir, "README.md"), "w", encoding="utf-8", newline="\n") as fh:

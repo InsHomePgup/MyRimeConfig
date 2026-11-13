@@ -14,6 +14,7 @@ SCALE = 3
 GAP = 24
 
 FONT_CANDIDATES = [
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "build", "MyRime", "fonts", "MiSans-Regular.ttf"),
     "/mnt/c/Windows/Fonts/msyh.ttc",
     "C:/Windows/Fonts/msyh.ttc",
     "/System/Library/Fonts/PingFang.ttc",
