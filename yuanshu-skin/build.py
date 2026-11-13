@@ -404,8 +404,9 @@ def pinyin_keyboard(mode):
     r3 = [shift] + [s.letter(ch, k) for ch in ROW3] + [s.backspace(edge, {"alignment": "right", "width": vis})]
 
     # 底行：123 / 表情 / ，。 / 空格 / 中英 / 回车（比例取自微信输入法）
+    # 同微信：123 进符号键盘（数字行 + 标点），符号键盘上的「12/34」再进九宫格数字键盘
     num = s.func_key("numericButton", s.text("numericForeground", "123"),
-                     {"keyboardType": "numeric"}, 0.15)
+                     {"keyboardType": "symbolic"}, 0.15)
     emoji = s.func_key("emojiButton", s.icon("emojiForeground", "face.smiling", size=21),
                        {"keyboardType": "emojis"}, 0.1)
     punct = s.add("punctButton", {
@@ -580,8 +581,11 @@ def symbolic_keyboard(mode):
     r3 = [more] + sym_row("punct", ["。", "，", "、", "？", "！", "."], (1 - 2 * edge) / 6) + [s.backspace(edge)]
     emoji = s.func_key("emojiButton", s.icon("emojiForeground", "face.smiling", size=21),
                        {"keyboardType": "emojis"}, 0.1)
-    num = s.func_key("numericButton", s.text("numericForeground", "123"),
-                     {"keyboardType": "numeric"}, 0.1, kind="key")
+    # 「12 / 34」上下两行（微信的九宫格数字键盘图标），用两层文字叠出来
+    num = s.func_key("numericButton", [
+        s.text("numericTopForeground", "12", size=13, center={"x": 0.5, "y": 0.34}),
+        s.text("numericBottomForeground", "34", size=13, center={"x": 0.5, "y": 0.66}),
+    ], {"keyboardType": "numeric"}, 0.1, kind="key")
     space = s.add("spaceButton", {
         "action": "space",
         "backgroundStyle": s.bg("key"),
