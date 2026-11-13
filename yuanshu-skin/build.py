@@ -103,6 +103,24 @@ RETURN_ACCENT = [1, 4, 7, 9, 10]
 RETURN_PLAIN = [0, 2, 3, 5, 6, 8, 11]
 
 
+# 全角中文标点的字形只占字身的一半：，。？！ 等画在左半边，（【《 等画在右半边。
+# 元书按字身（advance）居中，这些符号看起来就偏到一侧。下面是字形中心相对字身中心的偏移，
+# 单位 em，负数表示偏左；在 MiSans、等线、微软雅黑里量过，三者一致，iOS 的苹方也是这个惯例。
+# 弯引号 “” ‘’ 在 iOS 上取自 SF Pro（窄字身、已居中），不用调。
+_LEFT = "，。、；：？！）】》〉」』〕］｝〗"
+_RIGHT = "（【《〈「『〔［｛〖"
+PUNCT_OFFSET = {**{ch: -0.25 for ch in _LEFT}, **{ch: 0.25 for ch in _RIGHT}, "《": 0.18, "》": -0.18}
+KEYBOARD_WIDTH = 393 - KEYBOARD_INSETS["left"] - KEYBOARD_INSETS["right"]   # 按 iPhone 竖屏估算
+
+
+def glyph_center(ch, size, width_pt):
+    """让全角标点的字形本身水平居中：返回前景的 center，不需要调整时返回 None。"""
+    off = PUNCT_OFFSET.get(ch)
+    if not off or not width_pt:
+        return None
+    return {"x": round(0.5 - off * size / width_pt, 3), "y": 0.5}
+
+
 def pct(x):
     return {"percentage": round(x, 5)}
 
@@ -177,7 +195,7 @@ class Sheet:
             "borderSize": 0.5,
             "normalBorderColor": self.c["hint_border"],
         })
-        fg = self.text(name + "HintForeground", label, size=30)
+        fg = self.text(name + "HintForeground", label, size=30, center=glyph_center(label, 30, 52))
         return self.add(name + "Hint", {
             "size": {"width": 52, "height": 56},
             "backgroundStyle": "hintBackground",
@@ -205,7 +223,8 @@ class Sheet:
         node = {
             "action": action,
             "backgroundStyle": self.bg(kind),
-            "foregroundStyle": self.text(name + "Foreground", label, size=size),
+            "foregroundStyle": self.text(name + "Foreground", label, size=size,
+                                         center=glyph_center(label, size, width and width * KEYBOARD_WIDTH)),
             "hintStyle": self.hint(name, label),
         }
         if width is not None:
@@ -483,12 +502,14 @@ def pinyin_keyboard(mode):
 
 # ---------------------------------------------------------------- 符号栏（数字 / 符号键盘顶部）
 def symbol_toolbar(s, symbols):
+    # 符号平分关闭键以外的宽度（工具栏左右各缩进 6）
+    cell_pt = (393 - 12 - 44) / len(symbols)
     cells = []
     for i, sym in enumerate(symbols):
         name = "barSymbol%d" % i
         cells.append(s.add(name, {
             "action": {"symbol": sym},
-            "foregroundStyle": s.text(name + "Foreground", sym, size=18),
+            "foregroundStyle": s.text(name + "Foreground", sym, size=18, center=glyph_center(sym, 18, cell_pt)),
         }))
     cells.append(s.add("barClose", {
         "action": "returnPrimaryKeyboard",
