@@ -434,7 +434,7 @@ def pinyin_keyboard(mode):
     # 底行：123 / ，。 / 空格 / 中英 / 回车（比例取自微信输入法；不放 Emoji 键，用 iOS 自带的 Emoji 键盘）
     # 同微信：123 进符号键盘（数字行 + 标点），符号键盘上的「12/34」再进九宫格数字键盘
     num = s.func_key("numericButton", s.text("numericForeground", "123"),
-                     {"keyboardType": "symbolic"}, 0.15)
+                     {"keyboardType": "symbolMain"}, 0.15)
     punct = s.add("punctButton", {
         "action": {"character": ","},
         "swipeUpAction": {"character": "."},          # 唯一保留的划动：逗号键上划出句号，和微信一样
@@ -541,7 +541,7 @@ def numeric_keyboard(mode):
     s.add("sideColumn", {"size": {"width": pct(side)}})
     s.add("middleColumn", {"size": {"width": pct(1 - 2 * side)}})
     symbols = s.func_key("symbolicButton", s.text("symbolicForeground", "符号"),
-                         {"keyboardType": "symbolic"}, third, kind="key")
+                         {"keyboardType": "symbolMain"}, third, kind="key")
     space = s.func_key("spaceButton", s.text("spaceForeground", "空格"), "space")
     enter = s.enter(side)
     s.d[enter]["size"] = {"height": pct(0.5)}   # 在列里取高度：占两格
@@ -568,7 +568,7 @@ def numeric_keyboard(mode):
 
 # ---------------------------------------------------------------- 符号键盘
 # 微信输入法的符号键盘分两层：
-# - 主符号页（symbolic）：数字 + 常用中文标点，「符号」键进入更多符号；
+# - 主符号页（自定义类型 symbolMain，不用 symbolic）：数字 + 常用中文标点，「符号」键进入更多符号；
 # - 更多符号：底部是一排分类，每个分类在这里是一个自定义键盘，点分类就切过去。
 #   第一个分类（时钟图标）照微信截图；其余分类的内容是自拟的常用符号，以后可按微信截图对齐。
 SYMBOL_BAR = ["（", "）", ".", "@", "。", "？", "！", "-"]   # 符号页顶部的快捷符号
@@ -652,7 +652,7 @@ def symbol_page(mode, index):
     r2 = [key(10 + i, ch, k) for i, ch in enumerate(chars[10:20])]
     edge = EDGE_CELL
     num = s.func_key("symbolicButton", s.text("symbolicForeground", "123"),
-                     {"keyboardType": "symbolic"}, edge, edge_bounds("left"))
+                     {"keyboardType": "symbolMain"}, edge, edge_bounds("left"))
     # 第三行按实际符号个数均分 123 和删除键之间的宽度（同微信：6 个符号时每个键加宽，不留空格）
     row3 = [ch for ch in chars[20:27] if ch]
     w3 = (1 - 2 * edge) / max(len(row3), 1)
@@ -729,7 +729,9 @@ def to_yaml(obj, indent=0):
 KEYBOARDS = {
     "pinyin": ("pinyinPortrait", pinyin_keyboard),
     "numeric": ("numericPortrait", numeric_keyboard),
-    "symbolic": ("symbolicPortrait", symbolic_keyboard),
+    # 主符号页不用元书的 symbolic 类型：symbolic 键盘在未锁定时点任何符号都会自动回主键盘，
+    # 自定义类型则会一直停留，由用户自己点 ← 返回
+    "symbolMain": ("symbolicPortrait", symbolic_keyboard),
 }
 # 更多符号的分类页是自定义键盘类型，在 config.yaml 里按名字声明
 for _i, (_kb, _, _, _) in enumerate(SYMBOL_PAGES):

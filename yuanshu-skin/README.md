@@ -50,7 +50,7 @@ python3 deploy-yuanshu.py <手机地址> --skin --no-userdb   # 同步 Rime 配�
 
 ```
 拼音键盘 pinyinPortrait（26 键，中英共用一套，中英键切 RIME 的 ascii_mode）
- ├─ 123 ─────────→ 主符号页 symbolicPortrait（数字行 + 常用中文标点）
+ ├─ 123 ─────────→ 主符号页 symbolicPortrait（类型 symbolMain，数字行 + 常用中文标点）
  │                   ├─ 符号 ──→ 更多符号「常用」symbolCommonPortrait
  │                   │            └─ 底部分类栏：常用 / 中 / 英 / 括号 / 货币 / 数学 / 序号
  │                   │               每个分类是一个自定义键盘 symbol<Name>Portrait；左下 123 回主符号页
@@ -111,6 +111,7 @@ python3 deploy-yuanshu.py <手机地址> --skin --no-userdb   # 同步 Rime 配�
 - 某一行里放了**空白占位格**，看起来就是那一行右侧留了空隙。现在第三行按实际符号个数均分，没有空白格了。
 - 文本样式会去掉首尾空白，要做两行文字（比如 `12/34`），就用两个前景叠起来，各自用 `center` 定位。
 - 文字按字身居中，全角中文标点的字形却只画在字身的一半（`，。？！` 偏左，`（【《` 偏右），所以键上看起来不居中。`build.py` 的 `PUNCT_OFFSET` 记了每个标点的偏移，`glyph_center()` 据此给符号键、按键气泡、快捷符号栏算 `center.x`。新增全角标点时要加进这张表。弯引号 `“”‘’` 在 iOS 上取自 SF Pro，本来就居中，不用加。
+- **`symbolic` 类型的键盘点一下符号就会回主键盘**（除非用 `symbolicKeyboardLockStateToggle` 锁定）。用户要的是停留在符号页、自己点 ← 返回，所以主符号页用自定义类型 `symbolMain`，`config.yaml` 里不声明 `symbolic`。数字、符号页之间的切换都写 `symbolMain`，不要写回 `symbolic`。另外，元书文档说「输入行为 → 返回主键盘符号设置」对非符号键盘有效，所以自定义键盘上输入了列表里的符号，可能也会回主键盘（未在真机验证）。遇到这种情况就关掉这个开关。
 - 按列排（根上一个 HStack，里面放 VStack 列，列里的 Cell 用 `size.height`）可以正常显示。
 
 **照文档或经验做的，没有专门验证过：**
