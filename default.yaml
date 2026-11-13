@@ -8,8 +8,8 @@ config_version: '2026-02-06'
 
 # 方案列表
 schema_list:
+  - schema: double_pinyin          # 自然码双拼（第一个即默认方案）
   - schema: tiger                   # 虎码单字
-  - schema: double_pinyin          # 自然码双拼
   - schema: double_pinyin_trad     # 自然码双拼·繁（通用繁体）
   - schema: double_pinyin_hk       # 自然码双拼·港（港澳繁体）
   - schema: double_pinyin_tw       # 自然码双拼·台（台湾繁体，含用词）
