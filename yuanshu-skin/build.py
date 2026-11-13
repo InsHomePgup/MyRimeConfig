@@ -379,6 +379,16 @@ class Sheet:
         return self.add("toolbarSpacer", {"action": "none"})
 
 
+# 第三行两端的功能键（Shift / 删除 / 符号 / 123）：格子占 EDGE_CELL，键帽只画 EDGE_VISUAL 宽、靠外侧，
+# 多出来的部分仍可点击。所有键盘共用，保证这几个键一样宽（同微信）。
+EDGE_CELL = 0.15
+EDGE_VISUAL = 0.13
+
+
+def edge_bounds(side):
+    return {"alignment": side, "width": pct(EDGE_VISUAL / EDGE_CELL)}
+
+
 def row(*cells):
     return {"HStack": {"subviews": [{"Cell": c} for c in cells]}}
 
@@ -393,15 +403,14 @@ def pinyin_keyboard(mode):
           + [s.letter(ch, k) for ch in ROW2[1:-1]]
           + [s.letter("l", k + side, {"alignment": "left", "width": pct(k / (k + side))})])
 
-    edge = (1 - 7 * k) / 2                    # 第三行 Shift / 删除
-    vis = pct(0.13 / edge)                    # 键帽宽度约为 0.13 行宽，靠外侧
+    edge = EDGE_CELL                          # 第三行 Shift / 删除
     shift = s.func_key(
         "shiftButton", s.icon("shiftForeground", "shift"), "shift", edge,
-        {"alignment": "left", "width": vis},
+        edge_bounds("left"),
         uppercasedStateForegroundStyle=s.icon("shiftUpperForeground", "shift.fill"),
         capsLockedStateForegroundStyle=s.icon("capsLockForeground", "capslock.fill"),
     )
-    r3 = [shift] + [s.letter(ch, k) for ch in ROW3] + [s.backspace(edge, {"alignment": "right", "width": vis})]
+    r3 = [shift] + [s.letter(ch, k) for ch in ROW3] + [s.backspace(edge, edge_bounds("right"))]
 
     # 底行：123 / 表情 / ，。 / 空格 / 中英 / 回车（比例取自微信输入法）
     # 同微信：123 进符号键盘（数字行 + 标点），符号键盘上的「12/34」再进九宫格数字键盘
@@ -575,10 +584,11 @@ def symbolic_keyboard(mode):
 
     r1 = sym_row("num", "1234567890", k)
     r2 = sym_row("sym", ["-", "/", "：", "～", "（", "）", "…", "@", "“", "”"], k)
-    edge = 0.15
+    edge = EDGE_CELL
     more = s.func_key("moreSymbolsButton", s.text("moreSymbolsForeground", "符号"),
-                      {"keyboardType": SYMBOL_PAGES[0][0]}, edge)
-    r3 = [more] + sym_row("punct", ["。", "，", "、", "？", "！", "."], (1 - 2 * edge) / 6) + [s.backspace(edge)]
+                      {"keyboardType": SYMBOL_PAGES[0][0]}, edge, edge_bounds("left"))
+    r3 = ([more] + sym_row("punct", ["。", "，", "、", "？", "！", "."], (1 - 2 * edge) / 6)
+          + [s.backspace(edge, edge_bounds("right"))])
     emoji = s.func_key("emojiButton", s.icon("emojiForeground", "face.smiling", size=21),
                        {"keyboardType": "emojis"}, 0.1)
     # 「12 / 34」上下两行（微信的九宫格数字键盘图标），用两层文字叠出来
@@ -609,15 +619,14 @@ def symbol_page(mode, index):
     k = 0.1
     r1 = [key(i, ch, k) for i, ch in enumerate(chars[:10])]
     r2 = [key(10 + i, ch, k) for i, ch in enumerate(chars[10:20])]
-    edge = (1 - 7 * k) / 2
-    vis = pct(0.13 / edge)
+    edge = EDGE_CELL
     num = s.func_key("symbolicButton", s.text("symbolicForeground", "123"),
-                     {"keyboardType": "symbolic"}, edge, {"alignment": "left", "width": vis})
+                     {"keyboardType": "symbolic"}, edge, edge_bounds("left"))
     # 第三行按实际符号个数均分 123 和删除键之间的宽度（同微信：6 个符号时每个键加宽，不留空格）
     row3 = [ch for ch in chars[20:27] if ch]
     w3 = (1 - 2 * edge) / max(len(row3), 1)
     r3 = ([num] + [key(20 + i, ch, w3) for i, ch in enumerate(row3)]
-          + [s.backspace(edge, {"alignment": "right", "width": vis})])
+          + [s.backspace(edge, edge_bounds("right"))])
 
     # 分类栏：当前分类加灰色圆底
     s.add("tabSelectedBackground", {
