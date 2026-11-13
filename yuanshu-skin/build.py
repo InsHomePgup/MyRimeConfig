@@ -519,12 +519,52 @@ def numeric_keyboard(mode):
         row(return_key(s, side), symbols, digit("0"),
             s.symbol_key("dotButton", ".", {"symbol": "."}, mid, size=24), s.enter(side)),
     ]
-    toolbar = symbol_toolbar(s, ["+", "=", "×", "÷", "(", ")", ",", ":"])
+    toolbar = symbol_toolbar(s, ["。", "？", "！", "…", "（", "）", ".", "-"])
     return s.frame(toolbar, layout)
 
 
 # ---------------------------------------------------------------- 符号键盘
+# 微信输入法的符号键盘分两层：
+# - 主符号页（symbolic）：数字 + 常用中文标点，「符号」键进入更多符号；
+# - 更多符号：底部是一排分类，每个分类在这里是一个自定义键盘，点分类就切过去。
+#   第一个分类（时钟图标）照微信截图；其余分类的内容是自拟的常用符号，以后可按微信截图对齐。
+SYMBOL_BAR = ["（", "）", ".", "@", "。", "？", "！", "-"]   # 符号页顶部的快捷符号
+
+# (键盘类型名, 分类栏上的标签, 是否图标, 符号)。符号按 10 + 10 + 7 排三行，第三行两端是 123 和删除。
+SYMBOL_PAGES = [
+    ("symbolCommon", "clock", True,
+     ["_", "—", "；", "|", "%", "+", "-", "×", "÷", "=",
+      "【", "】", "{", "}", "《", "》", "#", "$", "&", "·",
+      "「", "」", "<", ">", "^", "*"]),
+    ("symbolZh", "中", False,
+     ["，", "。", "、", "；", "：", "？", "！", "…", "—", "·",
+      "“", "”", "‘", "’", "（", "）", "《", "》", "〈", "〉",
+      "「", "」", "『", "』", "【", "】", "～"]),
+    ("symbolEn", "英", False,
+     [",", ".", ";", ":", "?", "!", "'", "\"", "`", "~",
+      "(", ")", "[", "]", "{", "}", "<", ">", "/", "\\",
+      "|", "_", "+", "=", "*", "&", "^"]),
+    ("symbolBracket", "【】", False,
+     ["（", "）", "【", "】", "《", "》", "〈", "〉", "「", "」",
+      "『", "』", "〔", "〕", "［", "］", "｛", "｝", "〖", "〗",
+      "(", ")", "[", "]", "{", "}", "«"]),
+    ("symbolCurrency", "$¥", False,
+     ["￥", "¥", "$", "€", "£", "¢", "₩", "₽", "₹", "฿",
+      "₫", "₱", "₺", "₴", "₦", "₪", "₡", "₲", "₵", "₸",
+      "元", "角", "分", "%", "‰", "‱"]),
+    ("symbolMath", "+÷", False,
+     ["+", "−", "×", "÷", "=", "≠", "≈", "±", "<", ">",
+      "≤", "≥", "√", "∞", "°", "∑", "∫", "π", "∈", "∉",
+      "∩", "∪", "⊂", "⊃", "∠", "⊥", "∴"]),
+    ("symbolNumber", "①", False,
+     ["①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨", "⑩",
+      "Ⅰ", "Ⅱ", "Ⅲ", "Ⅳ", "Ⅴ", "Ⅵ", "Ⅶ", "Ⅷ", "Ⅸ", "Ⅹ",
+      "⑴", "⑵", "⑶", "⑷", "⑸", "⑹", "⑺"]),
+]
+
+
 def symbolic_keyboard(mode):
+    """主符号页，照微信截图。"""
     s = Sheet(mode)
     k = 0.1
 
@@ -533,12 +573,11 @@ def symbolic_keyboard(mode):
                 for i, ch in enumerate(chars)]
 
     r1 = sym_row("num", "1234567890", k)
-    r2 = sym_row("sym", ["-", "/", "：", "；", "（", "）", "～", "@", "“", "”"], k)
+    r2 = sym_row("sym", ["-", "/", "：", "～", "（", "）", "…", "@", "“", "”"], k)
     edge = 0.15
-    # ` 交给 RIME：虎码里是双拼反查的前缀
-    lookup = s.func_key("reverseLookupButton", s.text("reverseLookupForeground", "反查"),
-                        {"character": "`"}, edge)
-    r3 = [lookup] + sym_row("punct", ["。", "，", "、", "？", "！", "…"], (1 - 2 * edge) / 6) + [s.backspace(edge)]
+    more = s.func_key("moreSymbolsButton", s.text("moreSymbolsForeground", "符号"),
+                      {"keyboardType": SYMBOL_PAGES[0][0]}, edge)
+    r3 = [more] + sym_row("punct", ["。", "，", "、", "？", "！", "."], (1 - 2 * edge) / 6) + [s.backspace(edge)]
     emoji = s.func_key("emojiButton", s.icon("emojiForeground", "face.smiling", size=21),
                        {"keyboardType": "emojis"}, 0.1)
     num = s.func_key("numericButton", s.text("numericForeground", "123"),
@@ -549,8 +588,56 @@ def symbolic_keyboard(mode):
         "foregroundStyle": s.text("spaceForeground", "空格", color="text_dim"),
     })
     layout = [row(*r1), row(*r2), row(*r3), row(return_key(s, 0.15), emoji, num, space, s.enter(0.22))]
-    toolbar = symbol_toolbar(s, ["《", "》", "「", "」", "【", "】", "#", "&", "*"])
-    return s.frame(toolbar, layout)
+    return s.frame(symbol_toolbar(s, SYMBOL_BAR), layout)
+
+
+def symbol_page(mode, index):
+    """更多符号里的一个分类页。"""
+    s = Sheet(mode)
+    _, _, _, chars = SYMBOL_PAGES[index]
+    chars = (list(chars) + [""] * 27)[:27]
+
+    def key(i, ch, width):
+        if not ch:
+            return s.add("emptyCell%d" % i, {"action": "none", "size": {"width": pct(width)}})
+        return s.symbol_key("pageSym%dButton" % i, ch, {"symbol": ch}, width)
+
+    k = 0.1
+    r1 = [key(i, ch, k) for i, ch in enumerate(chars[:10])]
+    r2 = [key(10 + i, ch, k) for i, ch in enumerate(chars[10:20])]
+    edge = (1 - 7 * k) / 2
+    vis = pct(0.13 / edge)
+    num = s.func_key("symbolicButton", s.text("symbolicForeground", "123"),
+                     {"keyboardType": "symbolic"}, edge, {"alignment": "left", "width": vis})
+    r3 = ([num] + [key(20 + i, ch, k) for i, ch in enumerate(chars[20:27])]
+          + [s.backspace(edge, {"alignment": "right", "width": vis})])
+
+    # 分类栏：当前分类加灰色圆底
+    s.add("tabSelectedBackground", {
+        "buttonStyleType": "geometry",
+        "insets": {"top": 7, "bottom": 7, "left": 2, "right": 2},
+        "normalColor": s.c["toolbar_btn_hl"],
+        "highlightColor": s.c["toolbar_btn_hl"],
+        "cornerRadius": 17,
+    })
+    s.add("tabBackground", {
+        "buttonStyleType": "geometry",
+        "normalColor": "#FFFFFF03",
+        "highlightColor": s.c["toolbar_btn_hl"],
+        "insets": {"top": 7, "bottom": 7, "left": 2, "right": 2},
+        "cornerRadius": 17,
+    })
+    tabs = [return_key(s, 0.15)]
+    for i, (kb, label, is_icon, _) in enumerate(SYMBOL_PAGES):
+        fg = (s.icon("tab%dForeground" % i, label, size=19, color="text_dim") if is_icon
+              else s.text("tab%dForeground" % i, label, size=17 if len(label) == 1 else 13, color="text_dim"))
+        tabs.append(s.add("tab%dButton" % i, {
+            "action": {"keyboardType": kb},
+            "backgroundStyle": "tabSelectedBackground" if i == index else "tabBackground",
+            "foregroundStyle": fg,
+        }))
+    layout = [row(*r1), row(*r2), row(*r3), row(*tabs)]
+    return s.frame(symbol_toolbar(s, SYMBOL_BAR), layout)
 
 
 # ---------------------------------------------------------------- 输出
@@ -593,13 +680,16 @@ KEYBOARDS = {
     "numeric": ("numericPortrait", numeric_keyboard),
     "symbolic": ("symbolicPortrait", symbolic_keyboard),
 }
+# 更多符号的分类页是自定义键盘类型，在 config.yaml 里按名字声明
+for _i, (_kb, _, _, _) in enumerate(SYMBOL_PAGES):
+    KEYBOARDS[_kb] = (_kb + "Portrait", lambda mode, i=_i: symbol_page(mode, i))
 
 README = """MyRime：仿微信输入法布局的简洁皮肤，配合雾凇拼音 + 虎码单字使用。
 
 - 字母键没有划动功能，避免误触
 - 底行：123 / 表情 / 逗号（上划句号）/ 空格 / 中英 / 回车
 - 中英键切换 RIME 的 ascii_mode
-- 符号键盘的「反查」键输入 `，虎码下进入双拼反查
+- 符号键盘的「符号」键进入更多符号，底部一排分类（常用 / 中 / 英 / 括号 / 货币 / 数学 / 序号）
 - 工具栏：方案切换 / 常用语 / 剪贴板 / 收起键盘
 
 此皮肤由 MyRimeConfig 仓库的 yuanshu-skin/build.py 生成，请勿直接修改 YAML。
