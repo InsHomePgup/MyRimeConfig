@@ -129,6 +129,15 @@ python3 deploy-yuanshu.py 192.168.x.x --dry-run  # 只看要传哪些文件
 
 传完后在元书里先点**重新部署**，再点**同步**，把电脑学到的词合并进来。也可以手动在 WiFi 传输页面上传文件，效果一样。
 
+**键盘皮肤**：`yuanshu-skin/build.py` 生成仿微信输入法布局的皮肤 `MyRime`。字母键不绑划动、点击区域铺满整个格子，不容易误触；底行是 123 / 表情 / 逗号（上划句号）/ 空格 / 中英 / 回车。加 `--skin` 会生成皮肤并传到手机的 `Skins/MyRime/`，然后在元书的键盘皮肤里选中它：
+
+```bash
+python3 deploy-yuanshu.py 192.168.x.x --skin
+python3 yuanshu-skin/demo.py   # 在电脑上画预览图到 yuanshu-skin/build/（需要 Pillow）
+```
+
+配色、尺寸、布局都是 `build.py` 开头的常量。生成结果在 `yuanshu-skin/build/`，不提交；里面的 `MyRime.cskin` 也可以隔空投送到手机导入。目前只做了 iPhone 竖屏，横屏和 iPad 暂时沿用竖屏布局。
+
 这是单向的：电脑上新学的词，要先在电脑上同步一次，再运行一次脚本才能到元书；元书学到的词也不会回到电脑，因为元书的同步目录不在 Google Drive 里。
 
 如果元书使用的是独立共享目录，需确保本仓库依赖的所有 schema、dict、lua、opencc 文件一并导入，不能只单独导入某一个方案文件。
@@ -199,7 +208,8 @@ MyRimeConfig/
 ├── double_pinyin_{trad,hk,tw}.schema.yaml  # 自然码双拼的繁体版（继承 double_pinyin，只换 OpenCC 配置）
 ├── rime_ice.schema.yaml       # 雾凇拼音词库（自然码双拼的词库来源）
 ├── deploy.sh          # 部署脚本（macOS / Linux / Windows Git Bash）
-└── deploy-yuanshu.py  # 部署脚本（iOS 元书，经 WiFi 传输）
+├── deploy-yuanshu.py  # 部署脚本（iOS 元书，经 WiFi 传输）
+└── yuanshu-skin/      # 元书键盘皮肤生成脚本
 ```
 
 ## 常用快捷键

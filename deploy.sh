@@ -68,6 +68,7 @@ if command -v rsync &>/dev/null; then
         --exclude='LICENSE' \
         --exclude='*.md' \
         --exclude='build/' \
+        --exclude='yuanshu-skin/' \
         --exclude='sync/' \
         --exclude='*.userdb/' \
         --exclude='*.userdb.txt' \
@@ -86,6 +87,7 @@ else
         --exclude='./LICENSE' \
         --exclude='*.md' \
         --exclude='./build' \
+        --exclude='./yuanshu-skin' \
         --exclude='./sync' \
         --exclude='*.userdb' \
         --exclude='*.userdb.txt' \
