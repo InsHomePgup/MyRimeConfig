@@ -59,15 +59,23 @@ def _width(spec, total):
     return float(spec)
 
 
-def _layout_row(sheet, cells, total):
-    widths = []
-    for c in cells:
-        size = sheet[c].get("size", {})
-        widths.append(_width(size["width"], total) if "width" in size else None)
-    fixed = sum(w for w in widths if w is not None)
-    flex = [w for w in widths if w is None]
-    rest = (total - fixed) / len(flex) if flex else 0
-    return [w if w is not None else rest for w in widths]
+def _node_size(sheet, node, key):
+    """布局节点在排列方向上的尺寸：Cell 取按键的 size，HStack / VStack 取 style 引用的 size。"""
+    if "Cell" in node:
+        return sheet[node["Cell"]].get("size", {}).get(key)
+    stack = node.get("HStack") or node.get("VStack")
+    style = stack.get("style")
+    return sheet[style].get("size", {}).get(key) if style else None
+
+
+def _split(sheet, nodes, key, total):
+    """按 size 分配长度；没写尺寸的节点平分剩余空间。"""
+    sizes = [_node_size(sheet, n, key) for n in nodes]
+    lengths = [_width(v, total) if v is not None else None for v in sizes]
+    fixed = sum(v for v in lengths if v is not None)
+    flex = sum(1 for v in lengths if v is None)
+    rest = (total - fixed) / flex if flex else 0
+    return [v if v is not None else rest for v in lengths]
 
 
 def _draw_cell(draw, sheet, name, x, y, w, h):
@@ -99,7 +107,7 @@ def _draw_cell(draw, sheet, name, x, y, w, h):
         if st["buttonStyleType"] == "text":
             text = st["text"]
             if text.startswith("$"):
-                text = {"$returnKeyType": "换行", "$rimeSchemaName": "虎码官方单字"}.get(text, "")
+                text = {"$returnKeyType": "换行", "$rimeSchemaName": "自然码双拼"}.get(text, "")
             size = st.get("fontSize", 16)
         else:
             text = ICONS.get(st["systemImageName"], "?")
@@ -111,15 +119,24 @@ def _draw_cell(draw, sheet, name, x, y, w, h):
         draw.text((cx, cy), text, fill=_rgb(st["normalColor"]), font=font, anchor="mm")
 
 
+def _draw_nodes(draw, sheet, nodes, horizontal, x, y, w, h):
+    """horizontal 为真时横向排列（HStack 的子节点、根上的 VStack 列），否则纵向排列。"""
+    key, total = ("width", w) if horizontal else ("height", h)
+    pos = x if horizontal else y
+    for node, length in zip(nodes, _split(sheet, nodes, key, total)):
+        nx, ny, nw, nh = (pos, y, length, h) if horizontal else (x, pos, w, length)
+        if "Cell" in node:
+            _draw_cell(draw, sheet, node["Cell"], nx, ny, nw, nh)
+        elif "HStack" in node:
+            _draw_nodes(draw, sheet, node["HStack"]["subviews"], True, nx, ny, nw, nh)
+        else:
+            _draw_nodes(draw, sheet, node["VStack"]["subviews"], False, nx, ny, nw, nh)
+        pos += length
+
+
 def _draw_area(draw, sheet, layout, x, y, w, h):
-    rows = layout
-    rh = h / len(rows)
-    for i, r in enumerate(rows):
-        cells = [c["Cell"] for c in r["HStack"]["subviews"]]
-        cx = x
-        for name, cw in zip(cells, _layout_row(sheet, cells, w)):
-            _draw_cell(draw, sheet, name, cx, y + i * rh, cw, rh)
-            cx += cw
+    # 根上的 HStack 是一行行纵向堆叠，VStack 是一列列横向排开
+    _draw_nodes(draw, sheet, layout, "VStack" in layout[0], x, y, w, h)
 
 
 def _draw_keyboard(img, sheet, ox, colors):

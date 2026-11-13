@@ -412,12 +412,10 @@ def pinyin_keyboard(mode):
     )
     r3 = [shift] + [s.letter(ch, k) for ch in ROW3] + [s.backspace(edge, edge_bounds("right"))]
 
-    # 底行：123 / 表情 / ，。 / 空格 / 中英 / 回车（比例取自微信输入法）
+    # 底行：123 / ，。 / 空格 / 中英 / 回车（比例取自微信输入法；不放 Emoji 键，用 iOS 自带的 Emoji 键盘）
     # 同微信：123 进符号键盘（数字行 + 标点），符号键盘上的「12/34」再进九宫格数字键盘
     num = s.func_key("numericButton", s.text("numericForeground", "123"),
                      {"keyboardType": "symbolic"}, 0.15)
-    emoji = s.func_key("emojiButton", s.icon("emojiForeground", "face.smiling", size=21),
-                       {"keyboardType": "emojis"}, 0.1)
     punct = s.add("punctButton", {
         "action": {"character": ","},
         "swipeUpAction": {"character": "."},          # 唯一保留的划动：逗号键上划出句号，和微信一样
@@ -480,7 +478,7 @@ def pinyin_keyboard(mode):
         s.toolbar_button("dismissButton", "chevron.down", "dismissKeyboard"),
     )]
     return s.frame(toolbar, [row(*r1), row(*r2), row(*r3),
-                             row(num, emoji, punct, space, lang, enter)])
+                             row(num, punct, space, lang, enter)])
 
 
 # ---------------------------------------------------------------- 符号栏（数字 / 符号键盘顶部）
@@ -508,27 +506,41 @@ def return_key(s, width):
 
 # ---------------------------------------------------------------- 数字键盘
 def numeric_keyboard(mode):
+    """九宫格数字键盘，按列排：左列符号，中间 3×4 数字，右列删除 / 空格 / 换行（换行占两格高，同 iOS 数字键盘）。"""
     s = Sheet(mode)
-    side, mid = 0.17, (1 - 0.34) / 3
+    side = 0.17
+    third = 1 / 3    # 中间列里每个键占这一行的 1/3
 
     def digit(d):
-        return s.symbol_key("digit%sButton" % d, d, {"symbol": d}, mid, size=24)
+        return s.symbol_key("digit%sButton" % d, d, {"symbol": d}, third, size=24)
 
     def side_sym(name, label):
-        return s.symbol_key(name, label, {"symbol": label}, side, kind="func", size=20)
+        return s.symbol_key(name, label, {"symbol": label}, kind="func", size=20)
 
-    space = s.func_key("spaceButton", s.text("spaceForeground", "空格"), "space", side)
-    emoji = s.func_key("emojiButton", s.icon("emojiForeground", "face.smiling", size=21),
-                       {"keyboardType": "emojis"}, side)
+    s.add("sideColumn", {"size": {"width": pct(side)}})
+    s.add("middleColumn", {"size": {"width": pct(1 - 2 * side)}})
     symbols = s.func_key("symbolicButton", s.text("symbolicForeground", "符号"),
-                         {"keyboardType": "symbolic"}, mid, kind="key")
-    layout = [
-        row(side_sym("atButton", "@"), digit("1"), digit("2"), digit("3"), s.backspace(side)),
-        row(side_sym("percentButton", "%"), digit("4"), digit("5"), digit("6"), space),
-        row(side_sym("minusButton", "-"), digit("7"), digit("8"), digit("9"), emoji),
-        row(return_key(s, side), symbols, digit("0"),
-            s.symbol_key("dotButton", ".", {"symbol": "."}, mid, size=24), s.enter(side)),
-    ]
+                         {"keyboardType": "symbolic"}, third, kind="key")
+    space = s.func_key("spaceButton", s.text("spaceForeground", "空格"), "space")
+    enter = s.enter(side)
+    s.d[enter]["size"] = {"height": pct(0.5)}   # 在列里取高度：占两格
+    backspace = s.backspace()
+
+    def column(style, cells):
+        return {"VStack": {"style": style, "subviews": cells}}
+
+    layout = [{"HStack": {"subviews": [
+        column("sideColumn", [{"Cell": c} for c in (
+            side_sym("atButton", "@"), side_sym("percentButton", "%"),
+            side_sym("minusButton", "-"), return_key(s, None))]),
+        column("middleColumn", [
+            row(digit("1"), digit("2"), digit("3")),
+            row(digit("4"), digit("5"), digit("6")),
+            row(digit("7"), digit("8"), digit("9")),
+            row(symbols, digit("0"), s.symbol_key("dotButton", ".", {"symbol": "."}, third, size=24)),
+        ]),
+        column("sideColumn", [{"Cell": c} for c in (backspace, space, enter)]),
+    ]}}]
     toolbar = symbol_toolbar(s, ["。", "？", "！", "…", "（", "）", ".", "-"])
     return s.frame(toolbar, layout)
 
@@ -589,8 +601,6 @@ def symbolic_keyboard(mode):
                       {"keyboardType": SYMBOL_PAGES[0][0]}, edge, edge_bounds("left"))
     r3 = ([more] + sym_row("punct", ["。", "，", "、", "？", "！", "."], (1 - 2 * edge) / 6)
           + [s.backspace(edge, edge_bounds("right"))])
-    emoji = s.func_key("emojiButton", s.icon("emojiForeground", "face.smiling", size=21),
-                       {"keyboardType": "emojis"}, 0.1)
     # 「12 / 34」上下两行（微信的九宫格数字键盘图标），用两层文字叠出来
     num = s.func_key("numericButton", [
         s.text("numericTopForeground", "12", size=13, center={"x": 0.5, "y": 0.34}),
@@ -601,7 +611,7 @@ def symbolic_keyboard(mode):
         "backgroundStyle": s.bg("key"),
         "foregroundStyle": s.text("spaceForeground", "空格", color="text_dim"),
     })
-    layout = [row(*r1), row(*r2), row(*r3), row(return_key(s, 0.15), emoji, num, space, s.enter(0.22))]
+    layout = [row(*r1), row(*r2), row(*r3), row(return_key(s, 0.15), num, space, s.enter(0.22))]
     return s.frame(symbol_toolbar(s, SYMBOL_BAR), layout)
 
 
@@ -707,7 +717,7 @@ for _i, (_kb, _, _, _) in enumerate(SYMBOL_PAGES):
 README = """MyRime：仿微信输入法布局的简洁皮肤，配合雾凇拼音 + 虎码单字使用。
 
 - 字母键没有划动功能，避免误触
-- 底行：123 / 表情 / 逗号（上划句号）/ 空格 / 中英 / 回车
+- 底行：123 / 逗号（上划句号）/ 空格 / 中英 / 回车（不做 Emoji 面板，用 iOS 自带的 Emoji 键盘）
 - 中英键切换 RIME 的 ascii_mode
 - 符号键盘的「符号」键进入更多符号，底部一排分类（常用 / 中 / 英 / 括号 / 货币 / 数学 / 序号）
 - 工具栏：方案切换 / 常用语 / 剪贴板 / 收起键盘

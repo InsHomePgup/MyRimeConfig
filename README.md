@@ -136,7 +136,7 @@ python3 deploy-yuanshu.py 192.168.x.x --dry-run  # 只看要传哪些文件
 
 `deploy.sh` 不同步这两个文件，电脑上不会有联想，免得上屏后按空格或数字误选联想词。可以在方案选单里用「联想」开关关掉。
 
-**键盘皮肤**：`yuanshu-skin/build.py` 生成仿微信输入法布局的皮肤 `MyRime`。字母键不绑划动、点击区域铺满整个格子，不容易误触；底行是 123 / 表情 / 逗号（上划句号）/ 空格 / 中英 / 回车。加 `--skin` 会生成皮肤并传到手机的 `Skins/MyRime/`，然后在元书的键盘皮肤里选中它：
+**键盘皮肤**：`yuanshu-skin/build.py` 生成仿微信输入法布局的皮肤 `MyRime`。字母键不绑划动、点击区域铺满整个格子，不容易误触；底行是 123 / 逗号（上划句号）/ 空格 / 中英 / 回车，Emoji 用 iOS 自带的键盘。加 `--skin` 会生成皮肤并传到手机的 `Skins/MyRime/`，然后在元书的键盘皮肤里选中它：
 
 ```bash
 python3 deploy-yuanshu.py 192.168.x.x --skin
