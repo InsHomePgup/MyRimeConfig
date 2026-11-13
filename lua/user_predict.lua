@@ -49,14 +49,41 @@ local function parse_count(value)
     return tonumber(value and value:match("c=(%-?%d+)") or 0) or 0
 end
 
+-- 次数 <= 0 时不直接删除，而是像 Rime 用户词典一样写成负数（删除标记）：
+-- 「同步」会把 sync/ 下所有快照（包括本机自己的）合并回来，合并时保留绝对值大的一方，
+-- 直接删掉的记录会被旧快照恢复，写成 -n 才能盖过快照里的 n。
+local function write_count(key, c)
+    db:update(key, string.format("c=%d d=0 t=0", c))
+end
+
 local function add_count(key, delta)
     if not (db and db:loaded()) then return end
-    local c = parse_count(db:fetch(key)) + delta
-    if c > 0 then
-        db:update(key, string.format("c=%d d=0 t=0", c))
+    local old = parse_count(db:fetch(key))
+    local c
+    if old < 0 and delta > 0 then
+        c = delta                -- 删过的又学到：从头计数
     else
-        db:erase(key)
+        c = old + delta
     end
+    if c > 0 then
+        write_count(key, c)
+    elseif old ~= 0 then
+        write_count(key, -math.max(math.abs(old), 1))
+    end
+end
+
+-- 一次性清理：2026-11-13 测试时来回点联想词，把这两条刷到了十几次
+-- （防来回刷的逻辑加上之后不会再出现）。清理过的数据库记一个标记，只做一次。
+local CLEANUP_FLAG = "\001/user_predict_cleanup"
+local CLEANUP_KEYS = { "的 \t人", "人 \t的" }
+
+local function cleanup_once()
+    if not (db and db:loaded()) or db:fetch(CLEANUP_FLAG) then return end
+    for _, key in ipairs(CLEANUP_KEYS) do
+        local c = parse_count(db:fetch(key))
+        if c > 0 then write_count(key, -c) end
+    end
+    db:update(CLEANUP_FLAG, "20261113")
 end
 
 -- ---------------------------------------------------------------- 文字处理
@@ -143,10 +170,14 @@ local function learn(ctx, s, text)
         return
     end
     local cs = chars(text)
-    if s.last_text and now - s.last_time <= CONTEXT_TIMEOUT and #cs <= MAX_NEXT then
+    -- 来回点联想词（A → B → A → B）会互相刷次数：刚记过 A → B，这次又是 B → A，就不记
+    -- （跳过的这一对也要记住，否则 A → B 会每隔一次又被记上）
+    local ping_pong = s.pair and s.pair.from == text and s.pair.to == s.last_text
+    s.pair = s.last_text and { from = s.last_text, to = text } or nil
+    if s.last_text and now - s.last_time <= CONTEXT_TIMEOUT and #cs <= MAX_NEXT and not ping_pong then
         local keys = {}
-        for _, ctx in ipairs(context_keys(s.last_text)) do
-            local key = make_key(ctx, text)
+        for _, context in ipairs(context_keys(s.last_text)) do
+            local key = make_key(context, text)
             add_count(key, 1)
             keys[#keys + 1] = key
         end
@@ -175,6 +206,7 @@ function processor.init(env)
     local s = { last_text = nil, last_time = 0, learned = nil, creating = false, just_committed = false }
     env.state = s
     open_db()
+    cleanup_once()
     env.commit_conn = ctx.commit_notifier:connect(function(c)
         learn(c, s, c:get_commit_text())
         s.just_committed = true
