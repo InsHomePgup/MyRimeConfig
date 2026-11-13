@@ -129,6 +129,8 @@ python3 deploy-yuanshu.py 192.168.x.x --dry-run  # 只看要传哪些文件
 
 传完后在元书里先点**重新部署**，再点**同步**，把电脑学到的词合并进来。也可以手动在 WiFi 传输页面上传文件，效果一样。
 
+**联想**（上屏后猜下一个字词）只在元书上开：配置在 `double_pinyin.custom.yaml`，词库是 `predict-zhs.db`（来自 [kenspc/rime-predict-zh](https://github.com/kenspc/rime-predict-zh)，纯简体，GPL-3.0），由元书内置的 librime-predict 插件读取。`deploy.sh` 不同步这两个文件，电脑上不会有联想，免得上屏后按空格或数字误选联想词。可以在方案选单里用「联想」开关关掉。
+
 **键盘皮肤**：`yuanshu-skin/build.py` 生成仿微信输入法布局的皮肤 `MyRime`。字母键不绑划动、点击区域铺满整个格子，不容易误触；底行是 123 / 表情 / 逗号（上划句号）/ 空格 / 中英 / 回车。加 `--skin` 会生成皮肤并传到手机的 `Skins/MyRime/`，然后在元书的键盘皮肤里选中它：
 
 ```bash
@@ -203,6 +205,8 @@ MyRimeConfig/
 ├── weasel.yaml        # Windows 前端配置
 ├── hamster.yaml       # iOS 仓输入法前端配置
 ├── yuanshu.yaml       # iOS 元书输入法前端配置
+├── double_pinyin.custom.yaml  # 联想补丁（只传元书，电脑不同步）
+├── predict-zhs.db             # 联想词库
 ├── tiger.schema.yaml          # 虎码单字方案
 ├── double_pinyin.schema.yaml  # 自然码双拼方案
 ├── double_pinyin_{trad,hk,tw}.schema.yaml  # 自然码双拼的繁体版（继承 double_pinyin，只换 OpenCC 配置）

@@ -1,0 +1,17 @@
+# 只给 iOS 元书用：上屏后的联想（猜下一个字词）
+# deploy.sh 不会把这个文件和 predict-zhs.db 同步到电脑，电脑上按空格 / 数字不会误选联想词；
+# deploy-yuanshu.py 会照常传到手机。元书内置 librime-predict 插件。
+# 联想词库 predict-zhs.db 来自 https://github.com/kenspc/rime-predict-zh （GPL-3.0，v1.1.0，纯简体）
+
+patch:
+  # schema_sync 必须排第一个，predictor 放在它后面
+  'engine/processors/@before 1': predictor
+  'engine/translators/@before 0': predict_translator
+  'switches/+':
+    - name: prediction
+      states: [ 无联想, 联想 ]
+      reset: 1
+  predictor:
+    db: predict-zhs.db
+    max_candidates: 5   # 和 page_size 一致，避免句号键触发翻页
+    max_iterations: 0   # 选了联想词后继续联想，不限次数（同微信输入法）

@@ -30,6 +30,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 - **换行符**：虎码系文件（`tiger.*`、`easy_english.*`、`stroke.*`、`core2022.dict.yaml`、`rime.lua`，以及 `lua/calculator_translator.lua`、`lua/unicode_display.lua`）是 CRLF，其余是 LF。编辑时保持原样，用 Python 改写的话要加 `newline=''`。
 - **Lua filter 不要遍历整个候选流**：候选是惰性生成的，短码的英文补全可能有几万条。只丢弃不 yield 的循环会把它们全部拉一遍，之前就因此每次按键卡了约 0.4 秒。能确定后面没有需要的候选时就 `break`。
+- **只给元书的文件**：`double_pinyin.custom.yaml`（联想补丁）和 `predict-zhs.db` 被 `deploy.sh` 排除，只由 `deploy-yuanshu.py` 传到手机。想让某个改动只在 iOS 生效时也按这个办法；新增此类文件要同时加进 `deploy.sh` 的两处 exclude。
 - **仓库是公开的**：`*.userdb`、`installation.yaml`、`user.yaml`、`sync/` 不能提交。部署脚本已经把它们排除，不会覆盖或删除。
 - **分支**：直接在当前分支提交，不要自己建分支。分支由用户管理。
 
