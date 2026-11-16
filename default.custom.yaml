@@ -1,0 +1,3 @@
+# 空补丁：配置都直接写在 default.yaml 里。这个文件只为让部署日志不再报
+# inaccessible node: default.custom:/patch
+patch: {}
