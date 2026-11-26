@@ -400,42 +400,35 @@ def pinyin_keyboard(mode):
     punct_hint = s.hint("punctButton", "，", swipe_up_label="。")
     s.add("hintSelectedBackground", {
         "buttonStyleType": "geometry",
+        "insets": {"top": 2, "bottom": 2, "left": 2, "right": 2},
         "normalColor": s.c["hint_selected"],
         "highlightColor": s.c["hint_selected"],
-        "cornerRadius": 6,
+        "cornerRadius": 8,
     })
-    punct_cell_w, punct_cell_h = 46, 44
-    punct_period_sym = s.add("punctPeriodSymbol", {
-        "action": {"character": "."},
-        "foregroundStyle": s.text(
-            "punctPeriodSymbolForeground", "。", size=26,
-            center=glyph_center("。", 26, punct_cell_w),
-        ),
-    })
-    punct_comma_sym = s.add("punctCommaSymbol", {
-        "action": {"character": ","},
-        "foregroundStyle": s.text(
-            "punctCommaSymbolForeground", "，", size=26,
-            center=glyph_center("，", 26, punct_cell_w),
-        ),
-    })
-    punct_hint_grid = s.add("punctButtonHintGrid", {
-        "symbolRows": [[punct_period_sym], [punct_comma_sym]],
-        "size": {"width": punct_cell_w, "height": punct_cell_h},
-        "spacing": {"horizontal": 0, "vertical": 2},
-        "insets": {"top": 4, "bottom": 4, "left": 4, "right": 4},
-        "offset": {"x": 0, "y": 0},
-        "selected": {"row": 1, "col": 0},
-        "moveStep": {"horizontal": 36, "vertical": 36},
-        "moveThreshold": 10,
-        "backgroundStyle": "hintBackground",
-        "selectedBackgroundStyle": "hintSelectedBackground",
-    })
+    punct_cell_w, punct_cell_h = 44, 48
+    punct_long_items = [
+        ("punctNewlineSymbol", "换行", "enter", 14),
+        ("punctPeriodSymbol", "。", {"character": "."}, 22),
+        ("punctQuestionSymbol", "？", {"character": "?"}, 22),
+        ("punctExclamSymbol", "！", {"character": "!"}, 22),
+        ("punctAtSymbol", "@", {"symbol": "@"}, 22),
+        ("punctEllipsisSymbol", "…", {"symbol": "…"}, 22),
+    ]
+    punct_sym_names = [
+        s.add(sym_name, {
+            "action": act,
+            "foregroundStyle": s.text(
+                sym_name + "Foreground", label, size=sz,
+                center=glyph_center(label, sz, punct_cell_w),
+            ),
+        })
+        for sym_name, label, act, sz in punct_long_items
+    ]
     punct_hint_symbols = s.add("punctButtonHintSymbols", {
-        "symbolStyles": [punct_comma_sym, punct_period_sym],
+        "symbolStyles": punct_sym_names,
         "size": {"width": punct_cell_w, "height": punct_cell_h},
-        "insets": {"top": 4, "bottom": 4, "left": 4, "right": 4},
-        "selectedIndex": 0,
+        "insets": {"top": 5, "bottom": 5, "left": 5, "right": 5},
+        "selectedIndex": 1,
         "backgroundStyle": "hintBackground",
         "selectedBackgroundStyle": "hintSelectedBackground",
     })
@@ -449,7 +442,6 @@ def pinyin_keyboard(mode):
             s.text("punctUpForeground", "。", size=12, color="text_dim", center={"x": 0.5, "y": 0.25}),
         ],
         "hintStyle": punct_hint,
-        "hintSymbolsGridStyle": punct_hint_grid,
         "hintSymbolsStyle": punct_hint_symbols,
     })
     space = s.add("spaceButton", {
@@ -746,7 +738,7 @@ for _i, (_kb, _, _, _) in enumerate(SYMBOL_PAGES):
 README = """MyRime：仿微信输入法布局、iOS 原生外观的简洁皮肤，配合雾凇拼音（自然码双拼）使用。
 
 - 字母键没有划动功能，避免误触
-- 底行：123 / 逗号（上划或长按上滑出句号）/ 空格 / 中英 / 回车（不做 Emoji 面板，用 iOS 自带的 Emoji 键盘）
+- 底行：123 / 逗号（上划句号，长按横滑选 换行/。/？/！/@/…）/ 空格 / 中英 / 回车（不做 Emoji 面板，用 iOS 自带的 Emoji 键盘）
 - 中英键切换 RIME 的 ascii_mode
 - 符号键盘的「符号」键进入更多符号，底部一排分类（常用 / 中 / 英 / 括号 / 货币 / 数学 / 序号）
 - 工具栏：方案切换 / 常用语 / 剪贴板 / 收起键盘
