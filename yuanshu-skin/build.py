@@ -55,7 +55,7 @@ COLORS = {
         "toolbar_btn_hl": "#0000001A",
         "hint_bg": "#FFFFFF",
         "hint_border": "#C6C6C8",
-        "separator": "#C6C6C8",
+        "hint_selected": "#D1D4DA",
         "candidate_hl": "#0000001A",
         "preview_glass": "#E3E5EA",  # 只用于电脑上的预览图，模拟系统玻璃
     },
@@ -75,7 +75,7 @@ COLORS = {
         "toolbar_btn_hl": "#FFFFFF1A",
         "hint_bg": "#6C6C70",
         "hint_border": "#6C6C70",
-        "separator": "#48484A",
+        "hint_selected": "#FFFFFF33",
         "candidate_hl": "#FFFFFF1A",
         "preview_glass": "#2C2C2E",
     },
@@ -187,7 +187,7 @@ class Sheet:
         return self.add(name, node)
 
     # --- 按键
-    def hint(self, name, label):
+    def hint(self, name, label, swipe_up_label=None):
         self.add("hintBackground", {
             "buttonStyleType": "geometry",
             "normalColor": self.c["hint_bg"],
@@ -196,11 +196,17 @@ class Sheet:
             "normalBorderColor": self.c["hint_border"],
         })
         fg = self.text(name + "HintForeground", label, size=30, center=glyph_center(label, 30, 52))
-        return self.add(name + "Hint", {
+        node = {
             "size": {"width": 52, "height": 56},
             "backgroundStyle": "hintBackground",
             "foregroundStyle": fg,
-        })
+        }
+        if swipe_up_label:
+            node["swipeUpForegroundStyle"] = self.text(
+                name + "SwipeUpHintForeground", swipe_up_label, size=30,
+                center=glyph_center(swipe_up_label, 30, 52),
+            )
+        return self.add(name + "Hint", node)
 
     def letter(self, ch, width=None, bounds=None):
         name = ch + "Button"
@@ -284,7 +290,7 @@ class Sheet:
         })
 
     def candidates(self):
-        """横向 / 纵向候选栏，所有键盘共用。"""
+        """横向候选栏，所有键盘共用（不含展开的纵向候选面板）。"""
         c = self.c
         bg = self.area_background()
         self.add("horizontalCandidateStyle", {
@@ -306,54 +312,10 @@ class Sheet:
             "type": "horizontalCandidates",
             "candidateStyle": "horizontalCandidateStyle",
         })
-        self.add("expandButton", {
-            "action": {"shortcut": "#candidatesBarStateToggle"},
-            "size": {"width": 44},
-            "foregroundStyle": self.icon("expandForeground", "chevron.down"),
-        })
-        self.add("verticalCandidateStyle", {
-            "insets": {"top": 6, "bottom": 6, "left": 8, "right": 8},
-            "highlightBackgroundColor": c["candidate_hl"],
-            "preferredBackgroundColor": "#00000000",
-            "preferredTextColor": c["text"],
-            "preferredCommentColor": c["text_dim"],
-            "preferredIndexColor": "#00000000",
-            "textColor": c["text"],
-            "commentColor": c["text_dim"],
-            "indexColor": "#00000000",              # 原生不显示序号
-            "textFontSize": 20,
-            "commentFontSize": 12,
-            "indexFontSize": 1,
-        })
-        self.add("verticalCandidates", {
-            "type": "verticalCandidates",
-            "candidateStyle": "verticalCandidateStyle",
-            "insets": {"top": 6, "bottom": 6, "left": 6, "right": 6},
-            "maxRows": 5,
-            "maxColumns": 6,
-            "separatorColor": c["separator"],
-        })
-        self.add("verticalLastRow", {"size": {"height": 50}})
-        self.func_key("verticalPageUp", self.icon("pageUpForeground", "chevron.up"),
-                      {"shortcut": "#verticalCandidatesPageUp"})
-        self.func_key("verticalPageDown", self.icon("pageDownForeground", "chevron.down"),
-                      {"shortcut": "#verticalCandidatesPageDown"})
-        self.func_key("verticalReturn", self.icon("collapseForeground", "chevron.up.circle"),
-                      {"shortcut": "#candidatesBarStateToggle"})
-        self.func_key("verticalBackspace", "backspaceForeground", "backspace",
-                      repeatAction="backspace")
-        self.icon("backspaceForeground", "delete.left", hl_symbol="delete.left.fill")
         self.d.update({
-            "horizontalCandidatesStyle": {"backgroundStyle": bg, "insets": {"left": 4, "top": 4, "bottom": 2}},
+            "horizontalCandidatesStyle": {"backgroundStyle": bg, "insets": {"left": 4, "right": 4, "top": 4, "bottom": 2}},
             "horizontalCandidatesLayout": [
-                {"HStack": {"subviews": [{"Cell": "horizontalCandidates"}, {"Cell": "expandButton"}]}},
-            ],
-            "verticalCandidatesStyle": {"backgroundStyle": bg},
-            "verticalCandidatesLayout": [
-                {"HStack": {"subviews": [{"Cell": "verticalCandidates"}]}},
-                {"HStack": {"style": "verticalLastRow", "subviews": [
-                    {"Cell": "verticalPageUp"}, {"Cell": "verticalPageDown"},
-                    {"Cell": "verticalReturn"}, {"Cell": "verticalBackspace"}]}},
+                {"HStack": {"subviews": [{"Cell": "horizontalCandidates"}]}},
             ],
         })
 
@@ -435,6 +397,48 @@ def pinyin_keyboard(mode):
     # 同微信：123 进符号键盘（数字行 + 标点），符号键盘上的「12/34」再进九宫格数字键盘
     num = s.func_key("numericButton", s.text("numericForeground", "123"),
                      {"keyboardType": "symbolMain"}, 0.15)
+    punct_hint = s.hint("punctButton", "，", swipe_up_label="。")
+    s.add("hintSelectedBackground", {
+        "buttonStyleType": "geometry",
+        "normalColor": s.c["hint_selected"],
+        "highlightColor": s.c["hint_selected"],
+        "cornerRadius": 6,
+    })
+    punct_cell_w, punct_cell_h = 46, 44
+    punct_period_sym = s.add("punctPeriodSymbol", {
+        "action": {"character": "."},
+        "foregroundStyle": s.text(
+            "punctPeriodSymbolForeground", "。", size=26,
+            center=glyph_center("。", 26, punct_cell_w),
+        ),
+    })
+    punct_comma_sym = s.add("punctCommaSymbol", {
+        "action": {"character": ","},
+        "foregroundStyle": s.text(
+            "punctCommaSymbolForeground", "，", size=26,
+            center=glyph_center("，", 26, punct_cell_w),
+        ),
+    })
+    punct_hint_grid = s.add("punctButtonHintGrid", {
+        "symbolRows": [[punct_period_sym], [punct_comma_sym]],
+        "size": {"width": punct_cell_w, "height": punct_cell_h},
+        "spacing": {"horizontal": 0, "vertical": 2},
+        "insets": {"top": 4, "bottom": 4, "left": 4, "right": 4},
+        "offset": {"x": 0, "y": 0},
+        "selected": {"row": 1, "col": 0},
+        "moveStep": {"horizontal": 36, "vertical": 36},
+        "moveThreshold": 10,
+        "backgroundStyle": "hintBackground",
+        "selectedBackgroundStyle": "hintSelectedBackground",
+    })
+    punct_hint_symbols = s.add("punctButtonHintSymbols", {
+        "symbolStyles": [punct_comma_sym, punct_period_sym],
+        "size": {"width": punct_cell_w, "height": punct_cell_h},
+        "insets": {"top": 4, "bottom": 4, "left": 4, "right": 4},
+        "selectedIndex": 0,
+        "backgroundStyle": "hintBackground",
+        "selectedBackgroundStyle": "hintSelectedBackground",
+    })
     punct = s.add("punctButton", {
         "action": {"character": ","},
         "swipeUpAction": {"character": "."},          # 唯一保留的划动：逗号键上划出句号，和微信一样
@@ -444,7 +448,9 @@ def pinyin_keyboard(mode):
             s.text("punctForeground", "，", size=20, center={"x": 0.5, "y": 0.6}),
             s.text("punctUpForeground", "。", size=12, color="text_dim", center={"x": 0.5, "y": 0.25}),
         ],
-        "hintStyle": s.hint("punctButton", "，"),
+        "hintStyle": punct_hint,
+        "hintSymbolsGridStyle": punct_hint_grid,
+        "hintSymbolsStyle": punct_hint_symbols,
     })
     space = s.add("spaceButton", {
         "action": "space",
@@ -740,7 +746,7 @@ for _i, (_kb, _, _, _) in enumerate(SYMBOL_PAGES):
 README = """MyRime：仿微信输入法布局、iOS 原生外观的简洁皮肤，配合雾凇拼音（自然码双拼）使用。
 
 - 字母键没有划动功能，避免误触
-- 底行：123 / 逗号（上划句号）/ 空格 / 中英 / 回车（不做 Emoji 面板，用 iOS 自带的 Emoji 键盘）
+- 底行：123 / 逗号（上划或长按上滑出句号）/ 空格 / 中英 / 回车（不做 Emoji 面板，用 iOS 自带的 Emoji 键盘）
 - 中英键切换 RIME 的 ascii_mode
 - 符号键盘的「符号」键进入更多符号，底部一排分类（常用 / 中 / 英 / 括号 / 货币 / 数学 / 序号）
 - 工具栏：方案切换 / 常用语 / 剪贴板 / 收起键盘
@@ -753,7 +759,8 @@ README = """MyRime：仿微信输入法布局、iOS 原生外观的简洁皮肤�
 # 生成后自动检查，规则来自实际踩过的坑；有问题时 build() 报错退出，不写出半成品
 STYLE_REF_KEYS = ("backgroundStyle", "foregroundStyle", "uppercasedStateForegroundStyle",
                   "capsLockedStateForegroundStyle", "swipeUpForegroundStyle", "swipeDownForegroundStyle",
-                  "hintStyle", "hintSymbolsStyle", "notification", "candidateStyle", "cellStyle")
+                  "hintStyle", "hintSymbolsStyle", "hintSymbolsGridStyle", "selectedBackgroundStyle",
+                  "symbolStyles", "notification", "candidateStyle", "cellStyle")
 
 
 def _style_refs(value):
@@ -818,6 +825,10 @@ def check_sheet(sheet, keyboard_types):
             for ref in _style_refs(node.get(key)):
                 if ref not in sheet:
                     problems.append("%s.%s 引用了未定义的 %s" % (name, key, ref))
+        for r in node.get("symbolRows") or []:
+            for ref in r:
+                if ref and ref not in sheet:
+                    problems.append("%s.symbolRows 引用了未定义的 %s" % (name, ref))
         for key in ("action", "swipeUpAction", "swipeDownAction", "uppercasedStateAction"):
             action = node.get(key)
             if isinstance(action, dict) and "keyboardType" in action and action["keyboardType"] not in keyboard_types:
