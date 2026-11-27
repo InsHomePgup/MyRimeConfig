@@ -56,6 +56,7 @@ COLORS = {
         "hint_bg": "#FFFFFF",
         "hint_border": "#C6C6C8",
         "hint_selected": "#D1D4DA",
+        "separator": "#C6C6C8",
         "candidate_hl": "#0000001A",
         "preview_glass": "#E3E5EA",  # 只用于电脑上的预览图，模拟系统玻璃
     },
@@ -76,6 +77,7 @@ COLORS = {
         "hint_bg": "#6C6C70",
         "hint_border": "#6C6C70",
         "hint_selected": "#FFFFFF33",
+        "separator": "#48484A",
         "candidate_hl": "#FFFFFF1A",
         "preview_glass": "#2C2C2E",
     },
@@ -290,7 +292,7 @@ class Sheet:
         })
 
     def candidates(self):
-        """横向候选栏，所有键盘共用（不含展开的纵向候选面板）。"""
+        """横向 / 纵向候选栏，所有键盘共用。"""
         c = self.c
         bg = self.area_background()
         self.add("horizontalCandidateStyle", {
@@ -312,10 +314,54 @@ class Sheet:
             "type": "horizontalCandidates",
             "candidateStyle": "horizontalCandidateStyle",
         })
+        self.add("expandButton", {
+            "action": {"shortcut": "#candidatesBarStateToggle"},
+            "size": {"width": 44},
+            "foregroundStyle": self.icon("expandForeground", "chevron.down"),
+        })
+        self.add("verticalCandidateStyle", {
+            "insets": {"top": 6, "bottom": 6, "left": 8, "right": 8},
+            "highlightBackgroundColor": c["candidate_hl"],
+            "preferredBackgroundColor": "#00000000",
+            "preferredTextColor": c["text"],
+            "preferredCommentColor": c["text_dim"],
+            "preferredIndexColor": "#00000000",
+            "textColor": c["text"],
+            "commentColor": c["text_dim"],
+            "indexColor": "#00000000",              # 原生不显示序号
+            "textFontSize": 20,
+            "commentFontSize": 12,
+            "indexFontSize": 1,
+        })
+        self.add("verticalCandidates", {
+            "type": "verticalCandidates",
+            "candidateStyle": "verticalCandidateStyle",
+            "insets": {"top": 6, "bottom": 6, "left": 6, "right": 6},
+            "maxRows": 5,
+            "maxColumns": 6,
+            "separatorColor": c["separator"],
+        })
+        self.add("verticalLastRow", {"size": {"height": 50}})
+        self.func_key("verticalPageUp", self.icon("pageUpForeground", "chevron.up"),
+                      {"shortcut": "#verticalCandidatesPageUp"})
+        self.func_key("verticalPageDown", self.icon("pageDownForeground", "chevron.down"),
+                      {"shortcut": "#verticalCandidatesPageDown"})
+        self.func_key("verticalReturn", self.icon("collapseForeground", "chevron.up.circle"),
+                      {"shortcut": "#candidatesBarStateToggle"})
+        self.func_key("verticalBackspace", "backspaceForeground", "backspace",
+                      repeatAction="backspace")
+        self.icon("backspaceForeground", "delete.left", hl_symbol="delete.left.fill")
         self.d.update({
-            "horizontalCandidatesStyle": {"backgroundStyle": bg, "insets": {"left": 4, "right": 4, "top": 4, "bottom": 2}},
+            "horizontalCandidatesStyle": {"backgroundStyle": bg, "insets": {"left": 4, "top": 4, "bottom": 2}},
             "horizontalCandidatesLayout": [
-                {"HStack": {"subviews": [{"Cell": "horizontalCandidates"}]}},
+                {"HStack": {"subviews": [{"Cell": "horizontalCandidates"}, {"Cell": "expandButton"}]}},
+            ],
+            "verticalCandidatesStyle": {"backgroundStyle": bg},
+            "verticalCandidatesLayout": [
+                {"HStack": {"subviews": [{"Cell": "verticalCandidates"}]}},
+                {"HStack": {"style": "verticalLastRow", "subviews": [
+                    {"Cell": "verticalPageUp"}, {"Cell": "verticalPageDown"},
+                    {"Cell": "verticalReturn"}, {"Cell": "verticalBackspace"}]}},
             ],
         })
 
