@@ -1,5 +1,11 @@
 # 更新日志
 
+## [1.1.1](https://github.com/InsHomePgup/MyRimeConfig/compare/v1.1.0...v1.1.1) (2026-11-27)
+
+### 修复
+
+* 恢复元书皮肤纵向候选展开面板，移除上屏后联想功能 ([4debc9b](https://github.com/InsHomePgup/MyRimeConfig/commit/4debc9b17bee2c5cdff6c629b2a89185f4b2feee))
+
 ## [1.1.0](https://github.com/InsHomePgup/MyRimeConfig/compare/v1.0.0...v1.1.0) (2026-11-26)
 
 ### 新功能
